@@ -1,0 +1,39 @@
+template:
+  params:
+    bootswatch: spacelab
+
+authors:
+  Armin Rauschenberger:
+    href: https://rauschenberger.github.io
+
+home:
+   links:
+   - text: "Download package"
+     href: https://github.com/rauschenberger/starnet
+
+navbar:
+  title: "stanet"
+  left:
+    - text: "functions"
+      href: reference/index.html
+    - text: "vignette"
+      href: articles/starnet.html
+    - text: "article"
+      href: articles/article.html
+    - text: "news"
+      href: news/index.html
+  right:
+    - icon: fa-github
+      href: https://github.com/rauschenberger/starnet
+    - icon: fa-download
+      href: https://cran.r-project.org/package=starnet
+      
+reference:
+  - title: "Functions"
+    contents:
+      - starnet-package
+      - starnet
+      - predict.starnet
+      - coef.starnet
+      - weights.starnet
+      - cv.starnet

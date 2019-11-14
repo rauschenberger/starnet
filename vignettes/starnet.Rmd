@@ -1,0 +1,33 @@
+---
+title: Stacked Elastic Net
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{vignette}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Installation
+
+Install the current release from [CRAN](https://CRAN.R-project.org/package=starnet):
+
+```{r,eval=FALSE}
+install.packages("starnet")
+```
+
+or the latest development version from [GitHub](https://github.com/rauschenberger/starnet):
+
+```{r,eval=FALSE}
+#install.packages("devtools")
+devtools::install_github("rauschenberger/starnet")
+```
+
+A Rauschenberger, E Glaab, and MA van de Wiel (2019).
+"Improved elastic net regression through stacked generalisation".
+*Manuscript in preparation.*
