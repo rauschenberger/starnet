@@ -1,6 +1,4 @@
 
-#for(seed in 1:100){
-#set.seed(seed)
 for(family in c("gaussian","binomial","poisson")){
   n <- 20; p <- 50
   if(family=="cox"){
@@ -84,7 +82,6 @@ for(family in c("gaussian","binomial","poisson")){
   })
   
 }
-#}
 
 #--- testing the loss function ---
 
@@ -153,10 +150,10 @@ for(family in c("gaussian","binomial","poisson","cox","mgaussian","multinomial")
     }
     
     grouped <- FALSE # family!="cox"
-    warning("Activate the missing test (cox grouped)")
+    # Implement loss function for "cox-grouped"!
     # See notes below! See palasso implementation!
     a <- glmnet::cv.glmnet(y=y,x=X,alpha=alpha,lambda=c(lambda,0.5*lambda),foldid=foldid,family=family,type.measure=type.measure,grouped=grouped)$cvm[1]
-    b <- .loss(y=y,x=y_hat,family=family,type.measure=type.measure,foldid=foldid,grouped=grouped)
+    b <- starnet:::.loss(y=y,x=y_hat,family=family,type.measure=type.measure,foldid=foldid,grouped=grouped)
     
     testthat::test_that("same loss",{
       testthat::expect_true(abs(a-b)<1e-03)
@@ -164,7 +161,6 @@ for(family in c("gaussian","binomial","poisson","cox","mgaussian","multinomial")
     
   }
 }
-
 
 if(FALSE){
   # Run code from above before running this code!

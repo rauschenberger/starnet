@@ -32,5 +32,5 @@ devtools::install_github("rauschenberger/starnet")
 
 ## Reference
 
-Rauschenberger et al. (2019) “Improved elastic net regression through
-stacked generalisation”. *Manuscript in prepration.*
+A Rauschenberger, E Glaab, MA van de Wiel (2019). “Improved elastic net
+regression through stacked generalisation”. *Manuscript in preparation.*

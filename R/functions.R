@@ -697,35 +697,53 @@ glmnet.auc <- get("auc",envir=asNamespace("glmnet"))
 .cv.glmnet <- function(...,nzero){
   
   model <- glmnet::cv.glmnet(...)
+  #model <- glmnet::cv.glmnet(y=y,x=X,family="binomial")
+  #model <- glmnet::cv.glmnet(y=y,x=X,family="binomial",lambda=lambda)
   
-  if(!is.na(nzero)){
-    for(i in seq_len(2)){
-      from <- min(model$lambda[model$nzero==0],max(model$lambda))
+  #cat(unique(model$nzero),"\n")
+  
+  for(i in seq_len(3)){ # original: 2
+    # change from 1.05*min to min(1.05*)
+    from <- 1.05*min(model$lambda[model$nzero==0],max(model$lambda),na.rm=TRUE) # original: 1.05*min
+    if(is.na(nzero)||is.infinite(nzero)){ # unlimited model
+      if(model$lambda.min==rev(model$lambda)[1]){
+        to <- 0.01*min(model$lambda)
+      } else {
+        to <- max(model$lambda[model$lambda<model$lambda.min])
+      }
+    } else { # sparsity constraint
       if(all(model$nzero>=nzero)){
         to <- 0.01*min(model$lambda)
       } else {
-        to <- min(model$lambda[model$nzero<=(nzero+1)])
+        to <- min(model$lambda[model$nzero<=(nzero+1)],na.rm=TRUE)
+        to <- max(model$lambda[model$lambda<model$lambda.min],to) # trial
       }
-      lambda <- exp(seq(from=log(from),to=log(to),length.out=100))
-      model <- glmnet::cv.glmnet(...,lambda=lambda)
     }
-    cond <- model$nzero<=nzero
-    model$lambda <- model$lambda[cond]
-    model$cvm <- model$cvm[cond]
-    model$cvsd <- model$cvsd[cond]
-    model$cvup <- model$cvup[cond]
-    model$cvlo <- model$cvlo[cond]
-    model$nzero <- model$nzero[cond]
-    model$lambda.min <- model$lambda[which.min(model$cvm)]
-    model$lambda.1se <- max(model$lambda[model$cvm<min(model$cvup)])
-    model$glmnet.fit$a0 <- model$glmnet.fit$a0[cond]
-    model$glmnet.fit$beta <- model$glmnet.fit$beta[,cond,drop=FALSE]
-    model$glmnet.fit$df <- model$glmnet.fit$df[cond]
-    model$glmnet.fit$lambda <- model$glmnet.fit$lambda[cond]
-    model$glmnet.fit$dev.ratio <- model$glmnet.fit$dev.ratio[cond]
-    model$glmnet.fit$call <- NULL
-    model$glmnet.fit$dim[2] <- sum(cond)
+    
+    lambda <- exp(seq(from=log(from),to=log(to),length.out=100))
+    model <- glmnet::cv.glmnet(...,lambda=lambda)
+    #cat(unique(model$nzero),"\n")
   }
+  
+  if(is.na(nzero)){return(model)}
+
+  cond <- model$nzero<=nzero
+  model$lambda <- model$lambda[cond]
+  model$cvm <- model$cvm[cond]
+  model$cvsd <- model$cvsd[cond]
+  model$cvup <- model$cvup[cond]
+  model$cvlo <- model$cvlo[cond]
+  model$nzero <- model$nzero[cond]
+  model$lambda.min <- model$lambda[which.min(model$cvm)]
+  model$lambda.1se <- max(model$lambda[model$cvm<min(model$cvup)])
+  model$glmnet.fit$a0 <- model$glmnet.fit$a0[cond]
+  model$glmnet.fit$beta <- model$glmnet.fit$beta[,cond,drop=FALSE]
+  model$glmnet.fit$df <- model$glmnet.fit$df[cond]
+  model$glmnet.fit$lambda <- model$glmnet.fit$lambda[cond]
+  model$glmnet.fit$dev.ratio <- model$glmnet.fit$dev.ratio[cond]
+  model$glmnet.fit$call <- NULL
+  model$glmnet.fit$dim[2] <- sum(cond)
+  #cat(unique(model$nzero),"\n")
   
   return(model)
 }
