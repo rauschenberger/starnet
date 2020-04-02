@@ -6,7 +6,8 @@
 \usage{
 starnet(y, X, family = "gaussian", nalpha = 21, alpha = NULL,
   nfolds = 10, foldid = NULL, type.measure = "deviance",
-  alpha.meta = 0, grouped = TRUE, ...)
+  alpha.meta = 1, grouped = TRUE, penalty.factor = NULL,
+  intercept = NULL, upper.limit = NULL, unit.sum = NULL, ...)
 }
 \arguments{
 \item{y}{numeric response\strong{:}
@@ -40,6 +41,10 @@ vector of values between \eqn{0} (ridge) and \eqn{1} (lasso),
 
 \item{grouped}{logical}
 
+\item{penalty.factor}{penalty factors for base-learners}
+
+\item{intercept, upper.limit, unit.sum}{settings for meta-learner\strong{:} logical}
+
 \item{...}{further arguments passed to \code{\link[glmnet]{glmnet}}}
 }
 \description{
@@ -59,7 +64,7 @@ object <- starnet::starnet(y=y,X=X,family="gaussian")
 
 }
 \references{
-A Rauschenberger, E Glaab, and MA van de Wiel (2019)
+A Rauschenberger, E Glaab, and MA van de Wiel (2020)
 "Improved elastic net regression through stacked generalisation"
 \emph{Manuscript in preparation.}
 }

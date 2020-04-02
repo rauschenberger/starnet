@@ -5,8 +5,10 @@
 \title{Model comparison}
 \usage{
 cv.starnet(y, X, family = "gaussian", nalpha = 21, alpha = NULL,
-  nfolds = 5, foldid = NULL, type.measure = "deviance",
-  alpha.meta = 0, grouped = TRUE, nzero = NULL, ...)
+  nfolds.ext = 10, nfolds.int = 10, foldid.ext = NULL,
+  foldid.int = NULL, type.measure = "deviance", alpha.meta = 1,
+  grouped = TRUE, nzero = NULL, intercept = NULL,
+  upper.limit = NULL, unit.sum = NULL, ...)
 }
 \arguments{
 \item{y}{numeric response\strong{:}
@@ -24,11 +26,7 @@ and \eqn{p} columns (variables)}
 vector of values between \eqn{0} (ridge) and \eqn{1} (lasso);
 or \code{NULL} (equidistance)}
 
-\item{nfolds}{number of folds}
-
-\item{foldid}{fold identifiers\strong{:}
-vector with entries between \eqn{1} and \code{nfolds};
-or \code{NULL} (balance)}
+\item{nfolds.ext, nfolds.int, foldid.ext, foldid.int}{(number of) external/internal folds}
 
 \item{type.measure}{loss function\strong{:}
 character "deviance", "class", "mse" or "mae"
@@ -43,6 +41,12 @@ vector of values between \eqn{0} (ridge) and \eqn{1} (lasso),
 \item{nzero}{number of non-zero coefficients\strong{:}
 scalar/vector including positive integer(s) or \code{NA};
 or \code{NULL} (no posthoc feature selection)}
+
+\item{intercept}{settings for meta-learner\strong{:} logical}
+
+\item{upper.limit}{settings for meta-learner\strong{:} logical}
+
+\item{unit.sum}{settings for meta-learner\strong{:} logical}
 
 \item{...}{further arguments (not applicable)}
 }

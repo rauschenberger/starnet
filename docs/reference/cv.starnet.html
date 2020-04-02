@@ -124,8 +124,10 @@
     </div>
 
     <pre class="usage"><span class='fu'>cv.starnet</span>(<span class='no'>y</span>, <span class='no'>X</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"gaussian"</span>, <span class='kw'>nalpha</span> <span class='kw'>=</span> <span class='fl'>21</span>, <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>nfolds</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>foldid</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>type.measure</span> <span class='kw'>=</span> <span class='st'>"deviance"</span>,
-  <span class='kw'>alpha.meta</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>grouped</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>nzero</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
+  <span class='kw'>nfolds.ext</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>nfolds.int</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>foldid.ext</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>foldid.int</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>type.measure</span> <span class='kw'>=</span> <span class='st'>"deviance"</span>, <span class='kw'>alpha.meta</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>grouped</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>nzero</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>intercept</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>upper.limit</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>unit.sum</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -156,14 +158,8 @@ vector of values between \(0\) (ridge) and \(1\) (lasso);
 or <code>NULL</code> (equidistance)</p></td>
     </tr>
     <tr>
-      <th>nfolds</th>
-      <td><p>number of folds</p></td>
-    </tr>
-    <tr>
-      <th>foldid</th>
-      <td><p>fold identifiers<strong>:</strong>
-vector with entries between \(1\) and <code>nfolds</code>;
-or <code>NULL</code> (balance)</p></td>
+      <th>nfolds.ext, nfolds.int, foldid.ext, foldid.int</th>
+      <td><p>(number of) external/internal folds</p></td>
     </tr>
     <tr>
       <th>type.measure</th>
@@ -188,6 +184,18 @@ scalar/vector including positive integer(s) or <code>NA</code>;
 or <code>NULL</code> (no posthoc feature selection)</p></td>
     </tr>
     <tr>
+      <th>intercept</th>
+      <td><p>settings for meta-learner<strong>:</strong> logical</p></td>
+    </tr>
+    <tr>
+      <th>upper.limit</th>
+      <td><p>settings for meta-learner<strong>:</strong> logical</p></td>
+    </tr>
+    <tr>
+      <th>unit.sum</th>
+      <td><p>settings for meta-learner<strong>:</strong> logical</p></td>
+    </tr>
+    <tr>
       <th>...</th>
       <td><p>further arguments (not applicable)</p></td>
     </tr>
@@ -199,7 +207,7 @@ or <code>NULL</code> (no posthoc feature selection)</p></td>
 <span class='no'>n</span> <span class='kw'>&lt;-</span> <span class='fl'>50</span>; <span class='no'>p</span> <span class='kw'>&lt;-</span> <span class='fl'>20</span>
 <span class='no'>X</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='no'>n</span>*<span class='no'>p</span>),<span class='kw'>nrow</span><span class='kw'>=</span><span class='no'>n</span>,<span class='kw'>ncol</span><span class='kw'>=</span><span class='no'>p</span>)
 <span class='no'>y</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='kw'>n</span><span class='kw'>=</span><span class='no'>n</span>,<span class='kw'>mean</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/colSums.html'>rowSums</a></span>(<span class='no'>X</span>[,<span class='fl'>1</span>:<span class='fl'>20</span>]))
-<span class='no'>loss</span> <span class='kw'>&lt;-</span> <span class='fu'>cv.starnet</span>(<span class='kw'>y</span><span class='kw'>=</span><span class='no'>y</span>,<span class='kw'>X</span><span class='kw'>=</span><span class='no'>X</span>)</div><div class='img'><img src='cv.starnet-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='no'>loss</span> <span class='kw'>&lt;-</span> <span class='fu'>cv.starnet</span>(<span class='kw'>y</span><span class='kw'>=</span><span class='no'>y</span>,<span class='kw'>X</span><span class='kw'>=</span><span class='no'>X</span>)</div><div class='output co'>#&gt; <span class='message'>alpha1 2.6 </span></div><div class='output co'>#&gt; <span class='message'>0.044 _ 1.004 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.005</span></div><div class='output co'>#&gt; <span class='message'>alpha1 2.51 </span></div><div class='output co'>#&gt; <span class='message'>-0.112 _ 0 0.974 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</span></div><div class='output co'>#&gt; <span class='message'>alpha1 2.56 </span></div><div class='output co'>#&gt; <span class='message'>0.006 _ 0.713 0.297 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</span></div><div class='output co'>#&gt; <span class='message'>alpha1 1.89 </span></div><div class='output co'>#&gt; <span class='message'>-0.017 _ 0.052 0.928 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</span></div><div class='output co'>#&gt; <span class='message'>alpha1 2 </span></div><div class='output co'>#&gt; <span class='message'>0.048 _ 1.052 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</span></div><div class='output co'>#&gt; <span class='message'>alpha1 2.55 </span></div><div class='output co'>#&gt; <span class='message'>0.004 _ 0.017 0.958 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</span></div><div class='output co'>#&gt; <span class='message'>alpha1 2.27 </span></div><div class='output co'>#&gt; <span class='message'>-0.07 _ 0 0.962 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</span></div><div class='output co'>#&gt; <span class='message'>alpha1 2.24 </span></div><div class='output co'>#&gt; <span class='message'>0.024 _ 0 0.941 0.017 0.014 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</span></div><div class='output co'>#&gt; <span class='message'>alpha1 2.05 </span></div><div class='output co'>#&gt; <span class='message'>-0.078 _ 0.47 0.523 0 0 0 0.021 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</span></div><div class='output co'>#&gt; <span class='message'>alpha1 2.64 </span></div><div class='output co'>#&gt; <span class='message'>-0.069 _ 1.03 0 0 0 0 0 0 0.003 0 0 0 0 0 0 0 0 0 0 0 0 0</span></div><div class='img'><img src='cv.starnet-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

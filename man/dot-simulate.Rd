@@ -4,7 +4,7 @@
 \alias{.simulate}
 \title{Simulation}
 \usage{
-.simulate(n, p, mode)
+.simulate(n, p, mode, family = "gaussian")
 }
 \arguments{
 \item{n}{sample size\strong{:}
@@ -14,6 +14,8 @@ positive integer}
 positive integer}
 
 \item{mode}{character \code{"sparse"}, \code{"dense"} or \code{"blocks"}}
+
+\item{family}{\code{"gaussian"}, \code{"binomial"} or \code{"poisson"}}
 }
 \description{
 Prints object of class \link[starnet]{starnet}.

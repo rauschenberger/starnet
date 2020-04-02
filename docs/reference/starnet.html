@@ -125,7 +125,8 @@
 
     <pre class="usage"><span class='fu'>starnet</span>(<span class='no'>y</span>, <span class='no'>X</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"gaussian"</span>, <span class='kw'>nalpha</span> <span class='kw'>=</span> <span class='fl'>21</span>, <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>nfolds</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>foldid</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>type.measure</span> <span class='kw'>=</span> <span class='st'>"deviance"</span>,
-  <span class='kw'>alpha.meta</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>grouped</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
+  <span class='kw'>alpha.meta</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>grouped</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>penalty.factor</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>intercept</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>upper.limit</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>unit.sum</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -182,6 +183,14 @@ vector of values between \(0\) (ridge) and \(1\) (lasso),
       <td><p>logical</p></td>
     </tr>
     <tr>
+      <th>penalty.factor</th>
+      <td><p>penalty factors for base-learners</p></td>
+    </tr>
+    <tr>
+      <th>intercept, upper.limit, unit.sum</th>
+      <td><p>settings for meta-learner<strong>:</strong> logical</p></td>
+    </tr>
+    <tr>
       <th>...</th>
       <td><p>further arguments passed to <code><a href='https://rdrr.io/pkg/glmnet/man/glmnet.html'>glmnet</a></code></p></td>
     </tr>
@@ -203,7 +212,8 @@ We recommend to use <code>alpha.meta</code>\(=0\) (default) for stability.</p>
 <span class='no'>n</span> <span class='kw'>&lt;-</span> <span class='fl'>30</span>; <span class='no'>p</span> <span class='kw'>&lt;-</span> <span class='fl'>50</span>
 <span class='no'>y</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='kw'>n</span><span class='kw'>=</span><span class='no'>n</span>)
 <span class='no'>X</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='no'>n</span>*<span class='no'>p</span>),<span class='kw'>nrow</span><span class='kw'>=</span><span class='no'>n</span>,<span class='kw'>ncol</span><span class='kw'>=</span><span class='no'>p</span>)
-<span class='no'>object</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>starnet</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/starnet/man/starnet.html'>starnet</a></span>(<span class='kw'>y</span><span class='kw'>=</span><span class='no'>y</span>,<span class='kw'>X</span><span class='kw'>=</span><span class='no'>X</span>,<span class='kw'>family</span><span class='kw'>=</span><span class='st'>"gaussian"</span>)</div></pre>
+<span class='no'>object</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>starnet</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/starnet/man/starnet.html'>starnet</a></span>(<span class='kw'>y</span><span class='kw'>=</span><span class='no'>y</span>,<span class='kw'>X</span><span class='kw'>=</span><span class='no'>X</span>,<span class='kw'>family</span><span class='kw'>=</span><span class='st'>"gaussian"</span>)</div><div class='output co'>#&gt; <span class='message'>alpha1 0.87 </span></div><div class='output co'>#&gt; <span class='message'>0.082 _ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</span></div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
