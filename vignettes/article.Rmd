@@ -11,6 +11,6 @@ The `starnet` manuscript is in preparation. Click [here](https://CRAN.R-project.
 
 ## Reference
 
-A Rauschenberger, E Glaab, and MA van de Wiel (2019).
-"Improved elastic net regression through stacked generalisation".
+A Rauschenberger, E Glaab, and MA van de Wiel (2020).
+"Predictive and interpretable models via the stacked elastic net".
 *Manuscript in preparation.*

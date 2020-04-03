@@ -48,8 +48,8 @@ loss <- cv.starnet(y=y,X=X)
 
 }
 \references{
-A Rauschenberger, E Glaab, and MA van de Wiel (2019).
-"Improved elastic net regression through stacked generalisation".
+A Rauschenberger, E Glaab, and MA van de Wiel (2020).
+Predictive and interpretable models via the stacked elastic net".
 \emph{Manuscript in preparation}.
 
 \email{armin.rauschenberger@uni.lu}

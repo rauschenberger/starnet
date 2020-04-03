@@ -16,7 +16,7 @@ and \eqn{p} columns (variables)}
 
 \item{type}{character "link" or "response"}
 
-\item{nzero}{number of non-zero coefficients\strong{:}
+\item{nzero}{maximum number of non-zero coefficients\strong{:}
 positive integer, or \code{NULL}}
 
 \item{...}{further arguments (not applicable)}

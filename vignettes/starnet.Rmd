@@ -28,6 +28,6 @@ or the latest development version from [GitHub](https://github.com/rauschenberge
 devtools::install_github("rauschenberger/starnet")
 ```
 
-A Rauschenberger, E Glaab, and MA van de Wiel (2019).
-"Improved elastic net regression through stacked generalisation".
+A Rauschenberger, E Glaab, and MA van de Wiel (2020).
+"Predictive and interpretable models via the stacked elastic net".
 *Manuscript in preparation.*

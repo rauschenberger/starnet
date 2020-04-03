@@ -9,8 +9,8 @@
 #' Implements stacked elastic net regression.
 #'  
 #' @param y
-#' numeric response\strong{:}
-#' vector of length \eqn{n}
+#' response\strong{:}
+#' numeric vector of length \eqn{n}
 #' 
 #' @param X
 #' covariates\strong{:}
@@ -25,7 +25,8 @@
 #' 
 #' @param alpha
 #' elastic net mixing parameters\strong{:}
-#' vector of values between \eqn{0} (ridge) and \eqn{1} (lasso);
+#' vector of length \code{nalpha} with entries
+#' between \eqn{0} (ridge) and \eqn{1} (lasso);
 #' or \code{NULL} (equidistance)
 #'
 #' @param nfolds
@@ -33,7 +34,7 @@
 #'
 #' @param foldid
 #' fold identifiers\strong{:}
-#' vector with entries between \eqn{1} and \code{nfolds};
+#' vector of length \eqn{n} with entries between \eqn{1} and \code{nfolds};
 #' or \code{NULL} (balance)
 #' 
 #' @param type.measure
@@ -42,31 +43,33 @@
 #' (see \code{\link[glmnet]{cv.glmnet}})
 #'
 #' @param alpha.meta
-#' elastic net mixing parameters for stacking\strong{:}
-#' vector of values between \eqn{0} (ridge) and \eqn{1} (lasso),
-#' \emph{see details}
+#' meta-learner\strong{:}
+#' value between \eqn{0} (ridge) and \eqn{1} (lasso)
+#' for elastic net regularisation; 
+#' \code{NA} for convex combination
 #' 
 #' @param intercept,upper.limit,unit.sum
-#' settings for meta-learner\strong{:} logical
+#' settings for meta-learner\strong{:} logical,
+#' or \code{NULL} (default depends on \code{alpha.meta})
 #' 
 #' @param penalty.factor
-#' penalty factors for base-learners
-#' 
-#' @param grouped
-#' logical
+#' differential shrinkage\strong{:}
+#' vector of length \eqn{n} with entries
+#' between \eqn{0} (include) and \eqn{Inf} (exclude), 
+#' or \code{NULL} (all \eqn{1})
 #' 
 #' @param ...
 #' further arguments passed to \code{\link[glmnet]{glmnet}}
 #' 
 #' @references 
-#' A Rauschenberger, E Glaab, and MA van de Wiel (2020)
-#' "Improved elastic net regression through stacked generalisation"
+#' A Rauschenberger, E Glaab, and MA van de Wiel (2020).
+#' "Predictive and interpretable models via the stacked elastic net".
 #' \emph{Manuscript in preparation.}
 #' 
 #' @details
-#' Combine predictions from \emph{some} \code{alpha} with \code{alpha.meta}\eqn{=1},
-#' or from \emph{all} \code{alpha} with \code{alpha.meta}\eqn{=0}.
-#' We recommend to use \code{alpha.meta}\eqn{=0} (default) for stability.
+#' Posthoc feature selection\strong{:} consider
+#' argument \code{nzero} in functions
+#' \code{\link{coef}} and \code{\link{predict}}.
 #' 
 #' @examples
 #' set.seed(1)
@@ -75,16 +78,16 @@
 #' X <- matrix(rnorm(n*p),nrow=n,ncol=p)
 #' object <- starnet::starnet(y=y,X=X,family="gaussian")
 #' 
-starnet <- function(y,X,family="gaussian",nalpha=21,alpha=NULL,nfolds=10,foldid=NULL,type.measure="deviance",alpha.meta=1,grouped=TRUE,penalty.factor=NULL,intercept=NULL,upper.limit=NULL,unit.sum=NULL,...){
+starnet <- function(y,X,family="gaussian",nalpha=21,alpha=NULL,nfolds=10,foldid=NULL,type.measure="deviance",alpha.meta=1,penalty.factor=NULL,intercept=NULL,upper.limit=NULL,unit.sum=NULL,...){
   
   #--- temporary ---
-  # family <- "gaussian"; nalpha <- 21; alpha <- NULL; nfolds <- 10; foldid <- NULL; type.measure <- "deviance"; alpha.meta <- 0; grouped <- TRUE; penalty.factor <- NULL; intercept <- TRUE; upper.limit=TRUE; unit.sum=FALSE
+  # family <- "gaussian"; nalpha <- 21; alpha <- NULL; nfolds <- 10; foldid <- NULL; type.measure <- "deviance"; alpha.meta <- 0; penalty.factor <- NULL; intercept <- TRUE; upper.limit=TRUE; unit.sum=FALSE
   
   #--- default ---
   if(all(is.null(intercept),is.null(upper.limit),is.null(unit.sum))){
     if(is.na(alpha.meta)){
       intercept <- FALSE
-      upper.limit <- unit.sum <-TRUE
+      upper.limit <- unit.sum <- TRUE
     } else if(alpha.meta==1){
       intercept <- TRUE
       upper.limit <- unit.sum <- FALSE
@@ -116,21 +119,12 @@ starnet <- function(y,X,family="gaussian",nalpha=21,alpha=NULL,nfolds=10,foldid=
     # never pass NULL to glmnet/cv.glmnet!
   }
   
-  #if(nfolds > length(y)){nfolds <- length(y); warning("Using LOOCV!")}
-  
-  if(family=="cox" & grouped){stop("Implement grouped!",call.=FALSE)}
-  
   #--- fold identifiers ---
   if(is.null(foldid)){
-    foldid <- .folds(y=y,nfolds=nfolds) # was palasso:::.folds 2020-02-19
-  } # else {
-    nfolds <- length(unique(foldid)) # outside "if" since 2020-02-17
-  #}
+    foldid <- .folds(y=y,nfolds=nfolds)
+  }
+  nfolds <- max(foldid)
     
-  #message("trial - unbalanced folds")
-  #foldid <- palasso:::.folds(y=y,nfolds=nfolds) # remove this
-  #nfolds <- length(unique(foldid)) # remove this
-  
   #--- alpha sequence ---
   if(is.null(alpha)){
     alpha <- seq(from=0,to=1,length.out=nalpha)
@@ -173,7 +167,7 @@ starnet <- function(y,X,family="gaussian",nalpha=21,alpha=NULL,nfolds=10,foldid=
   #--- tune base lambdas ---
   for(i in seq_len(nalpha)){
     fit <- joinet:::.mean.function(link[[i]],family=family)
-    base[[i]]$cvm <- apply(fit,2,function(x) .loss(y=y,x=x,family=family,type.measure=type.measure,foldid=foldid,grouped=grouped))
+    base[[i]]$cvm <- apply(fit,2,function(x) .loss(y=y,x=x,family=family,type.measure=type.measure,foldid=foldid))
     base[[i]]$id.min <- which.min(base[[i]]$cvm)
     base[[i]]$lambda.min <- base[[i]]$lambda[base[[i]]$id.min]
   }
@@ -186,19 +180,9 @@ starnet <- function(y,X,family="gaussian",nalpha=21,alpha=NULL,nfolds=10,foldid=
   
   meta <- list()
   
-  #message("reshuffle folds for meta-learner")
-  #foldid <- .folds(y=y,nfolds=nfolds) # delete this
-  
   #--- meta cross-validation ---
   for(i in seq_along(alpha.meta)){
-    #message("trial - force parameters")
-    #intercept <- TRUE; upper.limit <- FALSE; unit.sum <- FALSE # remove this
-    
     if(is.na(alpha.meta[i])){next}
-    
-    #message("trial: without base-lasso")
-    #penalty.factor=ifelse(alpha==1,Inf,1) # REMOVE THIS
-    
     meta[[i]] <- glmnet::cv.glmnet(y=y,x=hat,
                                      lower.limits=0,
                                      upper.limits=ifelse(upper.limit,1,Inf), # was 1
@@ -206,28 +190,17 @@ starnet <- function(y,X,family="gaussian",nalpha=21,alpha=NULL,nfolds=10,foldid=
                                      family=family,
                                      type.measure=type.measure,
                                      intercept=intercept,
-                                     alpha=alpha.meta[i],
-                                     grouped=grouped,...)
-    
+                                     alpha=alpha.meta[i],...)
     if(unit.sum){
+      warning("inequality constraint",call.=FALSE)
       cond <- Matrix::colSums(meta[[i]]$glmnet.fit$beta)>1
       meta[[i]]$cvm[cond] <- Inf
       meta[[i]]$lambda.min <- meta[[i]]$lambda[which.min(meta[[i]]$cvm)]
-      #sum <- sum(coef(meta[[i]],s="lambda.min")[-1])
-      #message("sum = ",round(sum,2))
     }
-
   }
   
-  #browser()
-  #plot(sapply(base,function(x) min(x$cvm)))
-  #as.numeric(coef(meta[[1]],s="lambda.min")[-1])
-
   #--- convex combination ---  
   for(i in seq_along(alpha.meta)){
-    #message("trial - force parameters")
-    #intercept <- TRUE; upper.limit <- TRUE; unit.sum <- TRUE # remove this
-    
     if(!is.na(alpha.meta[i])){next}
     glm <- .glm(y=y,X=hat,family=family,intercept=intercept,lower.limit=TRUE,upper.limit=upper.limit,unit.sum=unit.sum)
     meta[[i]] <- list()
@@ -236,22 +209,17 @@ starnet <- function(y,X,family="gaussian",nalpha=21,alpha=NULL,nfolds=10,foldid=
     meta[[i]]$glmnet.fit$beta <- cbind(0,glm$beta) # matrix(data=rep(glm$beta,times=2),ncol=2)
     meta[[i]]$glmnet.fit$lambda <- meta[[i]]$lambda <- c(99e99,0) # was c(1,0)
     meta[[i]]$glmnet.fit$offset <- FALSE
-    
     if(length(alpha.meta)>1){
       link <- rep(NA,times=length(y))
       for(k in seq_len(nfolds)){
         glm <- .glm(y=y[foldid!=k],X=hat[foldid!=k,],family=family,intercept=intercept,lower.limit=TRUE,upper.limit=upper.limit,unit.sum=unit.sum)
         link[foldid==k] <- glm$alpha + hat[foldid==k,] %*% glm$beta
       }
-      #link <- glm$alpha + hat %*% glm$beta
       y_hat <- joinet:::.mean.function(x=link,family=family)
-      cvm <- .loss(y=y,x=y_hat,family=family,type.measure=type.measure,foldid=foldid,grouped=grouped)
+      cvm <- .loss(y=y,x=y_hat,family=family,type.measure=type.measure,foldid=foldid)
     } else {
       cvm <- 0
     }
-    
-    #if(round(cvm,digits=2)==0){browser()}
-    
     meta[[i]]$cvm <- c(Inf,cvm)
     meta[[i]]$lambda.min <- 0
     class(meta[[i]]) <- "cv.glmnet"
@@ -264,178 +232,14 @@ starnet <- function(y,X,family="gaussian",nalpha=21,alpha=NULL,nfolds=10,foldid=
   cvm_meta <- sapply(meta,function(x) min(x$cvm))
   message(paste0(names(cvm_meta)," ",round(cvm_meta,digits=2)," "))
   id_meta <- which.min(cvm_meta)
-  #message(names(id_meta))
+  
+  #--- message ---
   meta <- meta[[names(id_meta)]]
   message(paste(paste(round(stats::coef(meta,s="lambda.min")[1],digits=3)),"_",
                 paste(round(stats::coef(meta,s="lambda.min")[-1],digits=3),collapse=" ")))
-  #plot(coef(meta,s="lambda.min")[-1]) 
-  #message(paste(round(glm$alpha,digits=3),"_",paste(round(glm$beta,digits=3),
-  #      collapse=" ")))
   
   if(FALSE){
-    # message("trial - weights from cvm")
-    # cvm <- sapply(base,function(x) min(x$cvm))
-    # prior <- 1-(cvm-min(cvm))/(max(cvm)-min(cvm))
-    # weight <- prior/sum(prior)
-    # meta$glmnet.fit$a0 <- rep(x=0,times=2)
-    # meta$glmnet.fit$beta <- matrix(data=rep(weight,times=2),ncol=2)
-  }
-  
-  if(FALSE){
-    # # penalty factors from cvm
-    # cvm <- sapply(base,function(x) min(x$cvm))
-    # prior <- 1-(cvm-min(cvm))/(max(cvm)-min(cvm))
-    # weight <- prior/sum(prior)
-    # #penalty.factor=1/weight, # DELETE THIS!
-    # ##penalty.factor <- ifelse(alpha==1,Inf,1) # exclude lasso
-    # # ALSO DELETE PENALTY.FACTOR BELOW !
-  }
-  
-  if(FALSE){
-    ## fused lasso
-    #if(family=="gaussian"){
-    #  model <- "linear"
-    #} else if(family=="binomial"){
-    #  model <- "logistic"
-    #} else if(family=="poisson"){
-    #  model <- "poisson"
-    #} else {
-    #  stop("Not implemented.")
-    #}
-    #optL1 <- penalized::optL1(response=y,penalized=hat,positive=TRUE,
-    #               fusedl=TRUE,fold=foldid,lambda2=0,model=model)
-    #optL1$lambda
-    #optL2 <- penalized::optL2(response=y,penalized=hat,positive=TRUE,
-    #              fusedl=TRUE,fold=foldid,lambda1=optL1$lambda,model=model)
-    #optL2$lambda
-  }
-  
-  if(FALSE){
-    #message("trial - convex combination with CVXR")
-    # x <- hat
-    # p <- nalpha
-    # # different code for linear and logistic regression!
-    # 
-    # alpha <- CVXR::Variable(1)
-    # beta <- CVXR::Variable(p)
-    # if(family=="gaussian"){
-    #   objective <- CVXR::Minimize(mean((y-alpha-x%*%beta)^2))
-    # } else if(family=="binomial"){
-    #   objective <- CVXR::Minimize(sum(alpha+x[y<=0,]%*%beta)+sum(CVXR::logistic(-alpha-x%*%beta)))
-    # } else {
-    #   stop("Not implemented!")
-    # }
-    # #constraints <- list() # for testing purposes
-    # constraints <- list(alpha==0,beta>=0,sum(beta)==1)
-    # problem <- CVXR::Problem(objective,constraints=constraints)
-    # result <- CVXR::solve(problem)
-    # #result$getValue(alpha)
-    # #result$getValue(beta)
-    # 
-    # if(family=="gaussian"){
-    #   glm <- stats::glm(y~x,family=gaussian)
-    # } else if(family=="binomial"){
-    #   glm <- stats::glm(y~x,family=binomial)
-    # } else {
-    #   stop("Not implemented!")
-    # }
-    # #glm$coefficients
-    # 
-    # beta <- round(result$getValue(beta),digits=6)
-    
-    # Consider different coding (-1/1 vs 0/1)! See
-    # https://cvxr.rbind.io/cvxr_examples/cvxr_logistic-regression/
-    
-    # temporary solution
-    #glm <- .glm(y=y,X=hat,family=family)# trial
-    #meta$glmnet.fit$a0[] <- glm$alpha
-    #meta$glmnet.fit$beta[,] <- glm$beta
-    #message(paste(round(glm$beta,3),collapse=" "))
-    
-  }
-  
-  ## trial start 
-  ## Plot loss and coefs.
-  #plot(sapply(base,function(x) x$cvm[x$id.min]))
-  #plot(as.numeric(cor(y,hat)))
-  #plot(coef(meta[[1]],s=0))
-  ## trial start
-  
-  ## trial start ## added on 2020-02-18
-  #for(i in seq_along(alpha.meta)){
-  #  meta[[i]]$glmnet.fit$beta <- apply(meta[[i]]$glmnet.fit$beta,2,function(x) x/sum(x))
-  #}
-  ## Note: this should be inside cv.glmnet, not outside!
-  
-  if(FALSE){ # 2020-02-18
-    # message("trial - convex combination")
-    # if(length(alpha.meta)!=1){stop("Implement multiple alpha!")}
-    # # full fit
-    # meta <- list()
-    # meta$glmnet.fit <- glmnet::glmnet(y=y,x=hat,lower.limits=0,
-    #                                   family=family,alpha=alpha.meta,intercept=FALSE,...)
-    # meta$glmnet.fit$beta <- apply(meta$glmnet.fit$beta,2,function(x) x/sum(x))
-    # meta$glmnet.fit$beta[is.na(meta$glmnet.fit$beta)] <- 0
-    # meta$lambda <- meta$glmnet.fit$lambda
-    # link <- matrix(data=NA,nrow=n,ncol=length(meta$lambda))
-    # # meta cv
-    # for(k in seq_len(nfolds)){
-    #   y0 <- y[foldid!=k]
-    #   y1 <- y[foldid==k]
-    #   hat0 <- hat[foldid!=k,,drop=FALSE]
-    #   hat1 <- hat[foldid==k,,drop=FALSE]
-    #   object <- glmnet::glmnet(y=y0,x=hat0,family=family,alpha=alpha.meta,intercept=FALSE,...)
-    #   object$beta <- apply(object$beta,2,function(x) x/sum(x))
-    #   object$beta[is.na(object$beta)] <- 0
-    #   temp <- stats::predict(object=object,newx=hat1,type="link",
-    #                            s=meta$glmnet.fit$lambda)
-    #   link[foldid==k,seq_len(ncol(temp))] <- temp
-    # }
-    # # tune meta lambda
-    # fit <- joinet:::.mean.function(link,family=family)
-    # meta$cvm <- apply(fit,2,function(x) .loss(y=y,x=x,family=family,type.measure=type.measure,foldid=foldid,grouped=grouped))
-    # meta$id.min <- which.min(meta$cvm)
-    # meta$lambda.min <- meta$lambda[meta$id.min]
-    # class(meta) <- "cv.glmnet"
-  }
-  
-  if(FALSE){
-    # # meta-learner without intercept might work better
-    # meta <- list()
-    # for(i in seq_along(alpha.meta)){
-    #   message("temporary - no upper limits")
-    #   meta[[i]] <- glmnet::cv.glmnet(y=y,x=hat,
-    #                                  lower.limits=0,
-    #                                  upper.limits=1,
-    #                                  foldid=foldid,
-    #                                  family=family,
-    #                                  type.measure=type.measure,
-    #                                  alpha=alpha.meta[i],
-    #                                  intercept=FALSE,
-    #                                  grouped=grouped,...)
-    # }
-    # names(meta) <- paste0("alpha",alpha.meta)
-  }
-  
-  if(FALSE){ # 2020-02-19
-    # message("trial - simple convex combination")
-    # if(length(alpha.meta)!=1){stop("Implement multiple alpha!")}
-    # lambda <- seq(from=0.1,to=0,by=-0.01)
-    # meta <- list()
-    # meta$glmnet.fit <- glmnet::glmnet(y=y,x=hat,lower.limits=0,
-    #                                 family=family,alpha=alpha.meta,
-    #                                 lambda=lambda,intercept=FALSE,...)
-    # meta$glmnet.fit$beta <- apply(meta$glmnet.fit$beta,2,function(x) x/sum(x))
-    # meta$glmnet.fit$beta[is.na(meta$glmnet.fit$beta)] <- 0
-    # meta$lambda <- meta$glmnet.fit$lambda
-    # meta$id.min <- length(lambda)
-    # meta$lambda.min <- 0
-    # class(meta) <- "cv.glmnet"
-  }
-  
-  if(FALSE){ # 2020-02-19
-    # message("debugging - to be removed")
-    # # Here stacking returns same output as tuning.
+    ## debugging: stacking returns same output as tuning
     # cvm <- sapply(base,function(x) x$cvm[x$id.min])
     # id <- which.min(cvm)
     # meta$glmnet.fit$a0[] <- 0
@@ -476,7 +280,7 @@ starnet <- function(y,X,family="gaussian",nalpha=21,alpha=NULL,nfolds=10,foldid=
 #' character "link" or "response"
 #' 
 #' @param nzero
-#' number of non-zero coefficients\strong{:}
+#' maximum number of non-zero coefficients\strong{:}
 #' positive integer, or \code{NULL}
 #' 
 #' @param ...
@@ -521,14 +325,12 @@ predict.starnet <- function(object,newx,type="response",nzero=NULL,...){
     coef <- coef.starnet(object=x,nzero=nzero)
     frame$stack <- as.numeric(coef$alpha + newx %*% coef$beta)
   }
-  #frame$none <- as.numeric(stats::predict(object=x$meta,newx=link,s=Inf,type="link")) # original
   frame$none <- as.numeric(stats::predict(object=x$base$alpha1$glmnet.fit,
-                  newx=newx,s=Inf,type="link")) # trial 2020-02-20
+                  newx=newx,s=Inf,type="link"))
   
   if(type=="link"){
     return(frame)
   } else  if(type=="response"){
-    #frame <- sapply(frame,function(y) joinet:::.mean.function(y,family=x$info$family))
     frame <- lapply(frame,function(y) joinet:::.mean.function(y,family=x$info$family))
     return(as.data.frame(frame))
   } else {
@@ -545,15 +347,7 @@ predict.starnet <- function(object,newx,type="response",nzero=NULL,...){
 #' Extracts pooled coefficients.
 #' (The meta learners weights the coefficients from the base learners.)
 #' 
-#' @param object
-#' \link[starnet]{starnet} object
-#' 
-#' @param nzero
-#' number of non-zero coefficients\strong{:}
-#' positive integer, or \code{NULL}
-#' 
-#' @param ...
-#' further arguments (not applicable)
+#' @inheritParams predict.starnet
 #' 
 #' @examples
 #' set.seed(1)
@@ -671,11 +465,14 @@ print.starnet <- function(x,...){
 #' scalar/vector including positive integer(s) or \code{NA};
 #' or \code{NULL} (no posthoc feature selection)
 #' 
-#' @param grouped
-#' logical
-#' 
 #' @param nfolds.ext,nfolds.int,foldid.ext,foldid.int
-#' (number of) external/internal folds
+#' number of folds (\code{nfolds})\strong{:}
+#' positive integer;
+#' fold identifiers (\code{foldid})\strong{:} 
+#' vector of length \eqn{n} with entries between \eqn{1} and \code{nfolds},
+#' or \code{NULL},
+#' for hold-out (single split) instead of cross-validation (multiple splits)\strong{:}
+#' set to \eqn{0} for training and to \eqn{1} for testing samples
 #' 
 #' @param ...
 #' further arguments (not applicable)
@@ -687,31 +484,28 @@ print.starnet <- function(x,...){
 #' y <- rnorm(n=n,mean=rowSums(X[,1:20]))
 #' loss <- cv.starnet(y=y,X=X)
 #' 
-cv.starnet <- function(y,X,family="gaussian",nalpha=21,alpha=NULL,nfolds.ext=10,nfolds.int=10,foldid.ext=NULL,foldid.int=NULL,type.measure="deviance",alpha.meta=1,grouped=TRUE,nzero=NULL,intercept=NULL,upper.limit=NULL,unit.sum=NULL,...){
+cv.starnet <- function(y,X,family="gaussian",nalpha=21,alpha=NULL,nfolds.ext=10,nfolds.int=10,foldid.ext=NULL,foldid.int=NULL,type.measure="deviance",alpha.meta=1,nzero=NULL,intercept=NULL,upper.limit=NULL,unit.sum=NULL,...){
   
-  # family <- "gaussian"; nfolds.ext <- 5; nfolds.int <- 10; foldid.ext <- NULL; foldid.int <- NULL; type.measure <- "deviance"; alpha.meta <- 0; alpha = NULL; nalpha <- 21; grouped <- TRUE; nzero <- NULL; intercept <- upper.limit <- unit.sum <- NULL
+  # family <- "gaussian"; nfolds.ext <- nfolds.int <- 10; foldid.ext <- foldid.int <- NULL; type.measure <- "deviance"; alpha.meta <- 0; alpha = NULL; nalpha <- 21; nzero <- NULL; intercept <- upper.limit <- unit.sum <- NULL
   
   #--- fold identifiers ---
   if(is.null(foldid.ext)){
-    #if(nfolds>=length(y)){ # add this ? 2020-02-17
-    #  fold <- sample(x = rep(x = seq_len(nfolds), length.out = length(y)))
-    #} else {
-      fold <- .folds(y=y,nfolds=nfolds.ext) # was palasso:::.folds 2020-02-19
-    #}
+      fold <- .folds(y=y,nfolds=nfolds.ext)
   } else {
     fold <- foldid.ext
-    #nfolds <- length(unique(foldid)) # removed 2020-02-17
   }
-  #nfolds.ext <- length(unique(fold)) # added 2020-02-17
-  nfolds.ext <- max(fold) # added 2020-02-20
-  # Maybe use max(fold) or length(unique(fold,na.rm=TRUE)),
-  # such that we can use giant testing sets.
-  
+  nfolds.ext <- max(fold)
+  # start trial
+  if(is.null(foldid.int)){
+    foldid.int <- .folds(y=y,nfolds=nfolds.int)
+  }
+  nfolds.int <- max(foldid.int)
+  # end trial
+
   #--- alpha sequence ---
   if(is.null(alpha)){
     alpha <- seq(from=0,to=1,length.out=nalpha)
   } else {
-    alpha <- alpha
     nalpha <- length(alpha)
   }
   
@@ -724,18 +518,15 @@ cv.starnet <- function(y,X,family="gaussian",nalpha=21,alpha=NULL,nfolds.ext=10,
     pred <- matrix(data=NA,nrow=length(y),ncol=length(cols),
                    dimnames=list(NULL,cols))
     for(i in seq_len(nfolds.ext)){
-      #if(i<6){next} # remove this!
       # dense models
-      fit <- starnet(y=y[fold!=i],X=X[fold!=i,],alpha=alpha,nalpha=nalpha,nfolds=nfolds.int,foldid=foldid.int[fold!=i],family=family,type.measure=type.measure,alpha.meta=alpha.meta,grouped=grouped,intercept=intercept,upper.limit=upper.limit,unit.sum=unit.sum,...) # INSERT ,...
-      temp <- predict.starnet(fit,newx=X[fold==i,,drop=FALSE]) # added drop=FALSE 2020-02-17
-      #if(sum(fold==i)==1){temp <- as.data.frame(t(temp))} # trial 2020-02-17
+      fit <- starnet(y=y[fold!=i],X=X[fold!=i,],alpha=alpha,nalpha=nalpha,nfolds=nfolds.int,foldid=foldid.int[fold!=i],family=family,type.measure=type.measure,alpha.meta=alpha.meta,intercept=intercept,upper.limit=upper.limit,unit.sum=unit.sum,...) # INSERT ,...
+      temp <- predict.starnet(fit,newx=X[fold==i,,drop=FALSE])
       for(j in c(meta,base)){
         pred[fold==i,j] <- unlist(temp[[j]])
       }
       # sparse models
       if(!is.null(nzero)){
         for(j in seq_along(nzero)){
-          #if(i==6){browser()} # remove this!
           pred[fold==i,paste0("stack",nzero[j])] <- predict.starnet(fit,newx=X[fold==i,,drop=FALSE],nzero=nzero[j])[,"stack"] # added drop=FALSE 2020-04-02
           temp <- .cv.glmnet(y=y[fold!=i],x=X[fold!=i,],alpha=1,family=family,type.measure=type.measure,foldid=fit$info$foldid,nzero=nzero[j],...)
           pred[fold==i,paste0("lasso",nzero[j])] <- stats::predict(temp,
@@ -748,9 +539,7 @@ cv.starnet <- function(y,X,family="gaussian",nalpha=21,alpha=NULL,nfolds.ext=10,
     }
   
   if(length(type.measure)!=1){stop("Implement multiple type measures!")}
-  
-  loss <- apply(pred[fold!=0,],2,function(x) .loss(y=y[fold!=0],x=x,family=family,type.measure=type.measure,foldid=fold,grouped=grouped))
- # inserted "fold!=0" (twice)
+  loss <- apply(pred[fold!=0,],2,function(x) .loss(y=y[fold!=0],x=x,family=family,type.measure=type.measure,foldid=fold))
   
   ylim <- range(c(loss[base],loss[c("tune","stack")]))
   tryCatch(graphics::plot(y=loss[base],x=as.numeric(substring(text=base,first=6)),xlab="alpha",ylab="loss",ylim=ylim),error=function(x) NULL)
@@ -850,6 +639,8 @@ cv.starnet <- function(y,X,family="gaussian",nalpha=21,alpha=NULL,nfolds.ext=10,
 #' 
 .loss <- function(y,x,family,type.measure,foldid=NULL,grouped=TRUE){
   
+  if(family=="cox" & grouped){stop("Implement \"grouped Cox\"!",call.=FALSE)}
+  
   if(is.null(foldid)&(family=="cox"|type.measure=="auc")){
     stop("Missing foldid.",call.=FALSE)
   }
@@ -885,6 +676,7 @@ cv.starnet <- function(y,X,family="gaussian",nalpha=21,alpha=NULL,nfolds.ext=10,
       cvraw <- numeric()
       for(i in seq_along(unique(foldid))){
         if(grouped){
+          warning("Invalid \"grouped Cox\"!",call.=FALSE)
           full <- glmnet::coxnet.deviance(pred=x,y=y)
           mink <- glmnet::coxnet.deviance(pred=x[foldid!=i],y=y[foldid!=i])
           cvraw[i] <- full-mink
@@ -988,9 +780,6 @@ glmnet.auc <- get("auc",envir=asNamespace("glmnet"))
 .cv.glmnet <- function(...,nzero){
   
   model <- glmnet::cv.glmnet(...)
-  #model <- glmnet::cv.glmnet(y=y,x=X,family="binomial")
-  #model <- glmnet::cv.glmnet(y=y,x=X,family="binomial",lambda=lambda)
-  
   #cat(unique(model$nzero),"\n")
   
   for(i in seq_len(3)){ # original: 2
@@ -1007,7 +796,7 @@ glmnet.auc <- get("auc",envir=asNamespace("glmnet"))
         to <- 0.01*min(model$lambda)
       } else {
         to <- min(model$lambda[model$nzero<=(nzero+1)],na.rm=TRUE)
-        to <- max(model$lambda[model$lambda<model$lambda.min],to) # trial
+        to <- max(model$lambda[model$lambda<model$lambda.min],to)
       }
     }
     
@@ -1042,16 +831,7 @@ glmnet.auc <- get("auc",envir=asNamespace("glmnet"))
 
 .glm <- function(y,X,family,intercept=TRUE,lower.limit=FALSE,upper.limit=FALSE,unit.sum=FALSE){
   
-  # maybe use intercept=TRUE|FALSE|
-  
-  #if(intercept){
-  #  message("trial - force intercept")
-  #  if(family=="gaussian"){alpha <- mean(y)}
-  #  if(family=="binomial"){alpha <- log(mean(y)/(1-mean(y)));message(coef(glm(y~1,family="binomial"))[1])}
-  #} else {
-    alpha <- CVXR::Variable(1)
-  #}
-  
+  alpha <- CVXR::Variable(1)
   beta <- CVXR::Variable(ncol(X))
   
   if(family=="gaussian"){
@@ -1065,25 +845,8 @@ glmnet.auc <- get("auc",envir=asNamespace("glmnet"))
     stop("Family not implemented.")
   }
   
-  #if(convex.combination){
-  #  if(intercept){
-  #    constraints <- list(beta>=0,sum(beta)<=1) # note: "<=" not "=="
-  #    #message("temporary: no convex combination!")
-  #    #constraints <- list(beta>=0,beta<=1)
-  #  } else {
-  #    constraints <- list(alpha==0,beta>=0,sum(beta)<=1)
-  #    #message("temporary: no convex combination!")
-  #    #constraints <- list(alpha==0,beta>=0,beta<=1)
-  #  }
-  #} else {
-  #  constraints <- list()
-  #}
-  
   constraints <- list(alpha==0,beta>=0,beta<=1,sum(beta)==1)[c(!intercept,lower.limit,upper.limit,unit.sum)]
-  
-  #message("trial - force sum to one") # alternative: sum(beta)<=1
-  #message("trial - less or equal to one") # alternative: sum(beta)==1
-  
+  # either sum(beta)==1 or sum(beta)<=1
   problem <- CVXR::Problem(objective,constraints=constraints)
   result <- CVXR::solve(problem)
 
@@ -1102,7 +865,7 @@ glmnet.auc <- get("auc",envir=asNamespace("glmnet"))
   if (survival::is.Surv(y)) {
     y <- y[,"status"]
   }
-  if (all(y %in% c(0, 1))) {
+  if (all(y %in% c(0,1))) {
     foldid <- rep(x=NA,times=length(y))
     foldid[y==0] <- sample(x=rep(x=seq_len(nfolds),length.out=sum(y==0)))
     #foldid[y==1] <- sample(x=rep(x=seq(from=nfolds,to=1),length.out=sum(y==1))) # balanced size
@@ -1117,8 +880,7 @@ glmnet.auc <- get("auc",envir=asNamespace("glmnet"))
     foldid[y==1] <- sample(x=rep(x=seq,length.out=sum(y==1)))
     
   } else {
-    
-    foldid <- sample(x = rep(x = seq_len(nfolds), length.out = length(y)))
+    foldid <- sample(x=rep(x=seq_len(nfolds),length.out=length(y)))
   }
   return(foldid)
 }

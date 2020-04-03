@@ -7,12 +7,12 @@
 cv.starnet(y, X, family = "gaussian", nalpha = 21, alpha = NULL,
   nfolds.ext = 10, nfolds.int = 10, foldid.ext = NULL,
   foldid.int = NULL, type.measure = "deviance", alpha.meta = 1,
-  grouped = TRUE, nzero = NULL, intercept = NULL,
-  upper.limit = NULL, unit.sum = NULL, ...)
+  nzero = NULL, intercept = NULL, upper.limit = NULL,
+  unit.sum = NULL, ...)
 }
 \arguments{
-\item{y}{numeric response\strong{:}
-vector of length \eqn{n}}
+\item{y}{response\strong{:}
+numeric vector of length \eqn{n}}
 
 \item{X}{covariates\strong{:}
 numeric matrix with \eqn{n} rows (samples)
@@ -23,30 +23,39 @@ and \eqn{p} columns (variables)}
 \item{nalpha}{number of \code{alpha} values}
 
 \item{alpha}{elastic net mixing parameters\strong{:}
-vector of values between \eqn{0} (ridge) and \eqn{1} (lasso);
+vector of length \code{nalpha} with entries
+between \eqn{0} (ridge) and \eqn{1} (lasso);
 or \code{NULL} (equidistance)}
 
-\item{nfolds.ext, nfolds.int, foldid.ext, foldid.int}{(number of) external/internal folds}
+\item{nfolds.ext, nfolds.int, foldid.ext, foldid.int}{number of folds (\code{nfolds})\strong{:}
+positive integer;
+fold identifiers (\code{foldid})\strong{:} 
+vector of length \eqn{n} with entries between \eqn{1} and \code{nfolds},
+or \code{NULL},
+for hold-out (single split) instead of cross-validation (multiple splits)\strong{:}
+set to \eqn{0} for training and to \eqn{1} for testing samples}
 
 \item{type.measure}{loss function\strong{:}
 character "deviance", "class", "mse" or "mae"
 (see \code{\link[glmnet]{cv.glmnet}})}
 
-\item{alpha.meta}{elastic net mixing parameters for stacking\strong{:}
-vector of values between \eqn{0} (ridge) and \eqn{1} (lasso),
-\emph{see details}}
-
-\item{grouped}{logical}
+\item{alpha.meta}{meta-learner\strong{:}
+value between \eqn{0} (ridge) and \eqn{1} (lasso)
+for elastic net regularisation; 
+\code{NA} for convex combination}
 
 \item{nzero}{number of non-zero coefficients\strong{:}
 scalar/vector including positive integer(s) or \code{NA};
 or \code{NULL} (no posthoc feature selection)}
 
-\item{intercept}{settings for meta-learner\strong{:} logical}
+\item{intercept}{settings for meta-learner\strong{:} logical,
+or \code{NULL} (default depends on \code{alpha.meta})}
 
-\item{upper.limit}{settings for meta-learner\strong{:} logical}
+\item{upper.limit}{settings for meta-learner\strong{:} logical,
+or \code{NULL} (default depends on \code{alpha.meta})}
 
-\item{unit.sum}{settings for meta-learner\strong{:} logical}
+\item{unit.sum}{settings for meta-learner\strong{:} logical,
+or \code{NULL} (default depends on \code{alpha.meta})}
 
 \item{...}{further arguments (not applicable)}
 }

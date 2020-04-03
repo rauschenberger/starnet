@@ -6,12 +6,12 @@
 \usage{
 starnet(y, X, family = "gaussian", nalpha = 21, alpha = NULL,
   nfolds = 10, foldid = NULL, type.measure = "deviance",
-  alpha.meta = 1, grouped = TRUE, penalty.factor = NULL,
-  intercept = NULL, upper.limit = NULL, unit.sum = NULL, ...)
+  alpha.meta = 1, penalty.factor = NULL, intercept = NULL,
+  upper.limit = NULL, unit.sum = NULL, ...)
 }
 \arguments{
-\item{y}{numeric response\strong{:}
-vector of length \eqn{n}}
+\item{y}{response\strong{:}
+numeric vector of length \eqn{n}}
 
 \item{X}{covariates\strong{:}
 numeric matrix with \eqn{n} rows (samples)
@@ -22,28 +22,32 @@ and \eqn{p} columns (variables)}
 \item{nalpha}{number of \code{alpha} values}
 
 \item{alpha}{elastic net mixing parameters\strong{:}
-vector of values between \eqn{0} (ridge) and \eqn{1} (lasso);
+vector of length \code{nalpha} with entries
+between \eqn{0} (ridge) and \eqn{1} (lasso);
 or \code{NULL} (equidistance)}
 
 \item{nfolds}{number of folds}
 
 \item{foldid}{fold identifiers\strong{:}
-vector with entries between \eqn{1} and \code{nfolds};
+vector of length \eqn{n} with entries between \eqn{1} and \code{nfolds};
 or \code{NULL} (balance)}
 
 \item{type.measure}{loss function\strong{:}
 character "deviance", "class", "mse" or "mae"
 (see \code{\link[glmnet]{cv.glmnet}})}
 
-\item{alpha.meta}{elastic net mixing parameters for stacking\strong{:}
-vector of values between \eqn{0} (ridge) and \eqn{1} (lasso),
-\emph{see details}}
+\item{alpha.meta}{meta-learner\strong{:}
+value between \eqn{0} (ridge) and \eqn{1} (lasso)
+for elastic net regularisation; 
+\code{NA} for convex combination}
 
-\item{grouped}{logical}
+\item{penalty.factor}{differential shrinkage\strong{:}
+vector of length \eqn{n} with entries
+between \eqn{0} (include) and \eqn{Inf} (exclude), 
+or \code{NULL} (all \eqn{1})}
 
-\item{penalty.factor}{penalty factors for base-learners}
-
-\item{intercept, upper.limit, unit.sum}{settings for meta-learner\strong{:} logical}
+\item{intercept, upper.limit, unit.sum}{settings for meta-learner\strong{:} logical,
+or \code{NULL} (default depends on \code{alpha.meta})}
 
 \item{...}{further arguments passed to \code{\link[glmnet]{glmnet}}}
 }
@@ -51,9 +55,10 @@ vector of values between \eqn{0} (ridge) and \eqn{1} (lasso),
 Implements stacked elastic net regression.
 }
 \details{
-Combine predictions from \emph{some} \code{alpha} with \code{alpha.meta}\eqn{=1},
-or from \emph{all} \code{alpha} with \code{alpha.meta}\eqn{=0}.
-We recommend to use \code{alpha.meta}\eqn{=0} (default) for stability.
+For posthoc feature selection, set the
+argument \code{nzero} in functions
+\code{\link{coef}} and \code{\link{predict}}
+to the maximum number of non-zero coefficients.
 }
 \examples{
 set.seed(1)
@@ -64,7 +69,7 @@ object <- starnet::starnet(y=y,X=X,family="gaussian")
 
 }
 \references{
-A Rauschenberger, E Glaab, and MA van de Wiel (2020)
-"Improved elastic net regression through stacked generalisation"
+A Rauschenberger, E Glaab, and MA van de Wiel (2020).
+"Predictive and interpretable models via the stacked elastic net".
 \emph{Manuscript in preparation.}
 }
