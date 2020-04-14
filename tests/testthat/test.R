@@ -7,7 +7,7 @@ for(family in c("gaussian","binomial","poisson")){
                              event=rbinom(n=n,size=1,prob=0.2))
     list$X <- matrix(rnorm(n*p),nrow=n,ncol=p)
   } else {
-      list <- .simulate(n=n,p=p,mode="sparse",family=family)
+      list <- .simulate.block(n=n,p=p,mode="sparse",family=family)
   }
   
   foldid <- palasso:::.folds(y=list$y,nfolds=5)
@@ -80,7 +80,7 @@ for(family in c("gaussian","binomial","poisson")){
 for(family in c("gaussian","binomial")){
   
   n <- 100; p <- 5
-  list <- .simulate(n=n,p=p,mode="sparse")
+  list <- .simulate.block(n=n,p=p,mode="sparse")
   if(family=="binomial"){
     list$y <- stats::rbinom(n=n,size=1,prob=1/(1+exp(-list$y)))
   } else if(family=="poisson"){

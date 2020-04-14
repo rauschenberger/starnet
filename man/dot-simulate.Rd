@@ -2,9 +2,10 @@
 % Please edit documentation in R/functions.R
 \name{.simulate}
 \alias{.simulate}
+\alias{.simulate.block}
 \title{Simulation}
 \usage{
-.simulate(n, p, mode, family = "gaussian")
+.simulate.block(n, p, mode, family = "gaussian")
 }
 \arguments{
 \item{n}{sample size\strong{:}
@@ -13,12 +14,12 @@ positive integer}
 \item{p}{dimensionality\strong{:}
 positive integer}
 
-\item{mode}{character \code{"sparse"}, \code{"dense"} or \code{"blocks"}}
+\item{mode}{character \code{"sparse"}, \code{"dense"} or \code{"mixed"}}
 
-\item{family}{\code{"gaussian"}, \code{"binomial"} or \code{"poisson"}}
+\item{family}{character \code{"gaussian"}, \code{"binomial"} or \code{"poisson"}}
 }
 \description{
-Prints object of class \link[starnet]{starnet}.
+Functions for simulating data
 }
 \examples{
 NA

@@ -568,11 +568,13 @@ cv.starnet <- function(y,X,family="gaussian",nalpha=21,alpha=NULL,nfolds.ext=10,
 }
 
 
+#' @name
+#' .simulate
 #' @title
 #' Simulation
 #'
 #' @description
-#' Prints object of class \link[starnet]{starnet}.
+#' Functions for simulating data
 #' 
 #' @param n
 #' sample size\strong{:}
@@ -583,20 +585,21 @@ cv.starnet <- function(y,X,family="gaussian",nalpha=21,alpha=NULL,nfolds.ext=10,
 #' positive integer
 #' 
 #' @param mode
-#' character \code{"sparse"}, \code{"dense"} or \code{"blocks"}
+#' character \code{"sparse"}, \code{"dense"} or \code{"mixed"}
 #' 
 #' @param family
-#' \code{"gaussian"}, \code{"binomial"} or \code{"poisson"}
+#' character \code{"gaussian"}, \code{"binomial"} or \code{"poisson"}
 #' 
 #' @examples
 #' NA
 #' 
-.simulate <- function(n,p,mode,family="gaussian"){
-  q <- 3
-  Z <- matrix(data=stats::rnorm(n*q),nrow=n,ncol=q)
+.simulate.block <- function(n,p,mode,family="gaussian"){
+  Z <- matrix(data=stats::rnorm(n*3),nrow=n,ncol=3)
   y <- rowSums(Z)
-  if(family=="binomial"){y <- round(1/(1+exp(-y)))}
-  if(family=="poisson"){y <- round(exp(y))}
+  #if(family=="binomial"){y <- round(1/(1+exp(-y)))}
+  #if(family=="poisson"){y <- round(exp(y))}
+  y <- switch(family,gaussian=y,binomial=round(1/(1+exp(-y))),
+              poisson=round(exp(y)),stop("Invalid."))
   X <- matrix(data=stats::rnorm(n*p),nrow=n,ncol=p)
   if(mode=="sparse"){
     X[,1] <- sqrt(0.1)*X[,1] + sqrt(0.9)*Z[,1]
@@ -604,13 +607,52 @@ cv.starnet <- function(y,X,family="gaussian",nalpha=21,alpha=NULL,nfolds.ext=10,
   } else if(mode=="dense"){
     X[,1:250] <- sqrt(0.9)*X[,1:250] + sqrt(0.1)*Z[,1]
     X[,(p-250+1):p] <- sqrt(0.9)*X[,(p-250+1):p] + sqrt(0.1)*Z[,2]
-  } else if(mode=="blocks"){
-    # was 25 instead of 20
+  } else if(mode=="mixed"){
     X[,1:25] <- sqrt(0.5)*X[,1:25] + sqrt(0.5)*Z[,1]
     X[,(p-25+1):p] <- sqrt(0.5)*X[,(p-25+1):p] + sqrt(0.5)*Z[,2]
+  } else {
+    stop("Invalid.",.call=FALSE)
   }
   return(list(y=y,X=X))
 }
+
+#' @describeIn .simulate.block
+#' @param rho
+#' correlation\strong{:}
+#' numeric between \eqn{0} and \eqn{1}
+#' @param pi
+#' effects\strong{:}
+#' numeric between \eqn{0} (sparse) and \eqn{1} (dense)
+#' 
+.simulate.grid <- function(n,p,rho,pi,family="gaussian"){
+  mean <- rep(x=0,times=p)
+  sigma <- matrix(data=NA,nrow=p,ncol=p)
+  sigma <- rho^abs(row(sigma)-col(sigma))
+  diag(sigma) <- 1
+  X <- mvtnorm::rmvnorm(n=n,mean=mean,sigma=sigma)
+  nzero <- round(pi*p)
+  beta <- abs(stats::rnorm(p))*sample(x=rep(x=c(0,1),times=c(p-nzero,nzero)))
+  eta <- as.numeric(X %*% beta)
+  y <- eta + stats::rnorm(n=n,sd=0.5*stats::sd(eta))
+  y <- switch(family,gaussian=y,binomial=round(1/(1+exp(-y))),stop("Invalid."))
+  return(list(y=y,X=X,beta=beta))
+}
+
+#' @describeIn .simulate.block
+#' 
+.simulate.mode <- function(n,p,mode,family="gaussian"){
+  mean <- rep(x=0,times=p)
+  sigma <- matrix(data=0.1,nrow=p,ncol=p)
+  diag(sigma) <- 1
+  X <- mvtnorm::rmvnorm(n=n,mean=mean,sigma=sigma)
+  q <- switch(mode,sparse=5,dense=50,mixed=15,stop("Invalid.",.call=FALSE))
+  beta <- sample(rep(c(0,1),times=c(p-q,q)))
+  eta <- as.numeric(X %*% beta)
+  y <- eta + stats::rnorm(n=n,sd=0.5*stats::sd(eta))
+  y <- switch(family,gaussian=y,binomial=round(1/(1+exp(-y))),stop("Invalid."))
+  return(list(y=y,X=X,beta=beta))
+}
+
 
 #' @title 
 #' Loss
