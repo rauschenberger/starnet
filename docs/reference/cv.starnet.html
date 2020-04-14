@@ -190,17 +190,26 @@ or <code>NULL</code> (no posthoc feature selection)</p></td>
     <tr>
       <th>intercept</th>
       <td><p>settings for meta-learner<strong>:</strong> logical,
-or <code>NULL</code> (default depends on <code>alpha.meta</code>)</p></td>
+or <code>NULL</code>
+(<code>intercept=!is.na(alpha.meta)</code>,
+<code>upper.limit=TRUE</code>,
+<code>unit.sum=is.na(alpha.meta)</code>)</p></td>
     </tr>
     <tr>
       <th>upper.limit</th>
       <td><p>settings for meta-learner<strong>:</strong> logical,
-or <code>NULL</code> (default depends on <code>alpha.meta</code>)</p></td>
+or <code>NULL</code>
+(<code>intercept=!is.na(alpha.meta)</code>,
+<code>upper.limit=TRUE</code>,
+<code>unit.sum=is.na(alpha.meta)</code>)</p></td>
     </tr>
     <tr>
       <th>unit.sum</th>
       <td><p>settings for meta-learner<strong>:</strong> logical,
-or <code>NULL</code> (default depends on <code>alpha.meta</code>)</p></td>
+or <code>NULL</code>
+(<code>intercept=!is.na(alpha.meta)</code>,
+<code>upper.limit=TRUE</code>,
+<code>unit.sum=is.na(alpha.meta)</code>)</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -214,7 +223,7 @@ or <code>NULL</code> (default depends on <code>alpha.meta</code>)</p></td>
 <span class='no'>n</span> <span class='kw'>&lt;-</span> <span class='fl'>50</span>; <span class='no'>p</span> <span class='kw'>&lt;-</span> <span class='fl'>20</span>
 <span class='no'>X</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='no'>n</span>*<span class='no'>p</span>),<span class='kw'>nrow</span><span class='kw'>=</span><span class='no'>n</span>,<span class='kw'>ncol</span><span class='kw'>=</span><span class='no'>p</span>)
 <span class='no'>y</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='kw'>n</span><span class='kw'>=</span><span class='no'>n</span>,<span class='kw'>mean</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/colSums.html'>rowSums</a></span>(<span class='no'>X</span>[,<span class='fl'>1</span>:<span class='fl'>20</span>]))
-<span class='no'>loss</span> <span class='kw'>&lt;-</span> <span class='fu'>cv.starnet</span>(<span class='kw'>y</span><span class='kw'>=</span><span class='no'>y</span>,<span class='kw'>X</span><span class='kw'>=</span><span class='no'>X</span>)</div><div class='output co'>#&gt; <span class='message'>alpha1 2.63 </span></div><div class='output co'>#&gt; <span class='message'>0.003 _ 1.018 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</span></div><div class='output co'>#&gt; <span class='message'>alpha1 2.71 </span></div><div class='output co'>#&gt; <span class='message'>-0.022 _ 0.122 0.852 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</span></div><div class='output co'>#&gt; <span class='message'>alpha1 2.45 </span></div><div class='output co'>#&gt; <span class='message'>-0.031 _ 0.98 0.041 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</span></div><div class='output co'>#&gt; <span class='message'>alpha1 2.86 </span></div><div class='output co'>#&gt; <span class='message'>-0.084 _ 0.586 0.395 0 0 0 0 0 0 0 0 0 0.007 0 0 0 0 0 0 0 0 0</span></div><div class='output co'>#&gt; <span class='message'>alpha1 2.95 </span></div><div class='output co'>#&gt; <span class='message'>-0.131 _ 1.037 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</span></div><div class='output co'>#&gt; <span class='message'>alpha1 2.8 </span></div><div class='output co'>#&gt; <span class='message'>-0.111 _ 1.016 0.005 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</span></div><div class='output co'>#&gt; <span class='message'>alpha1 2.75 </span></div><div class='output co'>#&gt; <span class='message'>-0.05 _ 0.488 0.479 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</span></div><div class='output co'>#&gt; <span class='message'>alpha1 2.15 </span></div><div class='output co'>#&gt; <span class='message'>-0.031 _ 0 0.986 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</span></div><div class='output co'>#&gt; <span class='message'>alpha1 2.48 </span></div><div class='output co'>#&gt; <span class='message'>-0.08 _ 0.332 0.651 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</span></div><div class='output co'>#&gt; <span class='message'>alpha1 2.5 </span></div><div class='output co'>#&gt; <span class='message'>-0.039 _ 0.704 0.309 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</span></div><div class='img'><img src='cv.starnet-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='no'>loss</span> <span class='kw'>&lt;-</span> <span class='fu'>cv.starnet</span>(<span class='kw'>y</span><span class='kw'>=</span><span class='no'>y</span>,<span class='kw'>X</span><span class='kw'>=</span><span class='no'>X</span>)</div><div class='output co'>#&gt; <span class='message'>alpha1 2.63 </span></div><div class='output co'>#&gt; <span class='message'>0.003 _ 1 0.017 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</span></div><div class='output co'>#&gt; <span class='message'>alpha1 2.71 </span></div><div class='output co'>#&gt; <span class='message'>-0.022 _ 0.122 0.852 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</span></div><div class='output co'>#&gt; <span class='message'>alpha1 2.45 </span></div><div class='output co'>#&gt; <span class='message'>-0.03 _ 0.98 0.043 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</span></div><div class='output co'>#&gt; <span class='message'>alpha1 2.86 </span></div><div class='output co'>#&gt; <span class='message'>-0.082 _ 0.587 0.398 0 0 0 0 0 0 0 0 0 0.007 0 0 0 0 0 0 0 0 0</span></div><div class='output co'>#&gt; <span class='message'>alpha1 2.95 </span></div><div class='output co'>#&gt; <span class='message'>-0.133 _ 1 0.032 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</span></div><div class='output co'>#&gt; <span class='message'>alpha1 2.8 </span></div><div class='output co'>#&gt; <span class='message'>-0.111 _ 1 0.023 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</span></div><div class='output co'>#&gt; <span class='message'>alpha1 2.75 </span></div><div class='output co'>#&gt; <span class='message'>-0.05 _ 0.488 0.479 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</span></div><div class='output co'>#&gt; <span class='message'>alpha1 2.15 </span></div><div class='output co'>#&gt; <span class='message'>-0.031 _ 0 0.986 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</span></div><div class='output co'>#&gt; <span class='message'>alpha1 2.48 </span></div><div class='output co'>#&gt; <span class='message'>-0.08 _ 0.332 0.651 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</span></div><div class='output co'>#&gt; <span class='message'>alpha1 2.5 </span></div><div class='output co'>#&gt; <span class='message'>-0.038 _ 0.704 0.31 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</span></div><div class='img'><img src='cv.starnet-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

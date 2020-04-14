@@ -50,7 +50,10 @@
 #' 
 #' @param intercept,upper.limit,unit.sum
 #' settings for meta-learner\strong{:} logical,
-#' or \code{NULL} (default depends on \code{alpha.meta})
+#' or \code{NULL}
+#' (\code{intercept=!is.na(alpha.meta)},
+#' \code{upper.limit=TRUE},
+#' \code{unit.sum=is.na(alpha.meta)})
 #' 
 #' @param penalty.factor
 #' differential shrinkage\strong{:}
@@ -84,19 +87,23 @@ starnet <- function(y,X,family="gaussian",nalpha=21,alpha=NULL,nfolds=10,foldid=
   # family <- "gaussian"; nalpha <- 21; alpha <- NULL; nfolds <- 10; foldid <- NULL; type.measure <- "deviance"; alpha.meta <- 0; penalty.factor <- NULL; intercept <- TRUE; upper.limit=TRUE; unit.sum=FALSE
   
   #--- default ---
-  if(all(is.null(intercept),is.null(upper.limit),is.null(unit.sum))){
-    if(is.na(alpha.meta)){
-      intercept <- FALSE
-      upper.limit <- unit.sum <- TRUE
-    } else if(alpha.meta==1){
-      intercept <- TRUE
-      upper.limit <- unit.sum <- FALSE
-    } else if(alpha.meta==0){
-      intercept <- upper.limit <- TRUE
-      unit.sum <- FALSE
-    }
-  }
+  #if(all(is.null(intercept),is.null(upper.limit),is.null(unit.sum))){
+  #  if(is.na(alpha.meta)){
+  #    intercept <- FALSE
+  #    upper.limit <- unit.sum <- TRUE
+  #  } else if(alpha.meta==1){
+  #    intercept <- TRUE
+  #    upper.limit <- unit.sum <- FALSE
+  #  } else if(alpha.meta==0){
+  #    intercept <- upper.limit <- TRUE
+  #    unit.sum <- FALSE
+  #  }
+  #}
   
+  if(is.null(intercept)){intercept <- !is.na(alpha.meta)}
+  if(is.null(upper.limit)){upper.limit <- TRUE}  
+  if(is.null(unit.sum)){unit.sum <- is.na(alpha.meta)}
+    
   #--- checks ---
   cornet:::.check(x=y,type="vector")
   cornet:::.check(x=X,type="matrix")
@@ -596,10 +603,11 @@ cv.starnet <- function(y,X,family="gaussian",nalpha=21,alpha=NULL,nfolds.ext=10,
     X[,p] <- sqrt(0.1)*X[,p] + sqrt(0.9)*Z[,2]
   } else if(mode=="dense"){
     X[,1:250] <- sqrt(0.9)*X[,1:250] + sqrt(0.1)*Z[,1]
-    X[,(p-250):p] <- sqrt(0.9)*X[,(p-250):p] + sqrt(0.1)*Z[,2]
+    X[,(p-250+1):p] <- sqrt(0.9)*X[,(p-250+1):p] + sqrt(0.1)*Z[,2]
   } else if(mode=="blocks"){
+    # was 25 instead of 20
     X[,1:25] <- sqrt(0.5)*X[,1:25] + sqrt(0.5)*Z[,1]
-    X[,(p-25):p] <- sqrt(0.5)*X[,(p-25):p] + sqrt(0.5)*Z[,2]
+    X[,(p-25+1):p] <- sqrt(0.5)*X[,(p-25+1):p] + sqrt(0.5)*Z[,2]
   }
   return(list(y=y,X=X))
 }

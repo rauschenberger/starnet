@@ -190,7 +190,10 @@ or <code>NULL</code> (all \(1\))</p></td>
     <tr>
       <th>intercept, upper.limit, unit.sum</th>
       <td><p>settings for meta-learner<strong>:</strong> logical,
-or <code>NULL</code> (default depends on <code>alpha.meta</code>)</p></td>
+or <code>NULL</code>
+(<code>intercept=!is.na(alpha.meta)</code>,
+<code>upper.limit=TRUE</code>,
+<code>unit.sum=is.na(alpha.meta)</code>)</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -200,10 +203,9 @@ or <code>NULL</code> (default depends on <code>alpha.meta</code>)</p></td>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>For posthoc feature selection, set the
+    <p>Posthoc feature selection<strong>:</strong> consider
 argument <code>nzero</code> in functions
-<code><a href='https://rdrr.io/r/stats/coef.html'>coef</a></code> and <code><a href='https://rdrr.io/r/stats/predict.html'>predict</a></code>
-to the maximum number of non-zero coefficients.</p>
+<code><a href='https://rdrr.io/r/stats/coef.html'>coef</a></code> and <code><a href='https://rdrr.io/r/stats/predict.html'>predict</a></code>.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>A Rauschenberger, E Glaab, and MA van de Wiel (2020).

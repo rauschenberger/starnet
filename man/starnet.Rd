@@ -47,7 +47,10 @@ between \eqn{0} (include) and \eqn{Inf} (exclude),
 or \code{NULL} (all \eqn{1})}
 
 \item{intercept, upper.limit, unit.sum}{settings for meta-learner\strong{:} logical,
-or \code{NULL} (default depends on \code{alpha.meta})}
+or \code{NULL}
+(\code{intercept=!is.na(alpha.meta)},
+\code{upper.limit=TRUE},
+\code{unit.sum=is.na(alpha.meta)})}
 
 \item{...}{further arguments passed to \code{\link[glmnet]{glmnet}}}
 }
@@ -55,10 +58,9 @@ or \code{NULL} (default depends on \code{alpha.meta})}
 Implements stacked elastic net regression.
 }
 \details{
-For posthoc feature selection, set the
+Posthoc feature selection\strong{:} consider
 argument \code{nzero} in functions
-\code{\link{coef}} and \code{\link{predict}}
-to the maximum number of non-zero coefficients.
+\code{\link{coef}} and \code{\link{predict}}.
 }
 \examples{
 set.seed(1)

@@ -49,13 +49,22 @@ scalar/vector including positive integer(s) or \code{NA};
 or \code{NULL} (no posthoc feature selection)}
 
 \item{intercept}{settings for meta-learner\strong{:} logical,
-or \code{NULL} (default depends on \code{alpha.meta})}
+or \code{NULL}
+(\code{intercept=!is.na(alpha.meta)},
+\code{upper.limit=TRUE},
+\code{unit.sum=is.na(alpha.meta)})}
 
 \item{upper.limit}{settings for meta-learner\strong{:} logical,
-or \code{NULL} (default depends on \code{alpha.meta})}
+or \code{NULL}
+(\code{intercept=!is.na(alpha.meta)},
+\code{upper.limit=TRUE},
+\code{unit.sum=is.na(alpha.meta)})}
 
 \item{unit.sum}{settings for meta-learner\strong{:} logical,
-or \code{NULL} (default depends on \code{alpha.meta})}
+or \code{NULL}
+(\code{intercept=!is.na(alpha.meta)},
+\code{upper.limit=TRUE},
+\code{unit.sum=is.na(alpha.meta)})}
 
 \item{...}{further arguments (not applicable)}
 }
