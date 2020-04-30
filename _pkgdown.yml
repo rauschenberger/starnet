@@ -20,6 +20,8 @@ navbar:
       href: articles/starnet.html
     - text: "article"
       href: articles/article.html
+    - text: "script"
+      href: articles/script.html
     - text: "news"
       href: news/index.html
   right:

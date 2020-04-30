@@ -33,7 +33,7 @@ fold identifiers (\code{foldid})\strong{:}
 vector of length \eqn{n} with entries between \eqn{1} and \code{nfolds},
 or \code{NULL},
 for hold-out (single split) instead of cross-validation (multiple splits)\strong{:}
-set to \eqn{0} for training and to \eqn{1} for testing samples}
+set \code{foldid.ext} to \eqn{0} for training and to \eqn{1} for testing samples}
 
 \item{type.measure}{loss function\strong{:}
 character "deviance", "class", "mse" or "mae"

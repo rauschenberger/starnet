@@ -108,7 +108,7 @@ for(family in c("gaussian","binomial")){
 #--- testing the loss function ---
 
 set.seed(1)
-for(family in c("gaussian","binomial","poisson","cox","mgaussian","multinomial")){
+for(family in c("gaussian","binomial","poisson","mgaussian","multinomial","cox")){
   for(type.measure in c("deviance","mse","mae","class","auc")){
     
     if(type.measure=="class" & !family %in% c("binomial","multinomial")){next}
@@ -208,13 +208,19 @@ if(FALSE){
   all(abs(old-new)<1e-06)
   
   ### Cox: averaging
-  cvraw <- old # choose one "old" or "new" from above
+   # choose one from above
   # old
+  cvraw <- old
   status = y[, "status"]
   weights = as.vector(tapply(status, foldid, sum))
   temp = as.matrix(cvraw/weights,ncol=1)
   apply(temp, 2, weighted.mean, w = weights, na.rm = TRUE)
   # new
+  cvraw <- new
   weights <- tapply(X = y[, "status"], INDEX = foldid, FUN = sum)
   stats::weighted.mean(x = cvraw/weights, w = weights, na.rm = TRUE)
+  
+  grouped <- TRUE # FALSE or TRUE
+  glmnet::cv.glmnet(y=y,x=X,alpha=alpha,lambda=c(lambda,0.5*lambda),foldid=foldid,family="cox",grouped=grouped)$cvm[1]
+  
 }

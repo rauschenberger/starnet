@@ -169,7 +169,7 @@ starnet <- function(y,X,family="gaussian",nalpha=21,alpha=NULL,nfolds=10,foldid=
                           s=base[[i]]$glmnet.fit$lambda)
       link[[i]][foldid==k,seq_len(ncol(temp))] <- temp
     }
-  }
+  } 
   
   #--- tune base lambdas ---
   for(i in seq_len(nalpha)){
@@ -393,6 +393,8 @@ coef.starnet <- function(object,nzero=NULL,...){
                  foldid=object$info$foldid,nzero=nzero)
      coef <- stats::coef(model,s="lambda.min")
      return(list(alpha=coef[1],beta=coef[-1]))
+     # alternatives: lasso-like elastic net (alpha=0.95);
+     # logistic regression of predicted probabilities on X
   }
   
   return(pool)
@@ -479,7 +481,7 @@ print.starnet <- function(x,...){
 #' vector of length \eqn{n} with entries between \eqn{1} and \code{nfolds},
 #' or \code{NULL},
 #' for hold-out (single split) instead of cross-validation (multiple splits)\strong{:}
-#' set to \eqn{0} for training and to \eqn{1} for testing samples
+#' set \code{foldid.ext} to \eqn{0} for training and to \eqn{1} for testing samples
 #' 
 #' @param ...
 #' further arguments (not applicable)
@@ -645,7 +647,8 @@ cv.starnet <- function(y,X,family="gaussian",nalpha=21,alpha=NULL,nfolds.ext=10,
   sigma <- matrix(data=0.1,nrow=p,ncol=p)
   diag(sigma) <- 1
   X <- mvtnorm::rmvnorm(n=n,mean=mean,sigma=sigma)
-  q <- switch(mode,sparse=5,dense=50,mixed=15,stop("Invalid.",.call=FALSE))
+  q <- switch(mode,sparse=5,dense=50,mixed=20,stop("Invalid.",.call=FALSE))
+  # mixed: 15 is too lasso-friendly
   beta <- sample(rep(c(0,1),times=c(p-q,q)))
   eta <- as.numeric(X %*% beta)
   y <- eta + stats::rnorm(n=n,sd=0.5*stats::sd(eta))
@@ -689,7 +692,7 @@ cv.starnet <- function(y,X,family="gaussian",nalpha=21,alpha=NULL,nfolds.ext=10,
 #' 
 .loss <- function(y,x,family,type.measure,foldid=NULL,grouped=TRUE){
   
-  if(family=="cox" & grouped){stop("Implement \"grouped Cox\"!",call.=FALSE)}
+  if(family=="cox" & grouped){stop("Implement \"grouped Cox\"! See unit tests.",call.=FALSE)}
   
   if(is.null(foldid)&(family=="cox"|type.measure=="auc")){
     stop("Missing foldid.",call.=FALSE)
@@ -726,7 +729,7 @@ cv.starnet <- function(y,X,family="gaussian",nalpha=21,alpha=NULL,nfolds.ext=10,
       cvraw <- numeric()
       for(i in seq_along(unique(foldid))){
         if(grouped){
-          warning("Invalid \"grouped Cox\"!",call.=FALSE)
+          stop("Invalid \"grouped Cox\"! See unit tests!",call.=FALSE)
           full <- glmnet::coxnet.deviance(pred=x,y=y)
           mink <- glmnet::coxnet.deviance(pred=x[foldid!=i],y=y[foldid!=i])
           cvraw[i] <- full-mink

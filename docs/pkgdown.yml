@@ -3,5 +3,6 @@ pkgdown: 1.4.1
 pkgdown_sha: ~
 articles:
   article: article.html
+  script: script.html
   starnet: starnet.html
 
