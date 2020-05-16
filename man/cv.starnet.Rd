@@ -4,11 +4,24 @@
 \alias{cv.starnet}
 \title{Model comparison}
 \usage{
-cv.starnet(y, X, family = "gaussian", nalpha = 21, alpha = NULL,
-  nfolds.ext = 10, nfolds.int = 10, foldid.ext = NULL,
-  foldid.int = NULL, type.measure = "deviance", alpha.meta = 1,
-  nzero = NULL, intercept = NULL, upper.limit = NULL,
-  unit.sum = NULL, ...)
+cv.starnet(
+  y,
+  X,
+  family = "gaussian",
+  nalpha = 21,
+  alpha = NULL,
+  nfolds.ext = 10,
+  nfolds.int = 10,
+  foldid.ext = NULL,
+  foldid.int = NULL,
+  type.measure = "deviance",
+  alpha.meta = 1,
+  nzero = NULL,
+  intercept = NULL,
+  upper.limit = NULL,
+  unit.sum = NULL,
+  ...
+)
 }
 \arguments{
 \item{y}{response\strong{:}

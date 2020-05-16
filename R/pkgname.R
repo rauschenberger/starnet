@@ -24,7 +24,7 @@
 #' @references
 #' A Rauschenberger, E Glaab, and MA van de Wiel (2020).
 #' Predictive and interpretable models via the stacked elastic net".
-#' \emph{Manuscript in preparation}.
+#' \emph{Bioinformatics}. In press.
 #' 
 #' \email{armin.rauschenberger@uni.lu}
 #'

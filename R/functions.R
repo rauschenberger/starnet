@@ -67,7 +67,7 @@
 #' @references 
 #' A Rauschenberger, E Glaab, and MA van de Wiel (2020).
 #' "Predictive and interpretable models via the stacked elastic net".
-#' \emph{Manuscript in preparation.}
+#' \emph{Bioinformatics}. In press.
 #' 
 #' @details
 #' Posthoc feature selection\strong{:} consider

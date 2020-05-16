@@ -4,8 +4,7 @@
 \alias{predict.starnet}
 \title{Makes Predictions}
 \usage{
-\method{predict}{starnet}(object, newx, type = "response",
-  nzero = NULL, ...)
+\method{predict}{starnet}(object, newx, type = "response", nzero = NULL, ...)
 }
 \arguments{
 \item{object}{\link[starnet]{starnet} object}

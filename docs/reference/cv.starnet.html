@@ -126,11 +126,24 @@
     <p>Compares stacked elastic net, tuned elastic net, ridge and lasso.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>cv.starnet</span>(<span class='no'>y</span>, <span class='no'>X</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"gaussian"</span>, <span class='kw'>nalpha</span> <span class='kw'>=</span> <span class='fl'>21</span>, <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>nfolds.ext</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>nfolds.int</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>foldid.ext</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>foldid.int</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>type.measure</span> <span class='kw'>=</span> <span class='st'>"deviance"</span>, <span class='kw'>alpha.meta</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>nzero</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>intercept</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>upper.limit</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>unit.sum</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>cv.starnet</span>(
+  <span class='no'>y</span>,
+  <span class='no'>X</span>,
+  <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"gaussian"</span>,
+  <span class='kw'>nalpha</span> <span class='kw'>=</span> <span class='fl'>21</span>,
+  <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>nfolds.ext</span> <span class='kw'>=</span> <span class='fl'>10</span>,
+  <span class='kw'>nfolds.int</span> <span class='kw'>=</span> <span class='fl'>10</span>,
+  <span class='kw'>foldid.ext</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>foldid.int</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>type.measure</span> <span class='kw'>=</span> <span class='st'>"deviance"</span>,
+  <span class='kw'>alpha.meta</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>nzero</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>intercept</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>upper.limit</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>unit.sum</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='no'>...</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">

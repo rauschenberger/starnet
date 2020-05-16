@@ -4,10 +4,22 @@
 \alias{starnet}
 \title{Stacked Elastic Net Regression}
 \usage{
-starnet(y, X, family = "gaussian", nalpha = 21, alpha = NULL,
-  nfolds = 10, foldid = NULL, type.measure = "deviance",
-  alpha.meta = 1, penalty.factor = NULL, intercept = NULL,
-  upper.limit = NULL, unit.sum = NULL, ...)
+starnet(
+  y,
+  X,
+  family = "gaussian",
+  nalpha = 21,
+  alpha = NULL,
+  nfolds = 10,
+  foldid = NULL,
+  type.measure = "deviance",
+  alpha.meta = 1,
+  penalty.factor = NULL,
+  intercept = NULL,
+  upper.limit = NULL,
+  unit.sum = NULL,
+  ...
+)
 }
 \arguments{
 \item{y}{response\strong{:}
@@ -73,5 +85,5 @@ object <- starnet::starnet(y=y,X=X,family="gaussian")
 \references{
 A Rauschenberger, E Glaab, and MA van de Wiel (2020).
 "Predictive and interpretable models via the stacked elastic net".
-\emph{Manuscript in preparation.}
+\emph{Bioinformatics}. In press.
 }
