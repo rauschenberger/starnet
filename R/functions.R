@@ -237,13 +237,13 @@ starnet <- function(y,X,family="gaussian",nalpha=21,alpha=NULL,nfolds=10,foldid=
   
   #--- tune meta alpha ---
   cvm_meta <- sapply(meta,function(x) min(x$cvm))
-  message(paste0(names(cvm_meta)," ",round(cvm_meta,digits=2)," "))
+  #message(paste0(names(cvm_meta)," ",round(cvm_meta,digits=2)," "))
   id_meta <- which.min(cvm_meta)
   
   #--- message ---
   meta <- meta[[names(id_meta)]]
-  message(paste(paste(round(stats::coef(meta,s="lambda.min")[1],digits=3)),"_",
-                paste(round(stats::coef(meta,s="lambda.min")[-1],digits=3),collapse=" ")))
+  #message(paste(paste(round(stats::coef(meta,s="lambda.min")[1],digits=3)),"_",
+  #              paste(round(stats::coef(meta,s="lambda.min")[-1],digits=3),collapse=" ")))
   
   if(FALSE){
     ## debugging: stacking returns same output as tuning
@@ -491,7 +491,12 @@ print.starnet <- function(x,...){
 #' n <- 50; p <- 20
 #' X <- matrix(rnorm(n*p),nrow=n,ncol=p)
 #' y <- rnorm(n=n,mean=rowSums(X[,1:20]))
+#' \dontshow{
+#' loss <- cv.starnet(y=y,X=X,nfolds.ext=2,nfolds.int=3)
+#' }
+#' \dontrun{
 #' loss <- cv.starnet(y=y,X=X)
+#' }
 #' 
 cv.starnet <- function(y,X,family="gaussian",nalpha=21,alpha=NULL,nfolds.ext=10,nfolds.int=10,foldid.ext=NULL,foldid.int=NULL,type.measure="deviance",alpha.meta=1,nzero=NULL,intercept=NULL,upper.limit=NULL,unit.sum=NULL,...){
   
