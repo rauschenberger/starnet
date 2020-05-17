@@ -492,11 +492,9 @@ print.starnet <- function(x,...){
 #' X <- matrix(rnorm(n*p),nrow=n,ncol=p)
 #' y <- rnorm(n=n,mean=rowSums(X[,1:20]))
 #' \dontshow{
-#' loss <- cv.starnet(y=y,X=X,nfolds.ext=2,nfolds.int=3)
-#' }
+#' loss <- cv.starnet(y=y,X=X,nfolds.ext=2,nfolds.int=3)}
 #' \dontrun{
-#' loss <- cv.starnet(y=y,X=X)
-#' }
+#' loss <- cv.starnet(y=y,X=X)}
 #' 
 cv.starnet <- function(y,X,family="gaussian",nalpha=21,alpha=NULL,nfolds.ext=10,nfolds.int=10,foldid.ext=NULL,foldid.int=NULL,type.measure="deviance",alpha.meta=1,nzero=NULL,intercept=NULL,upper.limit=NULL,unit.sum=NULL,...){
   
@@ -574,9 +572,7 @@ cv.starnet <- function(y,X,family="gaussian",nalpha=21,alpha=NULL,nfolds.ext=10,
   return(list(meta=meta,base=base,extra=extra))
 }
 
-
-#' @name
-#' .simulate
+#' @name .simulate
 #' @title
 #' Simulation
 #'
@@ -622,8 +618,7 @@ cv.starnet <- function(y,X,family="gaussian",nalpha=21,alpha=NULL,nfolds.ext=10,
   }
   return(list(y=y,X=X))
 }
-
-#' @describeIn .simulate.block
+#' @rdname .simulate
 #' @param rho
 #' correlation\strong{:}
 #' numeric between \eqn{0} and \eqn{1}
@@ -644,8 +639,7 @@ cv.starnet <- function(y,X,family="gaussian",nalpha=21,alpha=NULL,nfolds.ext=10,
   y <- switch(family,gaussian=y,binomial=round(1/(1+exp(-y))),stop("Invalid."))
   return(list(y=y,X=X,beta=beta))
 }
-
-#' @describeIn .simulate.block
+#' @rdname .simulate
 #' 
 .simulate.mode <- function(n,p,mode,family="gaussian"){
   mean <- rep(x=0,times=p)
@@ -660,7 +654,6 @@ cv.starnet <- function(y,X,family="gaussian",nalpha=21,alpha=NULL,nfolds.ext=10,
   y <- switch(family,gaussian=y,binomial=round(1/(1+exp(-y))),stop("Invalid."))
   return(list(y=y,X=X,beta=beta))
 }
-
 
 #' @title 
 #' Loss
