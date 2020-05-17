@@ -13,8 +13,8 @@ This script requires that the working directory includes the folders
 
 ```{r start,include=FALSE}
 knitr::opts_chunk$set(echo=TRUE,eval=FALSE)
-setwd("C:/Users/armin.rauschenberger/Desktop/starnet")
-source("starnet/R/functions.R")
+#setwd("...")
+#source("starnet/R/functions.R")
 #devtools::install_github("rauschenberger/starnet")
 #install.packages("starnet_0.0.1.tar.gz",repos=NULL,type ="source")
 #library(starnet)
