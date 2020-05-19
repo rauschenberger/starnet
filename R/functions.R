@@ -79,9 +79,13 @@
 #' n <- 30; p <- 50
 #' y <- rnorm(n=n)
 #' X <- matrix(rnorm(n*p),nrow=n,ncol=p)
-#' object <- starnet::starnet(y=y,X=X,family="gaussian")
+#' object <- starnet(y=y,X=X,family="gaussian")
 #' 
 starnet <- function(y,X,family="gaussian",nalpha=21,alpha=NULL,nfolds=10,foldid=NULL,type.measure="deviance",alpha.meta=1,penalty.factor=NULL,intercept=NULL,upper.limit=NULL,unit.sum=NULL,...){
+  
+  if(is.na(alpha.meta) & (!"CVXR" %in% .packages(all.available=TRUE))){
+    stop("Install CVXR from CRAN for alpha.meta=NA.",call.=FALSE)
+  }
   
   #--- temporary ---
   # family <- "gaussian"; nalpha <- 21; alpha <- NULL; nfolds <- 10; foldid <- NULL; type.measure <- "deviance"; alpha.meta <- 0; penalty.factor <- NULL; intercept <- TRUE; upper.limit=TRUE; unit.sum=FALSE
@@ -627,6 +631,9 @@ cv.starnet <- function(y,X,family="gaussian",nalpha=21,alpha=NULL,nfolds.ext=10,
 #' numeric between \eqn{0} (sparse) and \eqn{1} (dense)
 #' 
 .simulate.grid <- function(n,p,rho,pi,family="gaussian"){
+  if(!"mvtnorm" %in% .packages(all.available=TRUE)){
+    stop("Install mvtnorm from CRAN for simulation.",call.=FALSE)
+  }
   mean <- rep(x=0,times=p)
   sigma <- matrix(data=NA,nrow=p,ncol=p)
   sigma <- rho^abs(row(sigma)-col(sigma))
@@ -642,6 +649,9 @@ cv.starnet <- function(y,X,family="gaussian",nalpha=21,alpha=NULL,nfolds.ext=10,
 #' @rdname .simulate
 #' 
 .simulate.mode <- function(n,p,mode,family="gaussian"){
+  if(!"mvtnorm" %in% .packages(all.available=TRUE)){
+    stop("Install mvtnorm from CRAN for simulation.",call.=FALSE)
+  }
   mean <- rep(x=0,times=p)
   sigma <- matrix(data=0.1,nrow=p,ncol=p)
   diag(sigma) <- 1

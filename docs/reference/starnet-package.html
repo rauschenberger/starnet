@@ -136,8 +136,8 @@ we combine multiple alphas by stacked generalisation.</p>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Use function <code><a href='starnet.html'>starnet</a></code> for model fitting.
-Type <code><a href='https://rdrr.io/r/base/library.html'>library(starnet)</a></code> and then <code><a href='starnet.html'>?starnet</a></code> or
+    <p>Use function <code>starnet</code> for model fitting.
+Type <code><a href='https://rdrr.io/r/base/library.html'>library(starnet)</a></code> and then <code>?starnet</code> or
 <code>help("starnet)"</code> to open its help file.</p>
 <p>See the vignette for further examples.
 Type <code><a href='../articles/starnet.html'>vignette("starnet")</a></code> or <code><a href='https://rdrr.io/r/utils/browseVignettes.html'>browseVignettes("starnet")</a></code>
@@ -157,7 +157,7 @@ Predictive and interpretable models via the stacked elastic net".
 <span class='co'># n samples, p features</span>
 
 <span class='co'>#--- model fitting ---</span>
-<span class='no'>object</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='starnet.html'>starnet</a></span>(<span class='kw'>y</span><span class='kw'>=</span><span class='no'>y</span>,<span class='kw'>X</span><span class='kw'>=</span><span class='no'>X</span>)
+<span class='no'>object</span> <span class='kw'>&lt;-</span> <span class='fu'>starnet</span>(<span class='kw'>y</span><span class='kw'>=</span><span class='no'>y</span>,<span class='kw'>X</span><span class='kw'>=</span><span class='no'>X</span>)
 <span class='co'># "base": one model for each alpha</span>
 <span class='co'># "meta": model for stacking them </span>
 
@@ -173,7 +173,7 @@ Predictive and interpretable models via the stacked elastic net".
 
 <span class='co'>#--- model comparison ---</span>
 <span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='no'>loss</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='cv.starnet.html'>cv.starnet</a></span>(<span class='kw'>y</span><span class='kw'>=</span><span class='no'>y</span>,<span class='kw'>X</span><span class='kw'>=</span><span class='no'>X</span>)}
+<span class='no'>loss</span> <span class='kw'>&lt;-</span> <span class='fu'>cv.starnet</span>(<span class='kw'>y</span><span class='kw'>=</span><span class='no'>y</span>,<span class='kw'>X</span><span class='kw'>=</span><span class='no'>X</span>)}
 <span class='co'># cross-validated loss for different alpha,</span>
 <span class='co'># and for tuning and stacking</span></div></pre>
   </div>

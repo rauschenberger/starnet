@@ -10,7 +10,7 @@ for(family in c("gaussian","binomial","poisson")){
       list <- .simulate.block(n=n,p=p,mode="sparse",family=family)
   }
   
-  foldid <- palasso:::.folds(y=list$y,nfolds=5)
+  foldid <- .folds(y=list$y,nfolds=5)
   
   glmnet <- glmnet::cv.glmnet(y=list$y,x=list$X,family=family,foldid=foldid,alpha=0.5)
   object <- starnet(y=list$y,X=list$X,family=family,foldid=foldid)
@@ -77,33 +77,34 @@ for(family in c("gaussian","binomial","poisson")){
 
 #--- testing the convex combination ---
 
-for(family in c("gaussian","binomial")){
-  
-  n <- 100; p <- 5
-  list <- .simulate.block(n=n,p=p,mode="sparse")
-  if(family=="binomial"){
-    list$y <- stats::rbinom(n=n,size=1,prob=1/(1+exp(-list$y)))
-  } else if(family=="poisson"){
-    list$y <- stats::rpois(n=n,lambda=exp(list$y))
+if("CVXR" %in% .packages(all.available=TRUE)){
+  for(family in c("gaussian","binomial")){
+    
+    n <- 100; p <- 5
+    list <- .simulate.block(n=n,p=p,mode="sparse")
+    if(family=="binomial"){
+      list$y <- stats::rbinom(n=n,size=1,prob=1/(1+exp(-list$y)))
+    } else if(family=="poisson"){
+      list$y <- stats::rpois(n=n,lambda=exp(list$y))
+    }
+    
+    glm0 <- .glm(y=list$y,X=list$X,family=family)
+    
+    if(family=="gaussian"){
+      glm1 <- stats::glm(y~X,family=gaussian,data=list)
+    } else if(family=="binomial"){
+      glm1 <- stats::glm(y~X,family=binomial,data=list)
+    } else if(family=="poisson") {
+      glm1 <- stats::glm(y~X,family=poisson,data=list)
+    }
+    
+    testthat::test_that("same coefficients",{
+      change <- (c(glm0$alpha,glm0$beta)-glm1$coefficients)/glm1$coefficients
+      testthat::expect_true(all(change<0.001))
+    })
+    
   }
-  
-  glm0 <- .glm(y=list$y,X=list$X,family=family)
-  
-  if(family=="gaussian"){
-    glm1 <- stats::glm(y~X,family=gaussian,data=list)
-  } else if(family=="binomial"){
-    glm1 <- stats::glm(y~X,family=binomial,data=list)
-  } else if(family=="poisson") {
-    glm1 <- stats::glm(y~X,family=poisson,data=list)
-  }
-  
-  testthat::test_that("same coefficients",{
-    change <- (c(glm0$alpha,glm0$beta)-glm1$coefficients)/glm1$coefficients
-    testthat::expect_true(all(change<0.001))
-  })
-  
 }
-
 
 #--- testing the loss function ---
 
