@@ -52,8 +52,7 @@ loss <- cv.starnet(y=y,X=X)}
 A Rauschenberger, E Glaab, and MA van de Wiel (2020).
 "Predictive and interpretable models via the stacked elastic net".
 \emph{Bioinformatics}. In press.
-\href{doi: 10.1093/bioinformatics/btaa535}{https://doi.org/10.1093/bioinformatics/btaa535}.
-\href{pdf}{https://academic.oup.com/bioinformatics/advance-article-pdf/doi/10.1093/bioinformatics/btaa535/33263777/btaa535.pdf}
+\doi{10.1093/bioinformatics/btaa535}.
 \email{armin.rauschenberger@uni.lu}
 }
 \keyword{documentation}

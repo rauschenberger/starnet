@@ -68,8 +68,7 @@
 #' A Rauschenberger, E Glaab, and MA van de Wiel (2020).
 #' "Predictive and interpretable models via the stacked elastic net".
 #' \emph{Bioinformatics}. In press.
-#' \href{doi: 10.1093/bioinformatics/btaa535}{https://doi.org/10.1093/bioinformatics/btaa535}.
-#' \href{pdf}{https://academic.oup.com/bioinformatics/advance-article-pdf/doi/10.1093/bioinformatics/btaa535/33263777/btaa535.pdf}
+#' \doi{10.1093/bioinformatics/btaa535}.
 #' \email{armin.rauschenberger@uni.lu}
 #' 
 #' @details
@@ -540,8 +539,7 @@ print.starnet <- function(x,...){
 #' y <- rnorm(n=n,mean=rowSums(X[,1:20]))
 #' \dontshow{
 #' loss <- cv.starnet(y=y,X=X,nfolds.ext=2,nfolds.int=3)}
-#' \donttest{
-#' loss <- cv.starnet(y=y,X=X)}
+#' #loss <- cv.starnet(y=y,X=X)
 #' 
 cv.starnet <- function(y,X,family="gaussian",nalpha=21,alpha=NULL,nfolds.ext=10,nfolds.int=10,foldid.ext=NULL,foldid.int=NULL,type.measure="deviance",alpha.meta=1,nzero=NULL,intercept=NULL,upper.limit=NULL,unit.sum=NULL,...){
   
