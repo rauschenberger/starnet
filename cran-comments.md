@@ -1,4 +1,5 @@
 
-# Notes
+Thanks for checking the package.
 
-- doi will be added after publication
+- replaced dontrun by donttest
+- added value tags to help files

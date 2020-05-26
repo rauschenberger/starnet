@@ -33,5 +33,6 @@ devtools::install_github("rauschenberger/starnet")
 ## Reference
 
 A Rauschenberger, E Glaab, MA van de Wiel (2020). “Predictive and
-interpretable models via the stacked elastic net”. *Manuscript in
-preparation.*
+interpretable models via the stacked elastic net”. *Bioinformatics*,
+btaa535.
+[doi: 10.1093/bioinformatics/btaa535](https://doi.org/10.1093/bioinformatics/btaa535).
