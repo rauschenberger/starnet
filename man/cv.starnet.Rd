@@ -59,7 +59,7 @@ for elastic net regularisation;
 
 \item{nzero}{number of non-zero coefficients\strong{:}
 scalar/vector including positive integer(s) or \code{NA};
-or \code{NULL} (no posthoc feature selection)}
+or \code{NULL} (no post hoc feature selection)}
 
 \item{intercept}{settings for meta-learner\strong{:} logical,
 or \code{NULL}

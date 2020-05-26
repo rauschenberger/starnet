@@ -76,7 +76,7 @@ for the base and meta learners, respectively.
 Implements stacked elastic net regression.
 }
 \details{
-Posthoc feature selection\strong{:} consider
+Post hoc feature selection\strong{:} consider
 argument \code{nzero} in functions
 \code{\link{coef}} and \code{\link{predict}}.
 }
