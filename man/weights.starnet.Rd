@@ -11,6 +11,9 @@
 
 \item{...}{further arguments (not applicable)}
 }
+\value{
+Vector containing intercept and slopes from the meta learner.
+}
 \description{
 Extracts coefficients from the meta learner,
 i.e. the weights for the base learners.

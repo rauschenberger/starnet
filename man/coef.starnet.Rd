@@ -14,6 +14,11 @@ positive integer, or \code{NULL}}
 
 \item{...}{further arguments (not applicable)}
 }
+\value{
+List of scalar \code{alpha} and vector \code{beta},
+containing the pooled intercept and the pooled slopes,
+respectively.
+}
 \description{
 Extracts pooled coefficients.
 (The meta learners weights the coefficients from the base learners.)

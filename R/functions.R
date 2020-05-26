@@ -74,6 +74,12 @@
 #' argument \code{nzero} in functions
 #' \code{\link{coef}} and \code{\link{predict}}.
 #' 
+#' @return
+#' Object of class \code{\link[starnet]{starnet}}.
+#' The slots \code{base} and \code{meta}
+#' contain \code{\link[glmnet]{cv.glmnet}}-like objects,
+#' for the base and meta learners, respectively.
+#' 
 #' @examples
 #' set.seed(1)
 #' n <- 30; p <- 50
@@ -297,6 +303,16 @@ starnet <- function(y,X,family="gaussian",nalpha=21,alpha=NULL,nfolds=10,foldid=
 #' @param ...
 #' further arguments (not applicable)
 #' 
+#' @return
+#' Matrix of predicted values, with samples in the rows,
+#' and models in the columns. Included models are
+#' \code{alpha} (fixed elastic net),
+#' \code{ridge} (i.e. \code{alpha0}),
+#' \code{lasso} (i.e. \code{alpha1}),
+#' \code{tune} (tuned elastic net),
+#' \code{stack} (stacked elastic net),
+#' and \code{none} (intercept-only model).
+#' 
 #' @examples
 #' set.seed(1)
 #' n <- 30; p <- 50
@@ -360,6 +376,11 @@ predict.starnet <- function(object,newx,type="response",nzero=NULL,...){
 #' 
 #' @inheritParams predict.starnet
 #' 
+#' @return
+#' List of scalar \code{alpha} and vector \code{beta},
+#' containing the pooled intercept and the pooled slopes,
+#' respectively.
+#' 
 #' @examples
 #' set.seed(1)
 #' n <- 30; p <- 50
@@ -419,6 +440,9 @@ coef.starnet <- function(object,nzero=NULL,...){
 #' @param ...
 #' further arguments (not applicable)
 #' 
+#' @return
+#' Vector containing intercept and slopes from the meta learner.
+#' 
 #' @examples
 #' set.seed(1)
 #' n <- 30; p <- 50
@@ -449,6 +473,9 @@ weights.starnet <- function(object,...){
 #' 
 #' @param ...
 #' further arguments (not applicable)
+#' 
+#' @return
+#' Prints "stacked gaussian/binomial/poisson elastic net".
 #' 
 #' @examples
 #' set.seed(1)
@@ -490,6 +517,19 @@ print.starnet <- function(x,...){
 #' @param ...
 #' further arguments (not applicable)
 #' 
+#' @return
+#' List containing the cross-validated loss
+#' (or out-of sample loss if \code{nfolds.ext} equals two,
+#' and \code{foldid.ext} contains zeros and ones).
+#' The slot \code{meta} contains the loss from the stacked elastic net
+#' (\code{stack}), the tuned elastic net (\code{tune}), ridge, lasso,
+#' and the intercept-only model (\code{none}).
+#' The slot \code{base} contains the loss from the base learners.
+#' And the slot \code{extra} contains the loss from the restricted
+#' stacked elastic net (\code{stack}), lasso, and lasso-like elastic net
+#' (\code{enet}),
+#' with the maximum number of non-zero coefficients shown in the column name.
+#' 
 #' @examples
 #' set.seed(1)
 #' n <- 50; p <- 20
@@ -497,7 +537,7 @@ print.starnet <- function(x,...){
 #' y <- rnorm(n=n,mean=rowSums(X[,1:20]))
 #' \dontshow{
 #' loss <- cv.starnet(y=y,X=X,nfolds.ext=2,nfolds.int=3)}
-#' \dontrun{
+#' \donttest{
 #' loss <- cv.starnet(y=y,X=X)}
 #' 
 cv.starnet <- function(y,X,family="gaussian",nalpha=21,alpha=NULL,nfolds.ext=10,nfolds.int=10,foldid.ext=NULL,foldid.int=NULL,type.measure="deviance",alpha.meta=1,nzero=NULL,intercept=NULL,upper.limit=NULL,unit.sum=NULL,...){
@@ -597,6 +637,9 @@ cv.starnet <- function(y,X,family="gaussian",nalpha=21,alpha=NULL,nfolds.ext=10,
 #' @param family
 #' character \code{"gaussian"}, \code{"binomial"} or \code{"poisson"}
 #' 
+#' @return
+#' List of vector \code{y} and matrix \code{X}.
+#' 
 #' @examples
 #' NA
 #' 
@@ -694,7 +737,7 @@ cv.starnet <- function(y,X,family="gaussian",nalpha=21,alpha=NULL,nfolds.ext=10,
 #' 
 #' @param grouped
 #' logical (for \code{"cox"} only)
-#' 
+#'
 #' @examples
 #' NA
 #' 
@@ -814,6 +857,9 @@ cv.starnet <- function(y,X,family="gaussian",nalpha=21,alpha=NULL,nfolds.ext=10,
 #' @param w
 #' (ignored here)
 #' 
+#' @return
+#' area under the ROC curve
+#' 
 #' @examples
 #' NA
 #' 
@@ -834,6 +880,9 @@ glmnet.auc <- get("auc",envir=asNamespace("glmnet"))
 #' @param nzero
 #' maximum number of non-zero coefficients\strong{:}
 #' positive integer
+#' 
+#' @return
+#' Object of class \code{\link[glmnet]{cv.glmnet}}.
 #' 
 #' @examples
 #' NA

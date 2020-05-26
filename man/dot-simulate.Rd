@@ -18,6 +18,9 @@ positive integer}
 
 \item{family}{character \code{"gaussian"}, \code{"binomial"} or \code{"poisson"}}
 }
+\value{
+List of vector \code{y} and matrix \code{X}.
+}
 \description{
 Functions for simulating data
 }

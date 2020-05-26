@@ -66,6 +66,12 @@ or \code{NULL}
 
 \item{...}{further arguments passed to \code{\link[glmnet]{glmnet}}}
 }
+\value{
+Object of class \code{\link[starnet]{starnet}}.
+The slots \code{base} and \code{meta}
+contain \code{\link[glmnet]{cv.glmnet}}-like objects,
+for the base and meta learners, respectively.
+}
 \description{
 Implements stacked elastic net regression.
 }

@@ -13,6 +13,9 @@ glmnet.auc(y, prob, w)
 
 \item{w}{(ignored here)}
 }
+\value{
+area under the ROC curve
+}
 \description{
 Import of \code{\link[glmnet]{auc}} (internal function)
 }

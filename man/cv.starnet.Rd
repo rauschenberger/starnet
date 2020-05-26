@@ -81,6 +81,19 @@ or \code{NULL}
 
 \item{...}{further arguments (not applicable)}
 }
+\value{
+List containing the cross-validated loss
+(or out-of sample loss if \code{nfolds.ext} equals two,
+and \code{foldid.ext} contains zeros and ones).
+The slot \code{meta} contains the loss from the stacked elastic net
+(\code{stack}), the tuned elastic net (\code{tune}), ridge, lasso,
+and the intercept-only model (\code{none}).
+The slot \code{base} contains the loss from the base learners.
+And the slot \code{extra} contains the loss from the restricted
+stacked elastic net (\code{stack}), lasso, and lasso-like elastic net
+(\code{enet}),
+with the maximum number of non-zero coefficients shown in the column name.
+}
 \description{
 Compares stacked elastic net, tuned elastic net, ridge and lasso.
 }
@@ -91,7 +104,7 @@ X <- matrix(rnorm(n*p),nrow=n,ncol=p)
 y <- rnorm(n=n,mean=rowSums(X[,1:20]))
 \dontshow{
 loss <- cv.starnet(y=y,X=X,nfolds.ext=2,nfolds.int=3)}
-\dontrun{
+\donttest{
 loss <- cv.starnet(y=y,X=X)}
 
 }

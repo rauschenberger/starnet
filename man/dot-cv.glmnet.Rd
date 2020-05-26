@@ -12,6 +12,9 @@
 \item{nzero}{maximum number of non-zero coefficients\strong{:}
 positive integer}
 }
+\value{
+Object of class \code{\link[glmnet]{cv.glmnet}}.
+}
 \description{
 Wrapper for \code{\link[glmnet]{cv.glmnet}},
 with different handling of sparsity constraints.

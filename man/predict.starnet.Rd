@@ -20,6 +20,16 @@ positive integer, or \code{NULL}}
 
 \item{...}{further arguments (not applicable)}
 }
+\value{
+Matrix of predicted values, with samples in the rows,
+and models in the columns. Included models are
+\code{alpha} (fixed elastic net),
+\code{ridge} (i.e. \code{alpha0}),
+\code{lasso} (i.e. \code{alpha1}),
+\code{tune} (tuned elastic net),
+\code{stack} (stacked elastic net),
+and \code{none} (intercept-only model).
+}
 \description{
 Predicts outcome from features with stacked model.
 }

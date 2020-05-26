@@ -11,6 +11,9 @@
 
 \item{...}{further arguments (not applicable)}
 }
+\value{
+Prints "stacked gaussian/binomial/poisson elastic net".
+}
 \description{
 Prints object of class \link[starnet]{starnet}.
 }
