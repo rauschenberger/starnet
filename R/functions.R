@@ -73,7 +73,7 @@
 #' \email{armin.rauschenberger@uni.lu}
 #' 
 #' @details
-#' Posthoc feature selection\strong{:} consider
+#' Post hoc feature selection\strong{:} consider
 #' argument \code{nzero} in functions
 #' \code{\link{coef}} and \code{\link{predict}}.
 #' 
@@ -412,7 +412,7 @@ coef.starnet <- function(object,nzero=NULL,...){
   pool$alpha <- meta$alpha + sum(meta$beta * base$alpha)
   pool$beta <- base$beta %*% meta$beta
   
-  # posthoc selection
+  # post hoc selection
   if(!is.null(nzero)){
      eta <- as.numeric(pool$alpha + object$info$X %*% pool$beta)
      if(stats::sd(eta)==0){return(list(alpha=pool$alpha,beta=0*pool$beta))}
@@ -506,7 +506,7 @@ print.starnet <- function(x,...){
 #' @param nzero
 #' number of non-zero coefficients\strong{:}
 #' scalar/vector including positive integer(s) or \code{NA};
-#' or \code{NULL} (no posthoc feature selection)
+#' or \code{NULL} (no post hoc feature selection)
 #' 
 #' @param nfolds.ext,nfolds.int,foldid.ext,foldid.int
 #' number of folds (\code{nfolds})\strong{:}
