@@ -1,3 +1,3 @@
-## starnet 0.0.1 (2019-11-14)
+## starnet 0.0.1 (2020-05-26)
 
-* first submission
+* submission to CRAN
