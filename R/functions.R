@@ -539,7 +539,8 @@ print.starnet <- function(x,...){
 #' y <- rnorm(n=n,mean=rowSums(X[,1:20]))
 #' \dontshow{
 #' loss <- cv.starnet(y=y,X=X,nfolds.ext=2,nfolds.int=3)}
-#' #loss <- cv.starnet(y=y,X=X)
+#' \donttest{
+#' loss <- cv.starnet(y=y,X=X)}
 #' 
 cv.starnet <- function(y,X,family="gaussian",nalpha=21,alpha=NULL,nfolds.ext=10,nfolds.int=10,foldid.ext=NULL,foldid.int=NULL,type.measure="deviance",alpha.meta=1,nzero=NULL,intercept=NULL,upper.limit=NULL,unit.sum=NULL,...){
   
