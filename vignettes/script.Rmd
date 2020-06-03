@@ -9,7 +9,7 @@ vignette: >
 ---
 
 This script requires that the working directory includes the folders
-"results" and "manuscript". For each simulation and application, the first chunk performs the computationally intensive analysis, and the other chunks summarise the results. We pre-processed the TCGA data with R 3.6.3 (2020-02-29) on a local machine (x86_64-w64-mingw32/x64, Windows 10 x64), and analysed the data with R 3.6.1 (2019-07-05) on a virtual machine (x86_64-pc-linux-gnu, Ubuntu 16.04.6 LTS).
+"results" and "manuscript". Consider uncommenting the lines for saving results and figures. For each simulation and application, the first chunk performs the computationally intensive analysis, and the other chunks summarise the results. We pre-processed the TCGA data with R 3.6.3 (2020-02-29) on a local machine (x86_64-w64-mingw32/x64, Windows 10 x64), and analysed the data with R 3.6.1 (2019-07-05) on a virtual machine (x86_64-pc-linux-gnu, Ubuntu 16.04.6 LTS).
 
 ```{r start,include=FALSE}
 knitr::opts_chunk$set(echo=TRUE,eval=FALSE)
@@ -65,7 +65,7 @@ pos$beta[1] <- pos$beta[1] - 0.3
 pos$beta[3] <- pos$beta[3] + 0.3
  
 a <- b <- 0.3
-grDevices::pdf(file="manuscript/figure_NET.pdf",width=5,height=3)
+#grDevices::pdf(file="manuscript/figure_NET.pdf",width=5,height=3)
 graphics::plot.new()
 graphics::par(mar=c(0,0,0,0),mfrow=c(1,1))
 graphics::plot.window(xlim=c(0.4,7.6),ylim=c(0.8,5.2))
@@ -85,7 +85,7 @@ text(x=c(4,6.5),y=1,labels=txt$dots,cex=1.2)
 ellipse(x=pos$alpha,y=3,text=txt$alpha,a=a+0.1,b=b,cex=1.2)
 text(x=c(4,6),y=3,labels=txt$dots,cex=1.2)
 ellipse(x=pos$y,y=5,text=txt$y,a=a,b=b,cex=1.2)
-grDevices::dev.off()
+#grDevices::dev.off()
 ```
 
 # Simulation 1
@@ -107,11 +107,11 @@ for(id in c(1,NA,0)){
     set.seed(i)
     loss[[i]] <- tryCatch(cv.starnet(y=data$y,X=data$X,family=family,foldid.ext=fold,alpha.meta=id,nzero=nzero),error=function(x) NULL)
   }
-  save(loss,mode,file=paste0("results/sim_prediction_",id,".RData"))
+  #save(loss,mode,file=paste0("results/sim_prediction_",id,".RData"))
 }
 
-writeLines(text=capture.output(utils::sessionInfo(),cat("\n"),
-        sessioninfo::session_info()),con="results/sim_prediction.txt")
+#writeLines(text=capture.output(utils::sessionInfo(),cat("\n"),
+#        sessioninfo::session_info()),con="results/sim_prediction.txt")
 ```
 
 ```{r pre_boxplot,fig.height=2}
@@ -120,7 +120,7 @@ load("results/sim_prediction_1.RData")
 cond <- sapply(loss,is.null)
 loss <- loss[!cond]; mode <- mode[!cond]
 
-grDevices::pdf(file="manuscript/figure_BOX.pdf",width=5,height=2)
+#grDevices::pdf(file="manuscript/figure_BOX.pdf",width=5,height=2)
 graphics::par(mfrow=c(1,3),mar=c(2.1,2,0.5,0.5),oma=c(0,2,0,0))
 meta <- sapply(loss,function(x) x$meta)
 base <- sapply(loss,function(x) x$base[c("alpha0.05","alpha0.95")])
@@ -171,7 +171,7 @@ for(i in modes){
   
 }
 graphics::title(ylab=paste0(paste0(rep(" ",times=12),collapse=""),"mean squared error"),outer=TRUE,line=1)
-grDevices::dev.off()
+#grDevices::dev.off()
 
 round(median,digits=2)
 round(winner,digits=2)
@@ -184,7 +184,7 @@ load("results/sim_prediction_1.RData")
 cond <- sapply(loss,is.null)
 loss <- loss[!cond]; mode <- mode[!cond]
 
-grDevices::pdf(file="manuscript/figure_PHS.pdf",width=5,height=2)
+#grDevices::pdf(file="manuscript/figure_PHS.pdf",width=5,height=2)
 graphics::par(mfrow=c(1,3),mar=c(3.3,2,0.5,0.5),oma=c(0,2,0,0))
 for(i in c("sparse","dense","mixed")){
   x <- as.numeric(colnames(loss[mode==i][[1]]$extra))
@@ -207,7 +207,7 @@ for(i in c("sparse","dense","mixed")){
   graphics::title(xlab="nzero",line=2.5)
 }
 graphics::title(ylab=paste0(paste0(rep(" ",times=12),collapse=""),"mean squared error"),outer=TRUE,line=1)
-grDevices::dev.off()
+#grDevices::dev.off()
 ```
 
 # Simulation 2
@@ -280,11 +280,11 @@ for(id in c(1,NA,0)){
     }
     
   }
-  save(mode,mae0,mae1,mse0,mse1,sel0,sel1,TP,FP,TN,FN,loss,file=paste0("results/sim_estimation_",id,".RData"))
+  #save(mode,mae0,mae1,mse0,mse1,sel0,sel1,TP,FP,TN,FN,loss,file=paste0("results/sim_estimation_",id,".RData"))
 }
 
-writeLines(text=capture.output(utils::sessionInfo(),cat("\n"),
-        sessioninfo::session_info()),con="results/sim_estimation.txt")
+#writeLines(text=capture.output(utils::sessionInfo(),cat("\n"),
+#        sessioninfo::session_info()),con="results/sim_estimation.txt")
 ```
 
 ```{r est_results}
@@ -359,11 +359,11 @@ for(id in c(1,NA,0)){
       loss[[k]][[seed]] <- tryCatch(cv.starnet(y=y[[k]],X=X[[k]],family="binomial",nzero=nzero,alpha.meta=id),error=function(x) NULL)
     }
   }
-  save(loss,n0,n1,file=paste0("results/app_standard_",id,".RData"))
+  #save(loss,n0,n1,file=paste0("results/app_standard_",id,".RData"))
 }
 
-writeLines(text=capture.output(utils::sessionInfo(),cat("\n"),
-        sessioninfo::session_info()),con="results/app_standard.txt")
+#writeLines(text=capture.output(utils::sessionInfo(),cat("\n"),
+#        sessioninfo::session_info()),con="results/app_standard.txt")
 ```
 
 ```{r sta_table,echo=TRUE}
@@ -376,18 +376,15 @@ for(i in names(loss)){
   for(j in c("meta","base")){
     median[[i]][[j]] <- apply(sapply(loss[[i]],function(x) x[[j]]),1,median)
   }
-  #median[[i]]$ph <- median(sapply(loss[[i]],function(x) x$extra["stack","Inf"]))
   list <- lapply(loss[[i]],function(x) x$extra)
   array <- array(data=unlist(list),dim=c(3,11,10),dimnames=list(rownames(list[[1]]),colnames(list[[1]]),seq_len(10)))
   median[[i]]$extra <- apply(X=array,MARGIN=1:2,FUN=median)
 }
 
 meta <- t(sapply(median,function(x) x$meta[c("ridge","lasso","tune","stack")]))
-#post <- sapply(median,function(x) x$ph)
 post <- sapply(median,function(x) x$extra["stack","Inf"])
 
 table <- cbind("\\#0"=n0,"\\#1"=n1,format(meta,digits=1,nsmall=2)," "=format(post,digits=1,nsmall=2))
-#index <- cbind(seq_len(nrow(meta)),ifelse(meta[,"stack"]<meta[,"tune"],6,5))
 index <- cbind(seq_len(nrow(meta)),apply(meta,1,which.min)+2)
 table[index] <- paste0("\\underline{",table[index],"}") 
 colnames(table) <- paste0("\\text{",colnames(table),"}")
@@ -402,7 +399,7 @@ xtable::print.xtable(xtable,sanitize.text.function=function(x) x)
 ```{r sta_figure,fig.height=2}
 #<<start>>
 #<<sta_table>>
-grDevices::pdf(file="manuscript/figure_STA.pdf",width=5,height=2)
+#grDevices::pdf(file="manuscript/figure_STA.pdf",width=5,height=2)
 graphics::par(mfrow=c(1,3),mar=c(3.3,2,0.5,0.5),oma=c(0,2,0,0))
 median$SRBCT <- list()
 median$SRBCT$meta <- rowMeans(sapply(median[paste0("SRBCT",1:4)],
@@ -428,7 +425,7 @@ for(i in c("colon","leukaemia","SRBCT")){
 
 }
 graphics::title(ylab=paste0(paste0(rep(" ",times=16),collapse=""),"logistic deviance"),outer=TRUE,line=1)
-grDevices::dev.off()
+#grDevices::dev.off()
 
 sapply(median,function(x) names(which.min(x$base)))
 ```
@@ -455,10 +452,10 @@ for(i in seq_along(type)){
   y[[i]] <- Y; x[[i]] <- X
 }
 print(object.size(x),units="Mb")
-save(y,x,type,file=paste0("results/tcga_data.RData"))
+#save(y,x,type,file=paste0("results/tcga_data.RData"))
 
-writeLines(text=capture.output(utils::sessionInfo(),cat("\n"),
-        sessioninfo::session_info()),con="results/app_processing.txt")
+#writeLines(text=capture.output(utils::sessionInfo(),cat("\n"),
+#        sessioninfo::session_info()),con="results/app_processing.txt")
 
 # cross-validation
 
@@ -472,13 +469,12 @@ for(id in c(1,NA,0)){
     if(sum(y[[i]]==0)<5|sum(y[[i]]==1)<5){next}
     set.seed(1)
     loss[[i]] <- tryCatch(cv.starnet(y=y[[i]],X=x[[i]],family="binomial",alpha.meta=id,nzero=nzero),error=function(x) NA)
-    #graphics::title(main=type[i])
   }
-  save(loss,file=paste0("results/app_extension_",id,".RData"))
+  #save(loss,file=paste0("results/app_extension_",id,".RData"))
 }
 
-writeLines(text=capture.output(utils::sessionInfo(),cat("\n"),
-        sessioninfo::session_info()),con="results/app_extension.txt")
+#writeLines(text=capture.output(utils::sessionInfo(),cat("\n"),
+#        sessioninfo::session_info()),con="results/app_extension.txt")
 ```
 
 ```{r ext_table}
@@ -493,7 +489,6 @@ meta <- t(sapply(loss[cond],function(x) x$meta[c("ridge","lasso","tune","stack")
 
 post <- sapply(loss[cond],function(x) x$extra["stack","Inf"])
 table <- cbind("\\#0"=n0[cond],"\\#1"=n1[cond],format(meta,digits=1,nsmall=3)," "=format(post,digits=1,nsmall=3))
-#index <- cbind(seq_len(nrow(meta)),ifelse(meta[,"stack"]<meta[,"tune"],6,5))
 index <- cbind(seq_len(nrow(meta)),apply(meta,1,which.min)+2)
 table[index] <- paste0("\\underline{",table[index],"}") 
 colnames(table) <- paste0("\\text{",colnames(table),"}")

@@ -42,7 +42,7 @@ coef <- coef(object)
 # vector "beta": slopes
 
 #--- model comparison ---
-\dontrun{
+\donttest{
 loss <- cv.starnet(y=y,X=X)}
 # cross-validated loss for different alpha,
 # and for tuning and stacking
