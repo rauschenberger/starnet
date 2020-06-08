@@ -1,18 +1,17 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
 <meta name="author" content="Armin Rauschenberger" />
 
-<meta name="date" content="2020-05-17" />
+<meta name="date" content="2020-06-08" />
 
 <title>Stacked Elastic Net</title>
 
@@ -332,6 +331,7 @@ summary {
   border: none;
   display: inline-block;
   border-radius: 4px;
+  background-color: transparent;
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
@@ -365,12 +365,12 @@ summary {
 
 <h1 class="title toc-ignore">Stacked Elastic Net</h1>
 <h4 class="author">Armin Rauschenberger</h4>
-<h4 class="date">17 May 2020</h4>
+<h4 class="date">08 June 2020</h4>
 
 </div>
 
 
-<p>This script requires that the working directory includes the folders “results” and “manuscript”. For each simulation and application, the first chunk performs the computationally intensive analysis, and the other chunks summarise the results. We pre-processed the TCGA data with R 3.6.3 (2020-02-29) on a local machine (x86_64-w64-mingw32/x64, Windows 10 x64), and analysed the data with R 3.6.1 (2019-07-05) on a virtual machine (x86_64-pc-linux-gnu, Ubuntu 16.04.6 LTS).</p>
+<p>This script requires that the working directory includes the folders “results” and “manuscript”. Consider uncommenting the lines for saving results and figures. For each simulation and application, the first chunk performs the computationally intensive analysis, and the other chunks summarise the results. We pre-processed the TCGA data with R 3.6.3 (2020-02-29) on a local machine (x86_64-w64-mingw32/x64, Windows 10 x64), and analysed the data with R 3.6.1 (2019-07-05) on a virtual machine (x86_64-pc-linux-gnu, Ubuntu 16.04.6 LTS).</p>
 <div id="introduction" class="section level1">
 <h1>Introduction</h1>
 <pre class="r"><code>#&lt;&lt;start&gt;&gt;
@@ -413,7 +413,7 @@ pos$beta[1] &lt;- pos$beta[1] - 0.3
 pos$beta[3] &lt;- pos$beta[3] + 0.3
  
 a &lt;- b &lt;- 0.3
-grDevices::pdf(file=&quot;manuscript/figure_NET.pdf&quot;,width=5,height=3)
+#grDevices::pdf(file=&quot;manuscript/figure_NET.pdf&quot;,width=5,height=3)
 graphics::plot.new()
 graphics::par(mar=c(0,0,0,0),mfrow=c(1,1))
 graphics::plot.window(xlim=c(0.4,7.6),ylim=c(0.8,5.2))
@@ -433,7 +433,7 @@ text(x=c(4,6.5),y=1,labels=txt$dots,cex=1.2)
 ellipse(x=pos$alpha,y=3,text=txt$alpha,a=a+0.1,b=b,cex=1.2)
 text(x=c(4,6),y=3,labels=txt$dots,cex=1.2)
 ellipse(x=pos$y,y=5,text=txt$y,a=a,b=b,cex=1.2)
-grDevices::dev.off()</code></pre>
+#grDevices::dev.off()</code></pre>
 </div>
 <div id="simulation-1" class="section level1">
 <h1>Simulation 1</h1>
@@ -453,17 +453,17 @@ for(id in c(1,NA,0)){
     set.seed(i)
     loss[[i]] &lt;- tryCatch(cv.starnet(y=data$y,X=data$X,family=family,foldid.ext=fold,alpha.meta=id,nzero=nzero),error=function(x) NULL)
   }
-  save(loss,mode,file=paste0(&quot;results/sim_prediction_&quot;,id,&quot;.RData&quot;))
+  #save(loss,mode,file=paste0(&quot;results/sim_prediction_&quot;,id,&quot;.RData&quot;))
 }
 
-writeLines(text=capture.output(utils::sessionInfo(),cat(&quot;\n&quot;),
-        sessioninfo::session_info()),con=&quot;results/sim_prediction.txt&quot;)</code></pre>
+#writeLines(text=capture.output(utils::sessionInfo(),cat(&quot;\n&quot;),
+#        sessioninfo::session_info()),con=&quot;results/sim_prediction.txt&quot;)</code></pre>
 <pre class="r"><code># &lt;&lt;start&gt;&gt;
 load(&quot;results/sim_prediction_1.RData&quot;)
 cond &lt;- sapply(loss,is.null)
 loss &lt;- loss[!cond]; mode &lt;- mode[!cond]
 
-grDevices::pdf(file=&quot;manuscript/figure_BOX.pdf&quot;,width=5,height=2)
+#grDevices::pdf(file=&quot;manuscript/figure_BOX.pdf&quot;,width=5,height=2)
 graphics::par(mfrow=c(1,3),mar=c(2.1,2,0.5,0.5),oma=c(0,2,0,0))
 meta &lt;- sapply(loss,function(x) x$meta)
 base &lt;- sapply(loss,function(x) x$base[c(&quot;alpha0.05&quot;,&quot;alpha0.95&quot;)])
@@ -514,7 +514,7 @@ for(i in modes){
   
 }
 graphics::title(ylab=paste0(paste0(rep(&quot; &quot;,times=12),collapse=&quot;&quot;),&quot;mean squared error&quot;),outer=TRUE,line=1)
-grDevices::dev.off()
+#grDevices::dev.off()
 
 round(median,digits=2)
 round(winner,digits=2)
@@ -524,7 +524,7 @@ load(&quot;results/sim_prediction_1.RData&quot;)
 cond &lt;- sapply(loss,is.null)
 loss &lt;- loss[!cond]; mode &lt;- mode[!cond]
 
-grDevices::pdf(file=&quot;manuscript/figure_PHS.pdf&quot;,width=5,height=2)
+#grDevices::pdf(file=&quot;manuscript/figure_PHS.pdf&quot;,width=5,height=2)
 graphics::par(mfrow=c(1,3),mar=c(3.3,2,0.5,0.5),oma=c(0,2,0,0))
 for(i in c(&quot;sparse&quot;,&quot;dense&quot;,&quot;mixed&quot;)){
   x &lt;- as.numeric(colnames(loss[mode==i][[1]]$extra))
@@ -547,7 +547,7 @@ for(i in c(&quot;sparse&quot;,&quot;dense&quot;,&quot;mixed&quot;)){
   graphics::title(xlab=&quot;nzero&quot;,line=2.5)
 }
 graphics::title(ylab=paste0(paste0(rep(&quot; &quot;,times=12),collapse=&quot;&quot;),&quot;mean squared error&quot;),outer=TRUE,line=1)
-grDevices::dev.off()</code></pre>
+#grDevices::dev.off()</code></pre>
 </div>
 <div id="simulation-2" class="section level1">
 <h1>Simulation 2</h1>
@@ -618,11 +618,11 @@ for(id in c(1,NA,0)){
     }
     
   }
-  save(mode,mae0,mae1,mse0,mse1,sel0,sel1,TP,FP,TN,FN,loss,file=paste0(&quot;results/sim_estimation_&quot;,id,&quot;.RData&quot;))
+  #save(mode,mae0,mae1,mse0,mse1,sel0,sel1,TP,FP,TN,FN,loss,file=paste0(&quot;results/sim_estimation_&quot;,id,&quot;.RData&quot;))
 }
 
-writeLines(text=capture.output(utils::sessionInfo(),cat(&quot;\n&quot;),
-        sessioninfo::session_info()),con=&quot;results/sim_estimation.txt&quot;)</code></pre>
+#writeLines(text=capture.output(utils::sessionInfo(),cat(&quot;\n&quot;),
+#        sessioninfo::session_info()),con=&quot;results/sim_estimation.txt&quot;)</code></pre>
 <pre class="r"><code>#&lt;&lt;start&gt;&gt;
 load(&quot;results/sim_estimation_1.RData&quot;)
 
@@ -692,11 +692,11 @@ for(id in c(1,NA,0)){
       loss[[k]][[seed]] &lt;- tryCatch(cv.starnet(y=y[[k]],X=X[[k]],family=&quot;binomial&quot;,nzero=nzero,alpha.meta=id),error=function(x) NULL)
     }
   }
-  save(loss,n0,n1,file=paste0(&quot;results/app_standard_&quot;,id,&quot;.RData&quot;))
+  #save(loss,n0,n1,file=paste0(&quot;results/app_standard_&quot;,id,&quot;.RData&quot;))
 }
 
-writeLines(text=capture.output(utils::sessionInfo(),cat(&quot;\n&quot;),
-        sessioninfo::session_info()),con=&quot;results/app_standard.txt&quot;)</code></pre>
+#writeLines(text=capture.output(utils::sessionInfo(),cat(&quot;\n&quot;),
+#        sessioninfo::session_info()),con=&quot;results/app_standard.txt&quot;)</code></pre>
 <pre class="r"><code>#&lt;&lt;start&gt;&gt;
 load(&quot;results/app_standard_1.RData&quot;)
 loss &lt;- lapply(loss,function(x) x[-2]) # error at id=1, seed=2, leukaemia
@@ -706,18 +706,15 @@ for(i in names(loss)){
   for(j in c(&quot;meta&quot;,&quot;base&quot;)){
     median[[i]][[j]] &lt;- apply(sapply(loss[[i]],function(x) x[[j]]),1,median)
   }
-  #median[[i]]$ph &lt;- median(sapply(loss[[i]],function(x) x$extra[&quot;stack&quot;,&quot;Inf&quot;]))
   list &lt;- lapply(loss[[i]],function(x) x$extra)
   array &lt;- array(data=unlist(list),dim=c(3,11,10),dimnames=list(rownames(list[[1]]),colnames(list[[1]]),seq_len(10)))
   median[[i]]$extra &lt;- apply(X=array,MARGIN=1:2,FUN=median)
 }
 
 meta &lt;- t(sapply(median,function(x) x$meta[c(&quot;ridge&quot;,&quot;lasso&quot;,&quot;tune&quot;,&quot;stack&quot;)]))
-#post &lt;- sapply(median,function(x) x$ph)
 post &lt;- sapply(median,function(x) x$extra[&quot;stack&quot;,&quot;Inf&quot;])
 
 table &lt;- cbind(&quot;\\#0&quot;=n0,&quot;\\#1&quot;=n1,format(meta,digits=1,nsmall=2),&quot; &quot;=format(post,digits=1,nsmall=2))
-#index &lt;- cbind(seq_len(nrow(meta)),ifelse(meta[,&quot;stack&quot;]&lt;meta[,&quot;tune&quot;],6,5))
 index &lt;- cbind(seq_len(nrow(meta)),apply(meta,1,which.min)+2)
 table[index] &lt;- paste0(&quot;\\underline{&quot;,table[index],&quot;}&quot;) 
 colnames(table) &lt;- paste0(&quot;\\text{&quot;,colnames(table),&quot;}&quot;)
@@ -729,7 +726,7 @@ xtable &lt;- xtable::xtable(table,align=c(&quot;l|rrccccc&quot;),digits=c(NA,0,0
 xtable::print.xtable(xtable,sanitize.text.function=function(x) x)</code></pre>
 <pre class="r"><code>#&lt;&lt;start&gt;&gt;
 #&lt;&lt;sta_table&gt;&gt;
-grDevices::pdf(file=&quot;manuscript/figure_STA.pdf&quot;,width=5,height=2)
+#grDevices::pdf(file=&quot;manuscript/figure_STA.pdf&quot;,width=5,height=2)
 graphics::par(mfrow=c(1,3),mar=c(3.3,2,0.5,0.5),oma=c(0,2,0,0))
 median$SRBCT &lt;- list()
 median$SRBCT$meta &lt;- rowMeans(sapply(median[paste0(&quot;SRBCT&quot;,1:4)],
@@ -755,7 +752,7 @@ for(i in c(&quot;colon&quot;,&quot;leukaemia&quot;,&quot;SRBCT&quot;)){
 
 }
 graphics::title(ylab=paste0(paste0(rep(&quot; &quot;,times=16),collapse=&quot;&quot;),&quot;logistic deviance&quot;),outer=TRUE,line=1)
-grDevices::dev.off()
+#grDevices::dev.off()
 
 sapply(median,function(x) names(which.min(x$base)))</code></pre>
 </div>
@@ -780,10 +777,10 @@ for(i in seq_along(type)){
   y[[i]] &lt;- Y; x[[i]] &lt;- X
 }
 print(object.size(x),units=&quot;Mb&quot;)
-save(y,x,type,file=paste0(&quot;results/tcga_data.RData&quot;))
+#save(y,x,type,file=paste0(&quot;results/tcga_data.RData&quot;))
 
-writeLines(text=capture.output(utils::sessionInfo(),cat(&quot;\n&quot;),
-        sessioninfo::session_info()),con=&quot;results/app_processing.txt&quot;)
+#writeLines(text=capture.output(utils::sessionInfo(),cat(&quot;\n&quot;),
+#        sessioninfo::session_info()),con=&quot;results/app_processing.txt&quot;)
 
 # cross-validation
 
@@ -797,13 +794,12 @@ for(id in c(1,NA,0)){
     if(sum(y[[i]]==0)&lt;5|sum(y[[i]]==1)&lt;5){next}
     set.seed(1)
     loss[[i]] &lt;- tryCatch(cv.starnet(y=y[[i]],X=x[[i]],family=&quot;binomial&quot;,alpha.meta=id,nzero=nzero),error=function(x) NA)
-    #graphics::title(main=type[i])
   }
-  save(loss,file=paste0(&quot;results/app_extension_&quot;,id,&quot;.RData&quot;))
+  #save(loss,file=paste0(&quot;results/app_extension_&quot;,id,&quot;.RData&quot;))
 }
 
-writeLines(text=capture.output(utils::sessionInfo(),cat(&quot;\n&quot;),
-        sessioninfo::session_info()),con=&quot;results/app_extension.txt&quot;)</code></pre>
+#writeLines(text=capture.output(utils::sessionInfo(),cat(&quot;\n&quot;),
+#        sessioninfo::session_info()),con=&quot;results/app_extension.txt&quot;)</code></pre>
 <pre class="r"><code>#&lt;&lt;start&gt;&gt;
 load(&quot;results/tcga_data.RData&quot;)
 load(&quot;results/app_extension_1.RData&quot;)
@@ -815,7 +811,6 @@ meta &lt;- t(sapply(loss[cond],function(x) x$meta[c(&quot;ridge&quot;,&quot;lass
 
 post &lt;- sapply(loss[cond],function(x) x$extra[&quot;stack&quot;,&quot;Inf&quot;])
 table &lt;- cbind(&quot;\\#0&quot;=n0[cond],&quot;\\#1&quot;=n1[cond],format(meta,digits=1,nsmall=3),&quot; &quot;=format(post,digits=1,nsmall=3))
-#index &lt;- cbind(seq_len(nrow(meta)),ifelse(meta[,&quot;stack&quot;]&lt;meta[,&quot;tune&quot;],6,5))
 index &lt;- cbind(seq_len(nrow(meta)),apply(meta,1,which.min)+2)
 table[index] &lt;- paste0(&quot;\\underline{&quot;,table[index],&quot;}&quot;) 
 colnames(table) &lt;- paste0(&quot;\\text{&quot;,colnames(table),&quot;}&quot;)

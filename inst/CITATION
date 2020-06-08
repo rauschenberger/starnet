@@ -1,0 +1,16 @@
+citHeader("To cite starnet in publications use:")
+
+citEntry(entry="Article",
+    title = "Predictive and interpretable models via the stacked elastic net",
+    author = personList(as.person("Armin Rauschenberger"),
+			as.person("Enrico Glaab"),
+			as.person("Mark A. van de Wiel")),
+    journal = "Bioinformatics",
+    volume= "In press",
+    year = 2020,
+    url = "https://doi.org/10.1093/bioinformatics/btaa535",
+    textVersion = paste("Armin Rauschenberger, Enrico Glaab, and Mark A. van de Wiel (2020).",
+		"\"Predictive and interpretable models via the stacked elastic net\",",
+		"Bioinformatics, In press.",
+		"https://doi.org/10.1093/bioinformatics/btaa535")
+)

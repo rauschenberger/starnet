@@ -7,10 +7,15 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-The `starnet` manuscript is in preparation. Click [here](https://CRAN.R-project.org/package=starnet) for the R package.
+Click [here](https://academic.oup.com/bioinformatics/advance-article-pdf/doi/10.1093/bioinformatics/btaa535/33263777/btaa535.pdf) to download article.
+
+<div>
+<object data="https://academic.oup.com/bioinformatics/advance-article-pdf/doi/10.1093/bioinformatics/btaa535/33263777/btaa535.pdf" type="application/pdf" width="100%" height="500px">
+</object>
+</div>
 
 ## Reference
 
 A Rauschenberger, E Glaab, and MA van de Wiel (2020).
 "Predictive and interpretable models via the stacked elastic net".
-*Manuscript in preparation.*
+*Bioinformatics.* [doi: 10.1093/bioinformatics/btaa535](https://doi.org/10.1093/bioinformatics/btaa535)

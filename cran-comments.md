@@ -1,2 +1,2 @@
 
-Thanks. The vignette does not save files any more.
+Reason for resubmission: error on r-patched-solaris-x86.

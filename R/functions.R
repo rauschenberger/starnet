@@ -84,7 +84,7 @@
 #' 
 #' @examples
 #' set.seed(1)
-#' n <- 30; p <- 50
+#' n <- 40; p <- 50
 #' y <- rnorm(n=n)
 #' X <- matrix(rnorm(n*p),nrow=n,ncol=p)
 #' object <- starnet(y=y,X=X,family="gaussian")
@@ -317,7 +317,7 @@ starnet <- function(y,X,family="gaussian",nalpha=21,alpha=NULL,nfolds=10,foldid=
 #' 
 #' @examples
 #' set.seed(1)
-#' n <- 30; p <- 50
+#' n <- 40; p <- 50
 #' y <- rnorm(n=n)
 #' X <- matrix(rnorm(n*p),nrow=n,ncol=p)
 #' object <- starnet(y=y,X=X)
@@ -385,7 +385,7 @@ predict.starnet <- function(object,newx,type="response",nzero=NULL,...){
 #' 
 #' @examples
 #' set.seed(1)
-#' n <- 30; p <- 50
+#' n <- 40; p <- 50
 #' y <- rnorm(n=n)
 #' X <- matrix(rnorm(n*p),nrow=n,ncol=p)
 #' object <- starnet(y=y,X=X)
@@ -447,7 +447,7 @@ coef.starnet <- function(object,nzero=NULL,...){
 #' 
 #' @examples
 #' set.seed(1)
-#' n <- 30; p <- 50
+#' n <- 40; p <- 50
 #' y <- rnorm(n=n)
 #' X <- matrix(rnorm(n*p),nrow=n,ncol=p)
 #' object <- starnet(y=y,X=X)
@@ -481,7 +481,7 @@ weights.starnet <- function(object,...){
 #' 
 #' @examples
 #' set.seed(1)
-#' n <- 30; p <- 20
+#' n <- 40; p <- 50
 #' y <- rnorm(n=n)
 #' X <- matrix(rnorm(n*p),nrow=n,ncol=p)
 #' object <- starnet(y=y,X=X)

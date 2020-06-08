@@ -82,7 +82,7 @@ argument \code{nzero} in functions
 }
 \examples{
 set.seed(1)
-n <- 30; p <- 50
+n <- 40; p <- 50
 y <- rnorm(n=n)
 X <- matrix(rnorm(n*p),nrow=n,ncol=p)
 object <- starnet(y=y,X=X,family="gaussian")
