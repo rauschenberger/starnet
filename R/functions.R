@@ -84,14 +84,14 @@
 #' 
 #' @examples
 #' set.seed(1)
-#' n <- 40; p <- 50
+#' n <- 50; p <- 100
 #' y <- rnorm(n=n)
 #' X <- matrix(rnorm(n*p),nrow=n,ncol=p)
 #' object <- starnet(y=y,X=X,family="gaussian")
 #' 
 starnet <- function(y,X,family="gaussian",nalpha=21,alpha=NULL,nfolds=10,foldid=NULL,type.measure="deviance",alpha.meta=1,penalty.factor=NULL,intercept=NULL,upper.limit=NULL,unit.sum=NULL,...){
   
-  if(is.na(alpha.meta) & (!"CVXR" %in% .packages(all.available=TRUE))){
+  if(is.na(alpha.meta) && (!"CVXR" %in% .packages(all.available=TRUE))){
     stop("Install CVXR from CRAN for alpha.meta=NA.",call.=FALSE)
   }
   
@@ -317,7 +317,7 @@ starnet <- function(y,X,family="gaussian",nalpha=21,alpha=NULL,nfolds=10,foldid=
 #' 
 #' @examples
 #' set.seed(1)
-#' n <- 40; p <- 50
+#' n <- 50; p <- 100
 #' y <- rnorm(n=n)
 #' X <- matrix(rnorm(n*p),nrow=n,ncol=p)
 #' object <- starnet(y=y,X=X)
@@ -385,7 +385,7 @@ predict.starnet <- function(object,newx,type="response",nzero=NULL,...){
 #' 
 #' @examples
 #' set.seed(1)
-#' n <- 40; p <- 50
+#' n <- 50; p <- 100
 #' y <- rnorm(n=n)
 #' X <- matrix(rnorm(n*p),nrow=n,ncol=p)
 #' object <- starnet(y=y,X=X)
@@ -447,7 +447,7 @@ coef.starnet <- function(object,nzero=NULL,...){
 #' 
 #' @examples
 #' set.seed(1)
-#' n <- 40; p <- 50
+#' n <- 50; p <- 100
 #' y <- rnorm(n=n)
 #' X <- matrix(rnorm(n*p),nrow=n,ncol=p)
 #' object <- starnet(y=y,X=X)
@@ -481,7 +481,7 @@ weights.starnet <- function(object,...){
 #' 
 #' @examples
 #' set.seed(1)
-#' n <- 40; p <- 50
+#' n <- 50; p <- 100
 #' y <- rnorm(n=n)
 #' X <- matrix(rnorm(n*p),nrow=n,ncol=p)
 #' object <- starnet(y=y,X=X)

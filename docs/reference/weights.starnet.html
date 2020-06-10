@@ -153,18 +153,18 @@ i.e. the weights for the base learners.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>1</span>)
-<span class='no'>n</span> <span class='kw'>&lt;-</span> <span class='fl'>40</span>; <span class='no'>p</span> <span class='kw'>&lt;-</span> <span class='fl'>50</span>
+<span class='no'>n</span> <span class='kw'>&lt;-</span> <span class='fl'>50</span>; <span class='no'>p</span> <span class='kw'>&lt;-</span> <span class='fl'>100</span>
 <span class='no'>y</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='kw'>n</span><span class='kw'>=</span><span class='no'>n</span>)
 <span class='no'>X</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='no'>n</span>*<span class='no'>p</span>),<span class='kw'>nrow</span><span class='kw'>=</span><span class='no'>n</span>,<span class='kw'>ncol</span><span class='kw'>=</span><span class='no'>p</span>)
 <span class='no'>object</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='starnet.html'>starnet</a></span>(<span class='kw'>y</span><span class='kw'>=</span><span class='no'>y</span>,<span class='kw'>X</span><span class='kw'>=</span><span class='no'>X</span>)
 <span class='fu'><a href='https://rdrr.io/r/stats/weights.html'>weights</a></span>(<span class='no'>object</span>)</div><div class='output co'>#&gt; (Intercept)          V1          V2          V3          V4          V5 
-#&gt;  0.06032819  0.00000000  0.23525906  0.15396683  0.00000000  0.00000000 
+#&gt;   0.1004483   0.0000000   0.0000000   0.0000000   0.0000000   0.0000000 
 #&gt;          V6          V7          V8          V9         V10         V11 
-#&gt;  0.00000000  0.00000000  0.00000000  0.00000000  0.00000000  0.00000000 
+#&gt;   0.0000000   0.0000000   0.0000000   0.0000000   0.0000000   0.0000000 
 #&gt;         V12         V13         V14         V15         V16         V17 
-#&gt;  0.00000000  0.00000000  0.00000000  0.00000000  0.00000000  0.00000000 
+#&gt;   0.0000000   0.0000000   0.0000000   0.0000000   0.0000000   0.0000000 
 #&gt;         V18         V19         V20         V21 
-#&gt;  0.00000000  0.00000000  0.00000000  0.00000000 </div><div class='input'>
+#&gt;   0.0000000   0.0000000   0.0000000   0.0000000 </div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

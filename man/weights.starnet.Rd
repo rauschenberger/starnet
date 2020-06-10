@@ -20,7 +20,7 @@ i.e. the weights for the base learners.
 }
 \examples{
 set.seed(1)
-n <- 40; p <- 50
+n <- 50; p <- 100
 y <- rnorm(n=n)
 X <- matrix(rnorm(n*p),nrow=n,ncol=p)
 object <- starnet(y=y,X=X)

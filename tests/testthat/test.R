@@ -1,6 +1,6 @@
 
 for(family in c("gaussian","binomial","poisson")){
-  n <- 30; p <- 50
+  n <- 50; p <- 100 # was 30 and 50
   if(family=="cox"){
     list <- list()
     list$y <- survival::Surv(time=abs(rnorm(n)),
