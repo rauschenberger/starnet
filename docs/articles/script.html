@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">starnet</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.3</span>
       </span>
     </div>
 
@@ -82,7 +82,7 @@
       <h1 data-toc-skip>Stacked Elastic Net</h1>
                         <h4 class="author">Armin Rauschenberger</h4>
             
-            <h4 class="date">10 June 2020</h4>
+            <h4 class="date">21 October 2020</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/rauschenberger/starnet/blob/master/vignettes/script.Rmd"><code>vignettes/script.Rmd</code></a></small>
       <div class="hidden name"><code>script.Rmd</code></div>
@@ -491,7 +491,7 @@
   <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"-"</span>,<span class="no">type</span>[<span class="no">i</span>],<span class="st">"-"</span>),<span class="kw">times</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">10</span>,<span class="fl">1</span>,<span class="fl">10</span>)),<span class="st">"\n"</span>)
   <span class="no">data</span> <span class="kw">&lt;-</span> <span class="kw pkg">curatedTCGAData</span><span class="kw ns">::</span><span class="fu">curatedTCGAData</span>(<span class="kw">diseaseCode</span><span class="kw">=</span><span class="no">type</span>[<span class="no">i</span>],<span class="kw">assays</span><span class="kw">=</span> <span class="st">"RNASeq2GeneNorm"</span>,<span class="kw">dry.run</span><span class="kw">=</span><span class="fl">FALSE</span>)
   <span class="no">data</span> <span class="kw">&lt;-</span> <span class="kw pkg">MultiAssayExperiment</span><span class="kw ns">::</span><span class="fu">mergeReplicates</span>(<span class="no">data</span>)
-  <span class="no">X</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span>(<span class="kw pkg">SummarizedExperiment</span><span class="kw ns">::</span><span class="fu">assay</span>(<span class="no">data</span>))
+  <span class="no">X</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span>(<span class="kw pkg">SummarizedExperiment</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">assay</a></span>(<span class="no">data</span>))
   <span class="no">Y</span> <span class="kw">&lt;-</span> <span class="kw pkg">TCGAutils</span><span class="kw ns">::</span><span class="fu">TCGAbiospec</span>(<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span>(<span class="no">X</span>))$<span class="no">sample_definition</span>
   <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span>(<span class="no">Y</span>))
   <span class="no">cond</span> <span class="kw">&lt;-</span> <span class="no">Y</span> <span class="kw">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Solid Tissue Normal"</span>,<span class="st">"Primary Solid Tumor"</span>)

@@ -36,3 +36,10 @@ A Rauschenberger, E Glaab, MA van de Wiel (2020). “Predictive and
 interpretable models via the stacked elastic net”. *Bioinformatics*,
 btaa535.
 [doi: 10.1093/bioinformatics/btaa535](https://doi.org/10.1093/bioinformatics/btaa535).
+
+[![CRAN
+version](https://www.r-pkg.org/badges/version/starnet)](https://CRAN.R-project.org/package=starnet)
+[![CRAN RStudio mirror
+downloads](https://cranlogs.r-pkg.org/badges/starnet)](https://CRAN.R-project.org/package=starnet)
+[![Total CRAN
+downloads](https://cranlogs.r-pkg.org/badges/grand-total/starnet)](https://CRAN.R-project.org/package=starnet)
