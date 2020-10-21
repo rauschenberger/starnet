@@ -1,4 +1,4 @@
 
 Reason for resubmission: error on r-patched-solaris-x86.
 
-(I actually think there is an issue with the R package glmnet.)
+(I actually think the problem is the R package glmnet on this machine.)
