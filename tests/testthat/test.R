@@ -61,12 +61,12 @@ for(family in c("gaussian","binomial","poisson")){
       a <- pred$stack
   
       coef <- coef.starnet(object=object)
-      b <- joinet:::.mean.function(coef$alpha + list$X %*% coef$beta,family=family)
+      b <- .mean.function(coef$alpha + list$X %*% coef$beta,family=family)
   
       pred <- predict.starnet(object=object,newx=list$X,type="link")
       weights <- weights.starnet(object=object)
       sub <- pred[,grepl(pattern="alpha",x=colnames(pred))]
-      c <- joinet:::.mean.function(weights[1] + as.matrix(sub) %*% weights[-1],family=family)
+      c <- .mean.function(weights[1] + as.matrix(sub) %*% weights[-1],family=family)
   
       cond <- all(abs((a-b)<1e-06) & abs((a-c)<1e-06) & abs((b-c)<1e-06))
       
@@ -166,7 +166,7 @@ for(family in c("gaussian","binomial","poisson","mgaussian","multinomial","cox")
           y_hat[foldid==k,] <- stats::predict(object=glmnet,newx=X1,type="response")
       } else {
           temp <- stats::predict(object=glmnet,newx=X1,type="link")
-          y_hat[foldid==k] <- joinet:::.mean.function(temp,family=family)
+          y_hat[foldid==k] <- .mean.function(temp,family=family)
       }
       beta[[k]] <- coef(glmnet)
       pred[[k]] <- predict(glmnet,newx=X,type="link")

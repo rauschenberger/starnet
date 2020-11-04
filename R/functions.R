@@ -185,7 +185,7 @@ starnet <- function(y,X,family="gaussian",nalpha=21,alpha=NULL,nfolds=10,foldid=
   
   #--- tune base lambdas ---
   for(i in seq_len(nalpha)){
-    fit <- joinet:::.mean.function(link[[i]],family=family)
+    fit <- .mean.function(link[[i]],family=family)
     base[[i]]$cvm <- apply(fit,2,function(x) .loss(y=y,x=x,family=family,type.measure=type.measure,foldid=foldid))
     base[[i]]$id.min <- which.min(base[[i]]$cvm)
     base[[i]]$lambda.min <- base[[i]]$lambda[base[[i]]$id.min]
@@ -234,7 +234,7 @@ starnet <- function(y,X,family="gaussian",nalpha=21,alpha=NULL,nfolds=10,foldid=
         glm <- .glm(y=y[foldid!=k],X=hat[foldid!=k,],family=family,intercept=intercept,lower.limit=TRUE,upper.limit=upper.limit,unit.sum=unit.sum)
         link[foldid==k] <- glm$alpha + hat[foldid==k,] %*% glm$beta
       }
-      y_hat <- joinet:::.mean.function(x=link,family=family)
+      y_hat <- .mean.function(x=link,family=family)
       cvm <- .loss(y=y,x=y_hat,family=family,type.measure=type.measure,foldid=foldid)
     } else {
       cvm <- 0
@@ -360,7 +360,7 @@ predict.starnet <- function(object,newx,type="response",nzero=NULL,...){
   if(type=="link"){
     return(frame)
   } else  if(type=="response"){
-    frame <- lapply(frame,function(y) joinet:::.mean.function(y,family=x$info$family))
+    frame <- lapply(frame,function(y) .mean.function(y,family=x$info$family))
     return(as.data.frame(frame))
   } else {
     stop("Invalid type.",call.=FALSE)
@@ -996,6 +996,21 @@ glmnet.auc <- get("auc",envir=asNamespace("glmnet"))
   }
   return(foldid)
 }
+
+# This function is a copy from joinet!
+.mean.function <- function(x,family){
+  if(family %in% c("gaussian","cox")){
+    return(x)
+  } else if(family=="binomial"){
+    return(1/(1+exp(-x)))
+  } else if(family=="poisson"){
+    return(exp(x))
+  } else {
+    stop("Family not implemented.",call.=FALSE)
+  }
+}
+
+
 
 #y <- c(0,0,0,0,0,0,0,0,1,1)
 #for(nfolds in 1:10){
