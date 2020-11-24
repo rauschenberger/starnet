@@ -83,11 +83,19 @@
 #' for the base and meta learners, respectively.
 #' 
 #' @examples
+#' \dontshow{
+#' if(!grepl('SunOS',Sys.info()['sysname'])){
 #' set.seed(1)
 #' n <- 50; p <- 100
 #' y <- rnorm(n=n)
 #' X <- matrix(rnorm(n*p),nrow=n,ncol=p)
-#' object <- starnet(y=y,X=X,family="gaussian")
+#' object <- starnet(y=y,X=X,family="gaussian")}}
+#' \donttest{
+#' set.seed(1)
+#' n <- 50; p <- 100
+#' y <- rnorm(n=n)
+#' X <- matrix(rnorm(n*p),nrow=n,ncol=p)
+#' object <- starnet(y=y,X=X,family="gaussian")}
 #' 
 starnet <- function(y,X,family="gaussian",nalpha=21,alpha=NULL,nfolds=10,foldid=NULL,type.measure="deviance",alpha.meta=1,penalty.factor=NULL,intercept=NULL,upper.limit=NULL,unit.sum=NULL,...){
   
@@ -316,12 +324,21 @@ starnet <- function(y,X,family="gaussian",nalpha=21,alpha=NULL,nfolds=10,foldid=
 #' and \code{none} (intercept-only model).
 #' 
 #' @examples
+#' \dontshow{
+#' if(!grepl('SunOS',Sys.info()['sysname'])){
 #' set.seed(1)
 #' n <- 50; p <- 100
 #' y <- rnorm(n=n)
 #' X <- matrix(rnorm(n*p),nrow=n,ncol=p)
 #' object <- starnet(y=y,X=X)
-#' y_hat <- predict(object,newx=X[c(1),,drop=FALSE])
+#' y_hat <- predict(object,newx=X[c(1),,drop=FALSE])}}
+#' \donttest{
+#' set.seed(1)
+#' n <- 50; p <- 100
+#' y <- rnorm(n=n)
+#' X <- matrix(rnorm(n*p),nrow=n,ncol=p)
+#' object <- starnet(y=y,X=X)
+#' y_hat <- predict(object,newx=X[c(1),,drop=FALSE])}
 #' 
 predict.starnet <- function(object,newx,type="response",nzero=NULL,...){
   if(length(list(...))!=0){warning("Ignoring argument.",call.=FALSE)}
@@ -384,12 +401,21 @@ predict.starnet <- function(object,newx,type="response",nzero=NULL,...){
 #' respectively.
 #' 
 #' @examples
+#' \dontshow{
+#' if(!grepl('SunOS',Sys.info()['sysname'])){
 #' set.seed(1)
 #' n <- 50; p <- 100
 #' y <- rnorm(n=n)
 #' X <- matrix(rnorm(n*p),nrow=n,ncol=p)
 #' object <- starnet(y=y,X=X)
-#' coef <- coef(object)
+#' coef <- coef(object)}}
+#' \donttest{
+#' set.seed(1)
+#' n <- 50; p <- 100
+#' y <- rnorm(n=n)
+#' X <- matrix(rnorm(n*p),nrow=n,ncol=p)
+#' object <- starnet(y=y,X=X)
+#' coef <- coef(object)}
 #' 
 coef.starnet <- function(object,nzero=NULL,...){
   if(length(list(...))!=0){warning("Ignoring argument.",call.=FALSE)}
@@ -446,12 +472,21 @@ coef.starnet <- function(object,nzero=NULL,...){
 #' Vector containing intercept and slopes from the meta learner.
 #' 
 #' @examples
+#' \dontshow{
+#' if(!grepl('SunOS',Sys.info()['sysname'])){
 #' set.seed(1)
 #' n <- 50; p <- 100
 #' y <- rnorm(n=n)
 #' X <- matrix(rnorm(n*p),nrow=n,ncol=p)
 #' object <- starnet(y=y,X=X)
-#' weights(object)
+#' weights(object)}}
+#' \donttest{
+#' set.seed(1)
+#' n <- 50; p <- 100
+#' y <- rnorm(n=n)
+#' X <- matrix(rnorm(n*p),nrow=n,ncol=p)
+#' object <- starnet(y=y,X=X)
+#' weights(object)}
 #' 
 weights.starnet <- function(object,...){
   if(length(list(...))!=0){warning("Ignoring argument.",call.=FALSE)}
@@ -480,12 +515,21 @@ weights.starnet <- function(object,...){
 #' Prints "stacked gaussian/binomial/poisson elastic net".
 #' 
 #' @examples
+#' \dontshow{
+#' if(!grepl('SunOS',Sys.info()['sysname'])){
 #' set.seed(1)
 #' n <- 50; p <- 100
 #' y <- rnorm(n=n)
 #' X <- matrix(rnorm(n*p),nrow=n,ncol=p)
 #' object <- starnet(y=y,X=X)
-#' print(object)
+#' print(object)}}
+#' \donttest{
+#' set.seed(1)
+#' n <- 50; p <- 100
+#' y <- rnorm(n=n)
+#' X <- matrix(rnorm(n*p),nrow=n,ncol=p)
+#' object <- starnet(y=y,X=X)
+#' print(object)}
 #' 
 print.starnet <- function(x,...){
   cat(paste0("stacked \"",x$info$family,"\" elastic net"),"\n")
@@ -533,12 +577,13 @@ print.starnet <- function(x,...){
 #' with the maximum number of non-zero coefficients shown in the column name.
 #' 
 #' @examples
+#' \dontshow{
+#' if(!grepl('SunOS',Sys.info()['sysname'])){
 #' set.seed(1)
 #' n <- 50; p <- 20
 #' X <- matrix(rnorm(n*p),nrow=n,ncol=p)
 #' y <- rnorm(n=n,mean=rowSums(X[,1:20]))
-#' \dontshow{
-#' loss <- cv.starnet(y=y,X=X,nfolds.ext=2,nfolds.int=3)}
+#' loss <- cv.starnet(y=y,X=X,nfolds.ext=2,nfolds.int=3)}}
 #' \donttest{
 #' loss <- cv.starnet(y=y,X=X)}
 #' 

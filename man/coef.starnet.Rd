@@ -24,11 +24,20 @@ Extracts pooled coefficients.
 (The meta learners weights the coefficients from the base learners.)
 }
 \examples{
+\dontshow{
+if(!grepl('SunOS',Sys.info()['sysname'])){
 set.seed(1)
 n <- 50; p <- 100
 y <- rnorm(n=n)
 X <- matrix(rnorm(n*p),nrow=n,ncol=p)
 object <- starnet(y=y,X=X)
-coef <- coef(object)
+coef <- coef(object)}}
+\donttest{
+set.seed(1)
+n <- 50; p <- 100
+y <- rnorm(n=n)
+X <- matrix(rnorm(n*p),nrow=n,ncol=p)
+object <- starnet(y=y,X=X)
+coef <- coef(object)}
 
 }

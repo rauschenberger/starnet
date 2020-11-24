@@ -34,11 +34,20 @@ and \code{none} (intercept-only model).
 Predicts outcome from features with stacked model.
 }
 \examples{
+\dontshow{
+if(!grepl('SunOS',Sys.info()['sysname'])){
 set.seed(1)
 n <- 50; p <- 100
 y <- rnorm(n=n)
 X <- matrix(rnorm(n*p),nrow=n,ncol=p)
 object <- starnet(y=y,X=X)
-y_hat <- predict(object,newx=X[c(1),,drop=FALSE])
+y_hat <- predict(object,newx=X[c(1),,drop=FALSE])}}
+\donttest{
+set.seed(1)
+n <- 50; p <- 100
+y <- rnorm(n=n)
+X <- matrix(rnorm(n*p),nrow=n,ncol=p)
+object <- starnet(y=y,X=X)
+y_hat <- predict(object,newx=X[c(1),,drop=FALSE])}
 
 }

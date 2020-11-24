@@ -29,6 +29,8 @@
 #' \email{armin.rauschenberger@uni.lu}
 #'
 #' @examples
+#' \dontshow{
+#' if(!grepl('SunOS',Sys.info()['sysname'])){
 #' #--- data simulation ---
 #' n <- 50; p <- 100
 #' y <- rnorm(n=n)
@@ -48,13 +50,34 @@
 #' #--- extract coefficients ---
 #' coef <- coef(object)
 #' # scalar "alpha": intercept
-#' # vector "beta": slopes
+#' # vector "beta": slopes}}
+#' 
+#' \donttest{
+#' #--- data simulation ---
+#' n <- 50; p <- 100
+#' y <- rnorm(n=n)
+#' X <- matrix(rnorm(n*p),nrow=n,ncol=p)
+#' # n samples, p features
+#' 
+#' #--- model fitting ---
+#' object <- starnet(y=y,X=X)
+#' # "base": one model for each alpha
+#' # "meta": model for stacking them 
+#' 
+#' #--- make predictions ---
+#' y_hat <- predict(object,newx=X)
+#' # one column for each alpha,
+#' # and for tuning and stacking
+#' 
+#' #--- extract coefficients ---
+#' coef <- coef(object)
+#' # scalar "alpha": intercept
+#' # vector "beta": slopes}}
 #' 
 #' #--- model comparison ---
-#' \donttest{
-#' loss <- cv.starnet(y=y,X=X)}
+#' loss <- cv.starnet(y=y,X=X)
 #' # cross-validated loss for different alpha,
-#' # and for tuning and stacking
+#' # and for tuning and stacking}
 #' 
 NULL
 

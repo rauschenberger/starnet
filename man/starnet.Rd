@@ -81,11 +81,19 @@ argument \code{nzero} in functions
 \code{\link{coef}} and \code{\link{predict}}.
 }
 \examples{
+\dontshow{
+if(!grepl('SunOS',Sys.info()['sysname'])){
 set.seed(1)
 n <- 50; p <- 100
 y <- rnorm(n=n)
 X <- matrix(rnorm(n*p),nrow=n,ncol=p)
-object <- starnet(y=y,X=X,family="gaussian")
+object <- starnet(y=y,X=X,family="gaussian")}}
+\donttest{
+set.seed(1)
+n <- 50; p <- 100
+y <- rnorm(n=n)
+X <- matrix(rnorm(n*p),nrow=n,ncol=p)
+object <- starnet(y=y,X=X,family="gaussian")}
 
 }
 \references{

@@ -18,11 +18,20 @@ Prints "stacked gaussian/binomial/poisson elastic net".
 Prints object of class \link[starnet]{starnet}.
 }
 \examples{
+\dontshow{
+if(!grepl('SunOS',Sys.info()['sysname'])){
 set.seed(1)
 n <- 50; p <- 100
 y <- rnorm(n=n)
 X <- matrix(rnorm(n*p),nrow=n,ncol=p)
 object <- starnet(y=y,X=X)
-print(object)
+print(object)}}
+\donttest{
+set.seed(1)
+n <- 50; p <- 100
+y <- rnorm(n=n)
+X <- matrix(rnorm(n*p),nrow=n,ncol=p)
+object <- starnet(y=y,X=X)
+print(object)}
 
 }

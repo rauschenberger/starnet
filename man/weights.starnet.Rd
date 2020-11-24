@@ -19,11 +19,20 @@ Extracts coefficients from the meta learner,
 i.e. the weights for the base learners.
 }
 \examples{
+\dontshow{
+if(!grepl('SunOS',Sys.info()['sysname'])){
 set.seed(1)
 n <- 50; p <- 100
 y <- rnorm(n=n)
 X <- matrix(rnorm(n*p),nrow=n,ncol=p)
 object <- starnet(y=y,X=X)
-weights(object)
+weights(object)}}
+\donttest{
+set.seed(1)
+n <- 50; p <- 100
+y <- rnorm(n=n)
+X <- matrix(rnorm(n*p),nrow=n,ncol=p)
+object <- starnet(y=y,X=X)
+weights(object)}
 
 }

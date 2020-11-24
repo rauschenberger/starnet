@@ -98,12 +98,13 @@ with the maximum number of non-zero coefficients shown in the column name.
 Compares stacked elastic net, tuned elastic net, ridge and lasso.
 }
 \examples{
+\dontshow{
+if(!grepl('SunOS',Sys.info()['sysname'])){
 set.seed(1)
 n <- 50; p <- 20
 X <- matrix(rnorm(n*p),nrow=n,ncol=p)
 y <- rnorm(n=n,mean=rowSums(X[,1:20]))
-\dontshow{
-loss <- cv.starnet(y=y,X=X,nfolds.ext=2,nfolds.int=3)}
+loss <- cv.starnet(y=y,X=X,nfolds.ext=2,nfolds.int=3)}}
 \donttest{
 loss <- cv.starnet(y=y,X=X)}
 

@@ -1,4 +1,5 @@
 
+if(!grepl('SunOS',Sys.info()['sysname'])){
 for(family in c("gaussian","binomial","poisson")){
   n <- 50; p <- 100 # was 30 and 50
   if(family=="cox"){
@@ -224,4 +225,5 @@ if(FALSE){
   grouped <- TRUE # FALSE or TRUE
   glmnet::cv.glmnet(y=y,x=X,alpha=alpha,lambda=c(lambda,0.5*lambda),foldid=foldid,family="cox",grouped=grouped)$cvm[1]
   
+}
 }
