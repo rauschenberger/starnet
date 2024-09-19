@@ -1,8 +1,4 @@
 
-<!-- Modify xxx.Rmd, not xxx.md! -->
-
-[![Travis-CI Build
-Status](https://travis-ci.org/rauschenberger/starnet.svg)](https://travis-ci.org/rauschenberger/starnet)
 [![AppVeyor build
 status](https://ci.appveyor.com/api/projects/status/github/rauschenberger/starnet?svg=true)](https://ci.appveyor.com/project/rauschenberger/starnet)
 [![Coverage
