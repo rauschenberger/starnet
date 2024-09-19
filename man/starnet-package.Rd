@@ -19,58 +19,6 @@ See the vignette for further examples.
 Type \code{vignette("starnet")} or \code{browseVignettes("starnet")}
 to open the vignette.
 }
-\examples{
-\dontshow{
-if(!grepl('SunOS',Sys.info()['sysname'])){
-#--- data simulation ---
-n <- 50; p <- 100
-y <- rnorm(n=n)
-X <- matrix(rnorm(n*p),nrow=n,ncol=p)
-# n samples, p features
-
-#--- model fitting ---
-object <- starnet(y=y,X=X)
-# "base": one model for each alpha
-# "meta": model for stacking them 
-
-#--- make predictions ---
-y_hat <- predict(object,newx=X)
-# one column for each alpha,
-# and for tuning and stacking
-
-#--- extract coefficients ---
-coef <- coef(object)
-# scalar "alpha": intercept
-# vector "beta": slopes}}
-
-\donttest{
-#--- data simulation ---
-n <- 50; p <- 100
-y <- rnorm(n=n)
-X <- matrix(rnorm(n*p),nrow=n,ncol=p)
-# n samples, p features
-
-#--- model fitting ---
-object <- starnet(y=y,X=X)
-# "base": one model for each alpha
-# "meta": model for stacking them 
-
-#--- make predictions ---
-y_hat <- predict(object,newx=X)
-# one column for each alpha,
-# and for tuning and stacking
-
-#--- extract coefficients ---
-coef <- coef(object)
-# scalar "alpha": intercept
-# vector "beta": slopes
-
-#--- model comparison ---
-loss <- cv.starnet(y=y,X=X)
-# cross-validated loss for different alpha,
-# and for tuning and stacking}
-
-}
 \references{
 A Rauschenberger, E Glaab, and MA van de Wiel (2021).
 "Predictive and interpretable models via the stacked elastic net".

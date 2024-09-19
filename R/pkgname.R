@@ -29,7 +29,7 @@
 #' \emph{Bioinformatics}. 37(14):2012-2016.
 #' \doi{10.1093/bioinformatics/btaa535}.
 #' \email{armin.rauschenberger@uni.lu}
-#'
+#' 
 #' @examples
 #' \dontshow{
 #' if(!grepl('SunOS',Sys.info()['sysname'])){
@@ -79,7 +79,7 @@
 #' #--- model comparison ---
 #' loss <- cv.starnet(y=y,X=X)
 #' # cross-validated loss for different alpha,
-#' # and for tuning and stacking}
+#' # and for tuning and stacking}}
 #' 
 "_PACKAGE"
 
