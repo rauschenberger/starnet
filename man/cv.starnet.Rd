@@ -61,19 +61,7 @@ for elastic net regularisation;
 scalar/vector including positive integer(s) or \code{NA};
 or \code{NULL} (no post hoc feature selection)}
 
-\item{intercept}{settings for meta-learner\strong{:} logical,
-or \code{NULL}
-(\code{intercept=!is.na(alpha.meta)},
-\code{upper.limit=TRUE},
-\code{unit.sum=is.na(alpha.meta)})}
-
-\item{upper.limit}{settings for meta-learner\strong{:} logical,
-or \code{NULL}
-(\code{intercept=!is.na(alpha.meta)},
-\code{upper.limit=TRUE},
-\code{unit.sum=is.na(alpha.meta)})}
-
-\item{unit.sum}{settings for meta-learner\strong{:} logical,
+\item{intercept, upper.limit, unit.sum}{settings for meta-learner\strong{:} logical,
 or \code{NULL}
 (\code{intercept=!is.na(alpha.meta)},
 \code{upper.limit=TRUE},

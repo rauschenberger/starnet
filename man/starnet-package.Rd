@@ -20,10 +20,22 @@ Type \code{vignette("starnet")} or \code{browseVignettes("starnet")}
 to open the vignette.
 }
 \references{
-A Rauschenberger, E Glaab, and MA van de Wiel (2020).
+A Rauschenberger, E Glaab, and MA van de Wiel (2021).
 "Predictive and interpretable models via the stacked elastic net".
-\emph{Bioinformatics}. In press.
+\emph{Bioinformatics}. 37(14):2012-2016.
 \doi{10.1093/bioinformatics/btaa535}.
 \email{armin.rauschenberger@uni.lu}
+}
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/rauschenberger/starnet}
+  \item Report bugs at \url{https://github.com/rauschenberger/starnet/issues}
+}
+
+}
+\author{
+\strong{Maintainer}: Armin Rauschenberger \email{armin.rauschenberger@uni.lu}
+
 }
 \keyword{documentation}
