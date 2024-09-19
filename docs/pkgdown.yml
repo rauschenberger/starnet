@@ -1,9 +1,0 @@
-pandoc: 2.7.2
-pkgdown: 1.5.1
-pkgdown_sha: ~
-articles:
-  article: article.html
-  script: script.html
-  starnet: starnet.html
-last_built: 2021-04-19T06:57Z
-
