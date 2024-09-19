@@ -1,0 +1,23 @@
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>/404.html</loc></url>
+<url><loc>/articles/article.html</loc></url>
+<url><loc>/articles/index.html</loc></url>
+<url><loc>/articles/script.html</loc></url>
+<url><loc>/articles/starnet.html</loc></url>
+<url><loc>/authors.html</loc></url>
+<url><loc>/index.html</loc></url>
+<url><loc>/news/index.html</loc></url>
+<url><loc>/reference/coef.starnet.html</loc></url>
+<url><loc>/reference/cv.starnet.html</loc></url>
+<url><loc>/reference/dot-cv.glmnet.html</loc></url>
+<url><loc>/reference/dot-loss.html</loc></url>
+<url><loc>/reference/dot-simulate.html</loc></url>
+<url><loc>/reference/glmnet.auc.html</loc></url>
+<url><loc>/reference/index.html</loc></url>
+<url><loc>/reference/predict.starnet.html</loc></url>
+<url><loc>/reference/print.starnet.html</loc></url>
+<url><loc>/reference/starnet-package.html</loc></url>
+<url><loc>/reference/starnet.html</loc></url>
+<url><loc>/reference/weights.starnet.html</loc></url>
+</urlset>
+
