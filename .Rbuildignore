@@ -5,3 +5,9 @@
 ^cran-comments\.md$
 ^appveyor\.yml$
 ^\.Rhistory$
+\.git
+^\.git
+^\.git$
+\.github
+^\.github
+^\.github$

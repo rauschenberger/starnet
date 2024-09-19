@@ -501,8 +501,6 @@ weights.starnet <- function(object,...){
 #' @export
 #' @title
 #' Print Values
-#' 
-#' @keywords internal
 #'
 #' @description
 #' Prints object of class \link[starnet]{starnet}.
@@ -666,7 +664,6 @@ cv.starnet <- function(y,X,family="gaussian",nalpha=21,alpha=NULL,nfolds.ext=10,
 }
 
 #' @name .simulate
-#' @keywords internal
 #' @title
 #' Simulation
 #'
@@ -760,8 +757,6 @@ cv.starnet <- function(y,X,family="gaussian",nalpha=21,alpha=NULL,nfolds.ext=10,
 
 #' @title 
 #' Loss
-#' 
-#' @keywords internal
 #' 
 #' @description
 #' Calculate loss from predicted and observed values
@@ -897,8 +892,6 @@ cv.starnet <- function(y,X,family="gaussian",nalpha=21,alpha=NULL,nfolds.ext=10,
 #' @title 
 #' glmnet:::auc
 #' 
-#' @keywords internal
-#' 
 #' @description
 #' Import of \code{\link[glmnet]{auc}} (internal function)
 #' 
@@ -923,7 +916,6 @@ glmnet.auc <- get("auc",envir=asNamespace("glmnet"))
 
 #' @title 
 #' glmnet::cv.glmnet
-#' @keywords internal
 #' 
 #' @description
 #' Wrapper for \code{\link[glmnet]{cv.glmnet}},
