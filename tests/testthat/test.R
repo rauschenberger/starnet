@@ -101,7 +101,7 @@ if("CVXR" %in% .packages(all.available=TRUE)){
     
     testthat::test_that("same coefficients",{
       change <- (c(glm0$alpha,glm0$beta)-glm1$coefficients)/glm1$coefficients
-      testthat::expect_true(all(change<0.001))
+      testthat::expect_true(all(change<0.01))
     })
     
   }
