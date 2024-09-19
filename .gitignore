@@ -1,0 +1,6 @@
+.DS_Store
+.Rhistory
+docs/pkgdown.yml
+*.png
+!orcid.png
+docs

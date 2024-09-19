@@ -12,7 +12,7 @@ home:
      href: https://github.com/rauschenberger/starnet
 
 navbar:
-  title: "stanet"
+  title: "starnet"
   left:
     - text: "functions"
       href: reference/index.html
