@@ -39,3 +39,11 @@ reference:
       - coef.starnet
       - weights.starnet
       - cv.starnet
+
+  - title: "Internal functions"
+    contents:
+      - .cv.glmnet
+      - .loss
+      - .simulate
+      - glmnet.auc
+      - print.starnet
