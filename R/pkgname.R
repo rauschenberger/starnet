@@ -3,6 +3,8 @@
 #' @keywords documentation
 #' @docType package
 #' 
+#' @aliases starnet-package
+#' 
 #' @title
 #' Stacked Elastic Net Regression
 #' 
