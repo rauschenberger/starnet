@@ -663,7 +663,8 @@ cv.starnet <- function(y,X,family="gaussian",nalpha=21,alpha=NULL,nfolds.ext=10,
   return(list(meta=meta,base=base,extra=extra))
 }
 
-#' @name .simulate
+#' @name simulate
+#' 
 #' @title
 #' Simulation
 #'

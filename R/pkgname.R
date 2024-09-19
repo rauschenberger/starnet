@@ -74,12 +74,12 @@
 #' #--- extract coefficients ---
 #' coef <- coef(object)
 #' # scalar "alpha": intercept
-#' # vector "beta": slopes}}
+#' # vector "beta": slopes
 #' 
 #' #--- model comparison ---
 #' loss <- cv.starnet(y=y,X=X)
 #' # cross-validated loss for different alpha,
 #' # and for tuning and stacking}
 #' 
-NULL
+"_PACKAGE"
 
