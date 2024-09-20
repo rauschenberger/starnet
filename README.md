@@ -34,7 +34,7 @@ Armin Rauschenberger
 [![AR](https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png)](https://orcid.org/0000-0001-6498-4801),
 Enrico Glaab
 [![EG](https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png)](https://orcid.org/0000-0003-3977-7469),
-Mark A. van de Wiel
+and Mark A. van de Wiel
 [![MvdW](https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png)](https://orcid.org/0000-0003-4780-8472)
 (2021).
 "Predictive and interpretable models via the stacked elastic net".
