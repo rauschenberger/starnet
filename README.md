@@ -30,14 +30,18 @@ devtools::install_github("rauschenberger/starnet")
 
 ## Reference
 
-A Rauschenberger, E Glaab, MA van de Wiel (2021). “Predictive and
-interpretable models via the stacked elastic net”. *Bioinformatics*
-37(14):2012-2016. [doi:
-10.1093/bioinformatics/btaa535](https://doi.org/10.1093/bioinformatics/btaa535).
+Armin Rauschenberger
+[![AR](https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png)](https://orcid.org/0000-0001-6498-4801),
+Enrico Glaab
+[![EG](https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png)](https://orcid.org/0000-0003-3977-7469),
+Mark A. van de Wiel
+[![MvdW](https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png)](https://orcid.org/0000-0003-4780-8472)
+(2021).
+"Predictive and interpretable models via the stacked elastic net".
+*Bioinformatics*
+37(14):2012-2016.
+[doi: 10.1093/bioinformatics/btaa535](https://doi.org/10.1093/bioinformatics/btaa535).
 
-[![CRAN
-version](https://www.r-pkg.org/badges/version/starnet)](https://CRAN.R-project.org/package=starnet)
-[![CRAN RStudio mirror
-downloads](https://cranlogs.r-pkg.org/badges/starnet)](https://CRAN.R-project.org/package=starnet)
-[![Total CRAN
-downloads](https://cranlogs.r-pkg.org/badges/grand-total/starnet)](https://CRAN.R-project.org/package=starnet)
+[![CRAN version](https://www.r-pkg.org/badges/version/starnet)](https://CRAN.R-project.org/package=starnet)
+[![CRAN RStudio mirror downloads](https://cranlogs.r-pkg.org/badges/starnet)](https://CRAN.R-project.org/package=starnet)
+[![Total CRAN downloads](https://cranlogs.r-pkg.org/badges/grand-total/starnet)](https://CRAN.R-project.org/package=starnet)
