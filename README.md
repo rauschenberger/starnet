@@ -4,8 +4,6 @@ status](https://ci.appveyor.com/api/projects/status/github/rauschenberger/starne
 [![Coverage
 Status](https://codecov.io/github/rauschenberger/starnet/coverage.svg?branch=master)](https://app.codecov.io/github/rauschenberger/starnet)
 
-
-
 ## Scope
 
 Stacked Elastic Net Regression (extending
@@ -24,8 +22,8 @@ or the latest development version from
 [GitHub](https://github.com/rauschenberger/starnet):
 
 ``` r
-#install.packages("devtools")
-devtools::install_github("rauschenberger/starnet")
+#install.packages("remotes")
+remotes::install_github("rauschenberger/starnet")
 ```
 
 ## Reference
