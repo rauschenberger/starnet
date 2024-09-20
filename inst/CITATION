@@ -1,15 +1,15 @@
 citHeader("To cite starnet in publications use:")
 
-citEntry(entry="Article",
-    title = "Predictive and interpretable models via the stacked elastic net",
-    author = personList(as.person("Armin Rauschenberger"),
-			as.person("Enrico Glaab"),
-			as.person("Mark A. van de Wiel")),
-    journal = "Bioinformatics",
-    volume= "37(14):2012-2016",
-    year = 2021,
-    url = "https://doi.org/10.1093/bioinformatics/btaa535",
-    textVersion = paste("Armin Rauschenberger, Enrico Glaab, and Mark A. van de Wiel (2021).",
+bibentry(
+  bibtype  = "Article",
+  title    = "Predictive and interpretable models via the stacked elastic net",
+  author   = person("Rauschenberger, Armin [aut], Glaab, Enrico [aut], van de Wiel, Mark A. [aut]"),
+  journal  = "Bioinformatics",
+  year     = "2021",
+  volume   = "37(14)",
+  page     = "2012-2016",
+  doi      = "10.1093/bioinformatics/btaa535",
+  textVersion = paste("Armin Rauschenberger, Enrico Glaab, and Mark A. van de Wiel (2021).",
 		"\"Predictive and interpretable models via the stacked elastic net\",",
 		"Bioinformatics, 37(14):2012-2016.",
 		"https://doi.org/10.1093/bioinformatics/btaa535")
