@@ -2,7 +2,9 @@
 [![AppVeyor build
 status](https://ci.appveyor.com/api/projects/status/github/rauschenberger/starnet?svg=true)](https://ci.appveyor.com/project/rauschenberger/starnet)
 [![Coverage
-Status](https://codecov.io/github/rauschenberger/starnet/coverage.svg?branch=master)](https://codecov.io/github/rauschenberger/starnet)
+Status](https://codecov.io/github/rauschenberger/starnet/coverage.svg?branch=master)](https://app.codecov.io/github/rauschenberger/starnet)
+
+
 
 ## Scope
 
