@@ -1,8 +1,7 @@
 
-[![AppVeyor build
-status](https://ci.appveyor.com/api/projects/status/github/rauschenberger/starnet?svg=true)](https://ci.appveyor.com/project/rauschenberger/starnet)
-[![Coverage
-Status](https://codecov.io/github/rauschenberger/starnet/coverage.svg?branch=master)](https://app.codecov.io/github/rauschenberger/starnet)
+[![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/rauschenberger/starnet?svg=true)](https://ci.appveyor.com/project/rauschenberger/starnet)
+[![R-CMD-check](https://github.com/rauschenberger/starnet/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/rauschenberger/starnet/actions/workflows/R-CMD-check.yaml)
+[![Coverage Status](https://codecov.io/github/rauschenberger/starnet/coverage.svg?branch=master)](https://app.codecov.io/github/rauschenberger/starnet)
 
 ## Scope
 
