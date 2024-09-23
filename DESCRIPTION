@@ -4,8 +4,7 @@ Title: Stacked Elastic Net
 Description: Implements stacked elastic net regression (Rauschenberger 2021, <doi:10.1093/bioinformatics/btaa535>). The elastic net generalises ridge and lasso regularisation (Zou 2005, <doi:10.1111/j.1467-9868.2005.00503.x>). Instead of fixing or tuning the mixing parameter alpha, we combine multiple alpha by stacked generalisation (Wolpert 1992 <doi:10.1016/S0893-6080(05)80023-1>).
 Depends: R (>= 3.0.0)
 Imports: glmnet, survival, cornet, Matrix
-Suggests: knitr, testthat, rmarkdown
-Enhances: CVXR, mvtnorm
+Suggests: knitr, testthat, rmarkdown, CVXR, mvtnorm
 Authors@R: person("Armin","Rauschenberger",email="armin.rauschenberger@uni.lu",role=c("aut","cre"))
 VignetteBuilder: knitr
 License: GPL-3
