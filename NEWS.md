@@ -1,4 +1,4 @@
-## starnet 1.0.0 (2024-09-23)
+## starnet 1.0.0 (2024-09-24)
 
 * updated documentation
 
