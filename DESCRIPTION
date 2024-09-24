@@ -5,7 +5,7 @@ Description: Implements stacked elastic net regression (Rauschenberger 2021, <do
 Depends: R (>= 3.0.0)
 Imports: glmnet, survival, cornet, Matrix
 Suggests: knitr, testthat, rmarkdown, CVXR, mvtnorm
-Authors@R: person("Armin","Rauschenberger",email="armin.rauschenberger@uni.lu",role=c("aut","cre"))
+Authors@R: person(given="Armin",family="Rauschenberger",email="armin.rauschenberger@uni.lu",role=c("aut","cre"),comment=c(ORCID="0000-0001-6498-4801"))
 VignetteBuilder: knitr
 License: GPL-3
 LazyData: true
