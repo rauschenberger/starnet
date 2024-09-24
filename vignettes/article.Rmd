@@ -7,24 +7,32 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-Click [here](https://academic.oup.com/bioinformatics/pdf-lookup/doi/10.1093/bioinformatics/btaa535) to download article.
+# Predictive and interpretable models via the stacked elastic net
 
-<div>
-<object data="https://academic.oup.com/bioinformatics/pdf-lookup/doi/10.1093/bioinformatics/btaa535" type="application/pdf" width="100%" height="500px">
-</object>
-</div>
-
-## Reference
-
-Armin Rauschenberger
+**Armin Rauschenberger**$^{1,2,*}$
 [![AR](https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png)](https://orcid.org/0000-0001-6498-4801),
-Enrico Glaab
+**Enrico Glaab**$^{1}$
 [![EG](https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png)](https://orcid.org/0000-0003-3977-7469),
-and Mark A. van de Wiel
+and **Mark A. van de Wiel**$^{2}$
 [![MvdW](https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png)](https://orcid.org/0000-0003-4780-8472)
-(2021).
+
+$^{1}$ Luxembourg Centre for Systems Biomedicine (LCSB), University of Luxembourg, Luxembourg
+
+$^{2}$ Department of Epidemiology and Data Science, Amsterdam UMC, The Netherlands
+
+$^{*}$ To whom correspondence should be addressed.
+
+## Abstract
+
+Machine learning in the biomedical sciences should ideally provide predictive and interpretable models. When predicting outcomes from clinical or molecular features, applied researchers often want to know which features have effects, whether these effects are positive or negative and how strong these effects are. Regression analysis includes this information in the coefficients but typically renders less predictive models than more advanced machine learning techniques. Here, we propose an interpretable meta-learning approach for high-dimensional regression. The elastic net provides a compromise between estimating weak effects for many features and strong effects for some features. It has a mixing parameter to weight between ridge and lasso regularization. Instead of selecting one weighting by tuning, we combine multiple weightings by stacking. We do this in a way that increases predictivity without sacrificing interpretability. The R package starnet is available on GitHub (\url{https://github.com/rauschenberger/starnet}) and CRAN (\url{https://CRAN.R-project.org/package=starnet}).
+
+## Full text (open access)
+
+Rauschenberger et al. (2021).
 "Predictive and interpretable models via the stacked elastic net".
 *Bioinformatics*
 37(14):2012-2016.
 [doi: 10.1093/bioinformatics/btaa535](https://doi.org/10.1093/bioinformatics/btaa535).
-
+(Click
+[here](https://academic.oup.com/bioinformatics/pdf-lookup/doi/10.1093/bioinformatics/btaa535)
+to access PDF.)
