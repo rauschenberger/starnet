@@ -1,7 +1,6 @@
 ---
 title: "Stacked Elastic Net"
 author: "Armin Rauschenberger"
-date: "`r format(Sys.time(),'%d %B %Y')`"
 vignette: >
   %\VignetteIndexEntry{script}
   %\VignetteEngine{knitr::rmarkdown}
