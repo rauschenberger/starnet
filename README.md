@@ -3,10 +3,9 @@
 [![R-CMD-check](https://github.com/rauschenberger/starnet/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/rauschenberger/starnet/actions/workflows/R-CMD-check.yaml)
 [![Codecov test coverage](https://codecov.io/gh/rauschenberger/starnet/graph/badge.svg)](https://app.codecov.io/gh/rauschenberger/starnet)
 
-## Scope
+# Stacked Elastic Net Regression
 
-Stacked Elastic Net Regression (extending
-[glmnet](https://CRAN.R-project.org/package=glmnet)).
+Implements stacked elastic net regression (combining multiple mixing parameters rather than selecting one mixing parameter).
 
 ## Installation
 
