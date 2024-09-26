@@ -105,6 +105,6 @@ and \href{https://orcid.org/0000-0003-4780-8472}{Mark A. van de Wiel}
 \emph{Bioinformatics} 37(14):2012-2016.
 \doi{10.1093/bioinformatics/btaa535}.
 (Click
-\href{https://academic.oup.com/bioinformatics/article-pdf/37/14/2012/57140878/btaa535.pdf}{here}
+\href{https://academic.oup.com/bioinformatics/pdf-lookup/doi/10.1093/bioinformatics/btaa535}{here}
 to access PDF.)
 }
