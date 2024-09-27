@@ -36,5 +36,5 @@ Rauschenberger et al. (2021).
 37(14):2012-2016.
 [doi: 10.1093/bioinformatics/btaa535](https://doi.org/10.1093/bioinformatics/btaa535).
 (Click
-[here](https://academic.oup.com/bioinformatics/pdf-lookup/doi/10.1093/bioinformatics/btaa535)
+[here](https://orbilu.uni.lu/bitstream/10993/43221/1/starnet.pdf)
 to access PDF.)

@@ -32,7 +32,7 @@
 #' \emph{Bioinformatics} 37(14):2012-2016.
 #' \doi{10.1093/bioinformatics/btaa535}.
 #' (Click
-#' \href{https://academic.oup.com/bioinformatics/pdf-lookup/doi/10.1093/bioinformatics/btaa535}{here}
+#' \href{https://orbilu.uni.lu/bitstream/10993/43221/1/starnet.pdf}{here}
 #' to access PDF.)
 #' 
 #' @examples
