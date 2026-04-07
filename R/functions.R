@@ -658,11 +658,10 @@ cv.starnet <- function(y,X,family="gaussian",nalpha=21,alpha=NULL,nfolds.ext=10,
   return(list(meta=meta,base=base,extra=extra))
 }
 
-#' @name .simulate
-#' 
+#' @name simulate-internal
 #' @title
 #' Simulation
-#'
+#' 
 #' @description
 #' Functions for simulating data
 #' 
@@ -680,11 +679,21 @@ cv.starnet <- function(y,X,family="gaussian",nalpha=21,alpha=NULL,nfolds.ext=10,
 #' @param family
 #' character \code{"gaussian"}, \code{"binomial"} or \code{"poisson"}
 #' 
+#' @param rho
+#' correlation\strong{:}
+#' numeric between \eqn{0} and \eqn{1}
+#' @param pi
+#' effects\strong{:}
+#' numeric between \eqn{0} (sparse) and \eqn{1} (dense)
+#' 
 #' @return
 #' List of vector \code{y} and matrix \code{X}.
 #' 
 #' @examples
 #' NA
+NULL
+
+#' @rdname simulate-internal
 #' 
 .simulate.block <- function(n,p,mode,family="gaussian"){
   Z <- matrix(data=stats::rnorm(n*3),nrow=n,ncol=3)
@@ -708,13 +717,8 @@ cv.starnet <- function(y,X,family="gaussian",nalpha=21,alpha=NULL,nfolds.ext=10,
   }
   return(list(y=y,X=X))
 }
-#' @rdname .simulate
-#' @param rho
-#' correlation\strong{:}
-#' numeric between \eqn{0} and \eqn{1}
-#' @param pi
-#' effects\strong{:}
-#' numeric between \eqn{0} (sparse) and \eqn{1} (dense)
+
+#' @rdname simulate-internal
 #' 
 .simulate.grid <- function(n,p,rho,pi,family="gaussian"){
   if(!"mvtnorm" %in% .packages(all.available=TRUE)){
@@ -732,7 +736,8 @@ cv.starnet <- function(y,X,family="gaussian",nalpha=21,alpha=NULL,nfolds.ext=10,
   y <- switch(family,gaussian=y,binomial=round(1/(1+exp(-y))),stop("Invalid."))
   return(list(y=y,X=X,beta=beta))
 }
-#' @rdname .simulate
+
+#' @rdname simulate-internal
 #' 
 .simulate.mode <- function(n,p,mode,family="gaussian"){
   if(!"mvtnorm" %in% .packages(all.available=TRUE)){
