@@ -84,7 +84,7 @@
 #' #--- model comparison ---
 #' loss <- cv.starnet(y=y,X=X)
 #' # cross-validated loss for different alpha,
-#' # and for tuning and stacking}}
+#' # and for tuning and stacking}
 #' 
 "_PACKAGE"
 
