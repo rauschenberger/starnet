@@ -1001,10 +1001,12 @@ glmnet.auc <- get("auc",envir=asNamespace("glmnet"))
   constraints <- list(alpha==0,beta>=0,beta<=1,sum(beta)==1)[c(!intercept,lower.limit,upper.limit,unit.sum)]
   # either sum(beta)==1 or sum(beta)<=1
   problem <- CVXR::Problem(objective,constraints=constraints)
-  result <- CVXR::solve(problem)
-
-  alpha <- round(result$getValue(alpha),digits=6)
-  beta <- round(result$getValue(beta),digits=6)
+  #result <- CVXR::solve(problem)
+  #alpha <- round(result$getValue(alpha),digits=6)
+  #beta <- round(result$getValue(beta),digits=6)
+  result <- CVXR::psolve(problem)
+  alpha <- round(x=CVXR::value(alpha),digits=6)
+  beta <- round(x=CVXR::value(beta),digits=6)
   return(list(alpha=alpha,beta=beta))
 }
 
