@@ -41,7 +41,8 @@ y_hat <- predict(object,newx=X)
 #--- extract coefficients ---
 coef <- coef(object)
 # scalar "alpha": intercept
-# vector "beta": slopes}}
+# vector "beta": slopes
+}}
 
 \donttest{
 #--- data simulation ---
@@ -68,7 +69,8 @@ coef <- coef(object)
 #--- model comparison ---
 loss <- cv.starnet(y=y,X=X)
 # cross-validated loss for different alpha,
-# and for tuning and stacking}
+# and for tuning and stacking
+}
 
 }
 \references{

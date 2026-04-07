@@ -1072,7 +1072,7 @@ glmnet.auc <- get("auc",envir=asNamespace("glmnet"))
 #fold[y==0] <- rep(1:min(sum(y==0),nfolds),length.out=sum(y==0))
 
 
-### plot matrix
+## plot matrix
 # #x <- matrix(c(-(12:1),1:12),nrow=4,ncol=6)
 # plot.matrix <- function(x,cutoff=0,main="",xlab="col",ylab="row",xscale=NULL,yscale=NULL,xlas=1,ylas=3,...){
 #   
@@ -1130,7 +1130,7 @@ glmnet.auc <- get("auc",envir=asNamespace("glmnet"))
 #   
 # }
 
-### simulate data
+## simulate data
 # .simulate <- function(n,p,rho,pi,family,factor){
 #   if(pi==base::pi){stop("Invalid pi!")}
 #   mu <- rep(x=0,times=p)
@@ -1152,7 +1152,7 @@ glmnet.auc <- get("auc",envir=asNamespace("glmnet"))
 #   return(list)
 # }
 
-### test significant difference
+## test significant difference
 # .test <- function (y,X){
 #   fold <- palasso:::.folds(y=y,nfolds=5)
 #   fold <- ifelse(fold==1,1,0)
