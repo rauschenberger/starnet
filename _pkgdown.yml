@@ -44,6 +44,6 @@ reference:
     contents:
       - .cv.glmnet
       - .loss
-      - .simulate
+      - simulate-internal
       - glmnet.auc
       - print.starnet
