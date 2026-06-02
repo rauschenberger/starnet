@@ -78,8 +78,8 @@ for(family in c("gaussian","binomial","poisson")){
 
 #--- testing the convex combination ---
 
-mosek <- tryCatch({ Rmosek::mosek_version(); TRUE }, error = function(x) FALSE)
-if("CVXR" %in% .packages(all.available=TRUE && mosek)){
+#mosek <- tryCatch({ Rmosek::mosek_version(); TRUE }, error = function(x) FALSE)
+if("CVXR" %in% .packages(all.available=TRUE) && FALSE){
   for(family in c("gaussian","binomial")){
     
     n <- 100; p <- 5
